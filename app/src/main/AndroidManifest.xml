@@ -18,11 +18,11 @@
         </activity>
         <activity
             android:name=".activities.ExerPos"
-            android:label="@string/title_activity_add_exercise" >
+            android:label="@string/title_activity_exer_pos" >
         </activity>
         <activity
             android:name=".activities.ExerBase"
-            android:label="@string/title_activity_exercises_list" >
+            android:label="@string/title_activity_exer_base" >
         </activity>
         <activity
             android:name=".activities.WorkoutBase"

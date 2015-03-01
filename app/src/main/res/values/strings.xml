@@ -1,10 +1,28 @@
 <resources>
-    <string name="app_name">Workout Logger</string>
+	<string name="app_name">Workout Logger</string>
+	<string name="action_settings">Settings</string>
+	<string name="title_activity_exer_pos">Exercise</string>
+	<string name="title_activity_exer_base">Exercises list</string>
+	<string name="title_activity_workout_base">Workouts list</string>
+	<string name="title_activity_workout_pos">Workout</string>
+	<string name="titile_warning">Warning</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-	<string name="title_activity_add_exercise">AddExercise</string>
-	<string name="title_activity_exercises_list">ExercisesList</string>
-	<string name="title_activity_workout_base">WorkoutBase</string>
-	<string name="title_activity_workout_pos">WorkoutPos</string>
+	<string name="btn_ok">OK</string>
+	<string name="btn_cancel">Cancel</string>
+
+	<string name="exer_pos_name">Name</string>
+	<string name="exer_pos_description">Description</string>
+
+	<string name="workoutpos_name">Workout name</string>
+	<string name="workoutpos_date">Date</string>
+	<string name="workoutpos_weight">Weight</string>
+	<string name="workoutpos_comment">Comment</string>
+	<string name="workoutpos_add_exercise">Add exercise</string>
+
+	<string name="list_item_cont_desc">Item menu</string>
+
+	<string name="menu_item_exer_add">Add</string>
+	<string name="menu_item_replace">Replace</string>
+	<string name="menu_item_edit">Edit</string>
+	<string name="menu_item_delete">Delete</string>
 </resources>

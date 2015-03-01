@@ -19,7 +19,7 @@
 			android:layout_height="wrap_content"
 			android:padding="16dp"
 			android:layout_below="@+id/add_exercise_toolbar"
-			android:text="Name" />
+			android:text="@string/exer_pos_name" />
 
 	<EditText
 			android:id="@+id/txt_exercise_name"
@@ -36,7 +36,7 @@
 			android:layout_height="wrap_content"
 			android:padding="16dp"
 			android:layout_below="@+id/txt_exercise_name"
-			android:text="Description" />
+			android:text="@string/exer_pos_description" />
 
 	<EditText
 			android:id="@+id/txt_exercise_description"

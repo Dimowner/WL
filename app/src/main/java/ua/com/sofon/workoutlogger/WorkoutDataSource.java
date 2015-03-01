@@ -1,13 +1,14 @@
 package ua.com.sofon.workoutlogger;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created on 21.02.2015.
@@ -47,16 +48,39 @@ public class WorkoutDataSource {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_EXE_NAME, name);
 		values.put(SQLiteHelper.COLUMN_DESCRIPTION, description);
-		long insertId = db.insert(SQLiteHelper.TABLE_EXERCISES, null,
-				values);
+		long insertId = db.insert(SQLiteHelper.TABLE_EXERCISES, null, values);
 		Log.v(LOG_TAG, "Insert exercise id = " + insertId);
 		Cursor cursor = db.query(SQLiteHelper.TABLE_EXERCISES,
-				ExercisesAllColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
+				exercisesAllColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
 				null, null, null);
 		cursor.moveToFirst();
 		Exercise newExersice = cursorToExercise(cursor);
 		cursor.close();
 		return newExersice;
+	}
+
+	/**
+	 * Write {@link ua.com.sofon.workoutlogger.Workout Workout} to database.
+	 * @param name Workout name.
+	 */
+	public Workout createWorkout(String name, Date date, float weight,
+					int duration, String comment, List<Exercise> exerciseList) {
+//		TODO: ADD Join of exercises
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.COLUMN_WORKOUT_NAME, name);
+		values.put(SQLiteHelper.COLUMN_DATE, date.getTime());
+		values.put(SQLiteHelper.COLUMN_WEIGHT, weight);
+		values.put(SQLiteHelper.COLUMN_DURATION, duration);
+		values.put(SQLiteHelper.COLUMN_WORKOUT_COMMENT, comment);
+		long insertId = db.insert(SQLiteHelper.TABLE_WORKOUTS, null, values);
+		Log.v(LOG_TAG, "Insert workout id = " + insertId);
+		Cursor cursor = db.query(SQLiteHelper.TABLE_WORKOUTS,
+				workoutsAllColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
+				null, null, null);
+		cursor.moveToFirst();
+		Workout newWorkout = cursorToWorkout(cursor);
+		cursor.close();
+		return newWorkout;
 	}
 
 	/**
@@ -98,13 +122,23 @@ public class WorkoutDataSource {
 	}
 
 	/**
+	 * Delete {@link ua.com.sofon.workoutlogger.Exercise Exercise} from database
+	 * @param workout Workout to delete.
+	 */
+	public void deleteWorkout(Workout workout) {
+		long id = workout.getId();
+		Log.i(LOG_TAG, "workout deleted ID = " + id);
+		db.delete(SQLiteHelper.TABLE_WORKOUTS, SQLiteHelper.COLUMN_ID + " = " + id, null);
+	}
+
+	/**
 	 * Get all exercises records from database.
 	 * @return List of {@link ua.com.sofon.workoutlogger.Exercise Exercise}
 	 */
 	public List<Exercise> getAllExercises() {
 		List<Exercise> exercises = new ArrayList<>();
 		Cursor cursor = db.query(SQLiteHelper.TABLE_EXERCISES,
-				ExercisesAllColumns, null, null, null, null, null);
+				exercisesAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Exercise exercise = cursorToExercise(cursor);
@@ -117,14 +151,14 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Get all exercises records from database.
-	 * @return List of {@link ua.com.sofon.workoutlogger.Exercise Exercise}
+	 * Get all workout records from database.
+	 * @return List of {@link ua.com.sofon.workoutlogger.Workout Workouts}
 	 */
 	public List<Workout> getAllWorkouts() {
 		List<Workout> workouts = new ArrayList<>();
 		//TODO: MAKE QUERY
 		Cursor cursor = db.query(SQLiteHelper.TABLE_WORKOUTS,
-				null, null, null, null, null, null);
+				workoutsAllColumns, null, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Workout workout = cursorToWorkout(cursor);
@@ -159,8 +193,12 @@ public class WorkoutDataSource {
 	private Workout cursorToWorkout(Cursor cursor) {
 		Workout workout = new Workout();
 		workout.setId(cursor.getLong(0));
-//		workout.setName(cursor.getString(1));
-//		workout.setDescription(cursor.getString(2));
+		workout.setName(cursor.getString(1));
+		workout.setDate(new Date(cursor.getLong(2)));
+		workout.setWeight(cursor.getFloat(3));
+		workout.setDuration(cursor.getInt(4));
+		workout.setComment(cursor.getString(5));
+//		TODO: READ EXERCISES
 		return workout;
 	}
 
@@ -171,10 +209,20 @@ public class WorkoutDataSource {
 	private SQLiteDatabase db;
 
 	/** Array contains all names of columns Exercises table. */
-	private String[] ExercisesAllColumns = {
+	private String[] exercisesAllColumns = {
 			SQLiteHelper.COLUMN_ID,
 			SQLiteHelper.COLUMN_EXE_NAME,
 			SQLiteHelper.COLUMN_DESCRIPTION
+		};
+
+	/** Array contains all names of columns Exercises table. */
+	private String[] workoutsAllColumns = {
+			SQLiteHelper.COLUMN_ID,
+			SQLiteHelper.COLUMN_WORKOUT_NAME,
+			SQLiteHelper.COLUMN_DATE,
+			SQLiteHelper.COLUMN_WEIGHT,
+			SQLiteHelper.COLUMN_DURATION,
+			SQLiteHelper.COLUMN_WORKOUT_COMMENT
 		};
 
 	/** Tag for logging mesages. */

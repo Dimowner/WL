@@ -1,26 +1,17 @@
 package ua.com.sofon.workoutlogger.activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
+import java.util.*;
+import java.sql.*;
+import android.content.*;
+import android.support.v7.app.*;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
-import java.sql.SQLException;
-import java.util.List;
-import ua.com.sofon.workoutlogger.Exercise;
+import android.os.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import ua.com.sofon.workoutlogger.*;
 import ua.com.sofon.workoutlogger.R;
-import ua.com.sofon.workoutlogger.WorkoutDataSource;
 
 /**
  * Activity shows all exercises.
@@ -37,6 +28,10 @@ public class ExerBase extends ActionBarActivity {
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		action = getIntent().getAction();
+		if (action == null) {
+			action = ACTION_DEFAULT;
+		}
 
 		workoutDataSource = new WorkoutDataSource(this);
 		try {
@@ -77,31 +72,34 @@ public class ExerBase extends ActionBarActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_ADD_EXERCISE && resultCode == RESULT_OK) {
-			//Add new item to DB and to listAdaptper.
-			listAdapter.addItem(
-					workoutDataSource.createExersice(
-							data.getExtras().getString(EXTRAS_KEY_NAME),
-							data.getExtras().getString(EXTRAS_KEY_DESCRIPTION)
-					)
-			);
-			listAdapter.notifyDataSetChanged();
-		} else if (requestCode == REQUEST_EDIT_EXERCISE && resultCode == RESULT_OK) {
-
-			//Update item in DB and in listAdaptper.
-			Bundle extras = data.getExtras();
-			String name = extras.getString(EXTRAS_KEY_NAME);
-			String description = extras.getString(EXTRAS_KEY_DESCRIPTION);
-			Log.v(LOG_TAG, "name = " + name + " desc = " + description + " id = " + extras.getLong(EXTRAS_KEY_ID));
-			workoutDataSource.updateExercise(
-					extras.getLong(EXTRAS_KEY_ID),
-					name,
-					description
-			);
-			Exercise e =  (Exercise) listAdapter.getItem(extras.getInt(EXTRAS_KEY_ITEM_POSITION));
-			e.setName(name);
-			e.setDescription(description);
-			listAdapter.notifyDataSetChanged();
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+				case REQUEST_ADD_EXERCISE:
+					//Add new item to DB and to listAdaptper.
+					listAdapter.addItem(
+							workoutDataSource.createExersice(
+									data.getExtras().getString(EXTRAS_KEY_NAME),
+									data.getExtras().getString(EXTRAS_KEY_DESCRIPTION)
+							)
+					);
+					listAdapter.notifyDataSetChanged();
+					break;
+				case REQUEST_EDIT_EXERCISE:
+					//Update item in DB and in listAdaptper.
+					Bundle extras = data.getExtras();
+					String name = extras.getString(EXTRAS_KEY_NAME);
+					String description = extras.getString(EXTRAS_KEY_DESCRIPTION);
+					workoutDataSource.updateExercise(
+							extras.getLong(EXTRAS_KEY_ID),
+							name,
+							description
+					);
+					Exercise e =  (Exercise) listAdapter.getItem(extras.getInt(EXTRAS_KEY_ITEM_POSITION));
+					e.setName(name);
+					e.setDescription(description);
+					listAdapter.notifyDataSetChanged();
+					break;
+			}
 		}
 	}
 
@@ -114,15 +112,21 @@ public class ExerBase extends ActionBarActivity {
 
 	private final int REQUEST_ADD_EXERCISE = 101;
 	private final int REQUEST_EDIT_EXERCISE = 102;
+	public static final String ACTION_SELECT = "action_select";
+	public static final String ACTION_DEFAULT = "action_default";
+
 	public static final String EXTRAS_KEY_ID = "exercise_id";
 	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
 	public static final String EXTRAS_KEY_NAME = "exercise_name";
 	public static final String EXTRAS_KEY_DESCRIPTION = "exercise_description";
+	public static final String EXTRAS_KEY_EXERCISE = "exercise";
+
+	private String action = ACTION_DEFAULT;
 	private ListView mListView;
 	private ExercisesListAdapter listAdapter;
 	private WorkoutDataSource workoutDataSource;
 
-	/** Tag for logging mesages. */
+	/** Tag for logging messages. */
 	private final String LOG_TAG = getClass().getSimpleName();
 
 
@@ -133,11 +137,11 @@ public class ExerBase extends ActionBarActivity {
 
 		/**
 		 * Constructor.
-		 * @param contex Application context.
+		 * @param context Application context.
 		 * @param exerciseList List contains list of exercises to show.
 		 */
-		public ExercisesListAdapter(Context contex, List<Exercise> exerciseList) {
-			this.context = contex;
+		public ExercisesListAdapter(Context context, List<Exercise> exerciseList) {
+			this.context = context;
 			this.exerciseList = exerciseList;
 		}
 
@@ -147,6 +151,14 @@ public class ExerBase extends ActionBarActivity {
 		 */
 		public void addItem(Exercise exe) {
 			exerciseList.add(exe);
+		}
+
+		/**
+		 * Remove Exercise from adapter.
+		 * @param exe Exercise.
+		 */
+		public void removeItem(Exercise exe) {
+			exerciseList.remove(exe);
 		}
 
 		@Override
@@ -168,9 +180,8 @@ public class ExerBase extends ActionBarActivity {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View view = convertView;
 			if (view == null) {
-				LayoutInflater inflater = (LayoutInflater)
-						context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = inflater.inflate(R.layout.list_item, null);
+				LayoutInflater inflater = getLayoutInflater();
+				view = inflater.inflate(R.layout.list_item, parent, false);
 			}
 
 			TextView name = (TextView) view.findViewById(R.id.list_item_title);
@@ -179,6 +190,19 @@ public class ExerBase extends ActionBarActivity {
 			Exercise exe = exerciseList.get(position);
 			name.setText(exe.getName());
 			description.setText(exe.getDescription());
+
+			LinearLayout listItem = (LinearLayout) view.findViewById(R.id.list_item_pnl);
+			listItem.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (action.equals(ACTION_SELECT)) {
+						Intent intent = new Intent();
+						intent.putExtra(EXTRAS_KEY_EXERCISE, (Exercise) listAdapter.getItem(position));
+						setResult(RESULT_OK, intent);
+						finish();
+					}
+				}
+			});
 
 			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.btn_item_menu);
 			itemMenu.setOnClickListener(new View.OnClickListener() {
@@ -200,16 +224,17 @@ public class ExerBase extends ActionBarActivity {
 		private void showPopupMenu(View view, final int position) {
 			final PopupMenu popupMenu = new PopupMenu(context, view);
 			popupMenu.inflate(R.menu.list_item_popupmenu);
+			MenuItem item = popupMenu.getMenu().findItem(R.id.action_replace);
+			item.setVisible(false);
 
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
+					Exercise e = exerciseList.get(position);
 					switch (item.getItemId()) {
 						case R.id.action_edit:
-
-							Exercise e = exerciseList.get(position);
 							Log.v(LOG_TAG, "name = " + e.getName() + " desc = " + e.getDescription() + " id = " + e.getId());
-							Intent intent = new Intent(context, ExerPos.class);
+							Intent intent = new Intent(ExerBase.this, ExerPos.class);
 							intent.setAction(ExerPos.ACTION_EDIT);
 							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
 							intent.putExtra(EXTRAS_KEY_ID, e.getId());
@@ -219,10 +244,22 @@ public class ExerBase extends ActionBarActivity {
 
 							return true;
 						case R.id.action_delete:
-//							TODO: ADD DIALOG TO ACCEPT DELETION
-							workoutDataSource.deleteExersice(exerciseList.get(position));
-							exerciseList.remove(position);
-							notifyDataSetChanged();
+							Util.showWarningDialog(ExerBase.this, "Delete exercise?",
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											workoutDataSource.deleteExersice(exerciseList.get(position));
+											exerciseList.remove(position);
+											notifyDataSetChanged();
+										}
+									},
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											dialog.cancel();
+										}
+									}
+							);
 							return true;
 						default:
 							return false;

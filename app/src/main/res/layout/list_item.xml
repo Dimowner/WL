@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:clickable="false"
 		android:orientation="horizontal">
 
 	<LinearLayout
+			android:id="@+id/list_item_pnl"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="90"
@@ -28,7 +30,7 @@
 			android:id="@+id/btn_item_menu"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
-			android:contentDescription="Item Options"
+			android:contentDescription="@string/list_item_cont_desc"
 			android:layout_weight="10"
 			android:padding="16dp"
 			android:background="@drawable/image_button_selector"

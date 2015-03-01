@@ -1,28 +1,22 @@
 package ua.com.sofon.workoutlogger.activities;
 
-import android.content.Context;
-import android.content.Intent;
+import java.util.*;
+import java.sql.*;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.sql.SQLException;
-import java.util.List;
+import android.content.*;
+import android.os.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import ua.com.sofon.workoutlogger.*;
 import ua.com.sofon.workoutlogger.R;
-import ua.com.sofon.workoutlogger.Workout;
-import ua.com.sofon.workoutlogger.WorkoutDataSource;
 
+/**
+ * Activity shows all workouts.
+ * @author Dimowner
+ */
 public class WorkoutBase extends ActionBarActivity {
 
 	@Override
@@ -33,7 +27,6 @@ public class WorkoutBase extends ActionBarActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 		workoutDataSource = new WorkoutDataSource(this);
 		try {
@@ -62,7 +55,6 @@ public class WorkoutBase extends ActionBarActivity {
 				return true;
 			case R.id.action_add:
 				Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
-//				intent.setAction(ExerPos.ACTION_ADD);
 				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
 				return true;
 			default:
@@ -73,23 +65,40 @@ public class WorkoutBase extends ActionBarActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_ADD_WORKOUT && resultCode == RESULT_OK) {
-			//Add new item to DB and to listAdaptper.
-//			listAdapter.addItem(
-//					workoutDataSource.createExersice(
-//							data.getExtras().getString(EXTRAS_KEY_NAME),
-//							data.getExtras().getString(EXTRAS_KEY_DESCRIPTION)
-//					)
-//			);
-//			listAdapter.notifyDataSetChanged();
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+				case REQUEST_ADD_WORKOUT:
+					Workout w = (Workout)data.getSerializableExtra(EXTRAS_KEY_WORKOUT);
+					listAdapter.addItem(
+							workoutDataSource.createWorkout(
+									w.getName(),
+									w.getDate(),
+									w.getWeight(),
+									w.getDuration(),
+									w.getComment(),
+									w.getExerciseList()
+							)
+					);
+					listAdapter.notifyDataSetChanged();
+					break;
+				case REQUEST_EDIT_WORKOUT:
+					Toast.makeText(this, "Update list item", Toast.LENGTH_LONG).show();
+					break;
+			}
 		}
 	}
 
+
 	private final int REQUEST_ADD_WORKOUT = 101;
+	private final int REQUEST_EDIT_WORKOUT = 102;
+
+	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
+	public static final String EXTRAS_KEY_WORKOUT = "workout";
 	private ListView mListView;
 	private WorkoutListAdapter listAdapter;
 	private WorkoutDataSource workoutDataSource;
-	/** Tag for logging mesages. */
+
+	/** Tag for logging messages. */
 	private final String LOG_TAG = getClass().getSimpleName();
 
 
@@ -100,11 +109,11 @@ public class WorkoutBase extends ActionBarActivity {
 
 		/**
 		 * Constructor.
-		 * @param contex Application context.
+		 * @param context Application context.
 		 * @param workoutList List contains list of exercises to show.
 		 */
-		public WorkoutListAdapter(Context contex, List<Workout> workoutList) {
-			this.context = contex;
+		public WorkoutListAdapter(Context context, List<Workout> workoutList) {
+			this.context = context;
 			this.workoutList = workoutList;
 		}
 
@@ -135,27 +144,24 @@ public class WorkoutBase extends ActionBarActivity {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View view = convertView;
 			if (view == null) {
-				LayoutInflater inflater = (LayoutInflater)
-						context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = inflater.inflate(R.layout.list_item, null);
+				LayoutInflater inflater = getLayoutInflater();
+				view = inflater.inflate(R.layout.list_item, parent, false);
 			}
 
 			TextView name = (TextView) view.findViewById(R.id.list_item_title);
-			TextView description = (TextView) view.findViewById(R.id.list_item_content);
+			TextView content = (TextView) view.findViewById(R.id.list_item_content);
 
-			Workout exe = workoutList.get(position);
-//			name.setText(exe.getName());
-//			description.setText(exe.getDescription());
+			Workout workout = workoutList.get(position);
+			name.setText(workout.getName());
+			content.setText("Date:" + workout.getDateStr() + " weight:" + workout.getWeight());
 
 			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.btn_item_menu);
 			itemMenu.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.v(LOG_TAG, "Show item menu pos = " + position);
 					showPopupMenu(v, position);
 				}
 			});
-
 			return view;
 		}
 
@@ -167,17 +173,38 @@ public class WorkoutBase extends ActionBarActivity {
 		private void showPopupMenu(View view, final int position) {
 			final PopupMenu popupMenu = new PopupMenu(context, view);
 			popupMenu.inflate(R.menu.list_item_popupmenu);
+			MenuItem item = popupMenu.getMenu().findItem(R.id.action_replace);
+			item.setVisible(false);
 
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
+					Workout w = workoutList.get(position);
 					switch (item.getItemId()) {
 						case R.id.action_edit:
+							Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
+							intent.setAction(ExerPos.ACTION_EDIT);
+							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
+							intent.putExtra(EXTRAS_KEY_WORKOUT, w);
+							startActivityForResult(intent, REQUEST_EDIT_WORKOUT);
 							return true;
 						case R.id.action_delete:
-//							workoutDataSource.deleteExersice(exerciseList.get(position));
-//							exerciseList.remove(position);
-//							notifyDataSetChanged();
+							Util.showWarningDialog(WorkoutBase.this, "Delete workout?",
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											workoutDataSource.deleteWorkout(workoutList.get(position));
+											workoutList.remove(position);
+											notifyDataSetChanged();
+										}
+									},
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											dialog.cancel();
+										}
+									}
+							);
 							return true;
 						default:
 							return false;

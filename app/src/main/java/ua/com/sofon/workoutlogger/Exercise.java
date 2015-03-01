@@ -1,10 +1,12 @@
 package ua.com.sofon.workoutlogger;
 
+import java.io.Serializable;
+
 /**
  * Created on 21.02.2015.
  * @author Dimowner
  */
-public class Exercise {
+public class Exercise implements Serializable {
 
 	public Exercise() {
 		this.id = 0;
@@ -42,6 +44,7 @@ public class Exercise {
 		this.description = description;
 	}
 
+	private static final long serialVersionUID = 4018750221300108624L;
 	private long id;
 	private String name;
 	private String description;
