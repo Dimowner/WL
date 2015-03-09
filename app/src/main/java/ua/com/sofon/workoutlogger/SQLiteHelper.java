@@ -38,7 +38,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
 	private static final String DATABASE_NAME = "workout_logger.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 
 	//Tables names
 	public static final String TABLE_EXERCISES = "exercises";
@@ -59,6 +59,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_DURATION = "workout_duration";
 	public static final String COLUMN_WEIGHT = "workout_weight";
 	public static final String COLUMN_WORKOUT_COMMENT = "workout_comment";
+	public static final String COLUMN_WORKOUT_STATE = "workout_state";
 
 	//Fields for table Performed Exercises
 	public static final String COLUMN_WORKOUT_ID = "workout_id";
@@ -85,6 +86,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_DATE + " long not null, "
 			+ COLUMN_WEIGHT + " float, "
 			+ COLUMN_DURATION + " integer, "
+			+ COLUMN_WORKOUT_STATE + " integer, "
 			+ COLUMN_WORKOUT_COMMENT + " text);";
 
 	//TODO: Delete on cascade

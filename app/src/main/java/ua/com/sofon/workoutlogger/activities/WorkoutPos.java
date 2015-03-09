@@ -31,17 +31,17 @@ public class WorkoutPos extends ActionBarActivity {
 		txtExeName = (EditText) findViewById(R.id.workout_pos_txt_name);
 		txtDate = (EditText) findViewById(R.id.workout_pos_txt_date);
 		txtWeight = (EditText) findViewById(R.id.workout_pos_txt_weight);
-		txtComment = (EditText) findViewById(R.id.workout_pos_txt_comment);
+//		txtComment = (EditText) findViewById(R.id.workout_pos_txt_comment);
 		exeList = (ListView) findViewById(R.id.workout_pos_exe_list);
 
-		List<Exercise> exercises = new ArrayList<>();
-		adapter = new ExercisesListAdapter(this, exercises);
-		exeList.setAdapter(adapter);
 		TextView listHeader = new TextView(this);
 		listHeader.setText("Exercises:");
 		listHeader.setGravity(Gravity.CENTER);
 		listHeader.setPadding(16,16,16,16);
 		exeList.addHeaderView(listHeader);
+		List<Exercise> exercises = new ArrayList<>();
+		adapter = new ExercisesListAdapter(this, exercises);
+		exeList.setAdapter(adapter);
 
 		Button btnAddExe = (Button) findViewById(R.id.workout_pos_btn_add_exe);
 		btnAddExe.setOnClickListener(new View.OnClickListener() {
@@ -53,20 +53,21 @@ public class WorkoutPos extends ActionBarActivity {
 			}
 		});
 
-		intent = new Intent();
-		if (getIntent().getAction() != null
-				&& getIntent().getAction().equals(ACTION_EDIT)) {
-			Bundle extras = getIntent().getExtras();
-			if (extras.containsKey(WorkoutBase.EXTRAS_KEY_ITEM_POSITION)) {
-				intent.putExtra(WorkoutBase.EXTRAS_KEY_ITEM_POSITION,
-						extras.getInt(WorkoutBase.EXTRAS_KEY_ITEM_POSITION));
-			}
-			if (extras.containsKey(WorkoutBase.EXTRAS_KEY_WORKOUT)) {
-				Workout workout = (Workout)extras.getSerializable(WorkoutBase.EXTRAS_KEY_WORKOUT);
-				txtExeName.setText(workout.getName());
-				txtDate.setText(workout.getDateStr());
-				txtWeight.setText(String.valueOf(workout.getWeight()));
-				txtComment.setText(workout.getComment());
+		if (getIntent().getAction() != null) {
+			action = getIntent().getAction();
+		}
+
+		if (action.equals(ACTION_EDIT)) {
+			if (getIntent().hasExtra(WorkoutBase.EXTRAS_KEY_WORKOUT)) {
+				editingWorkout = (Workout)getIntent()
+						.getSerializableExtra(WorkoutBase.EXTRAS_KEY_WORKOUT);
+				txtExeName.setText(editingWorkout.getName());
+				txtDate.setText(editingWorkout.getDateStr());
+				txtWeight.setText(String.valueOf(editingWorkout.getWeight()));
+
+				adapter.addItems(editingWorkout.getExerciseList());
+				adapter.notifyDataSetChanged();
+//				txtComment.setText(workout.getComment());
 			}
 		} else {
 //			TODO: Make normal date for other locations
@@ -96,7 +97,11 @@ public class WorkoutPos extends ActionBarActivity {
 			case R.id.action_accept:
 				if (txtDate.getText().length() > 0) {
 					Intent intent = new Intent();
-					intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, makeWorkout());
+					if (action.equals(ACTION_ADD)) {
+						intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, makeWorkout());
+					} else if (action.equals(ACTION_EDIT)) {
+						intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, updateWorkout(editingWorkout));
+					}
 					setResult(RESULT_OK, intent);
 					finish();
 				} else {
@@ -134,7 +139,37 @@ public class WorkoutPos extends ActionBarActivity {
 		} catch (NumberFormatException e) {
 			Log.e(LOG_TAG, "", e);
 		}
-		workout.setComment(txtComment.getText().toString());
+		workout.setComment(txtExeName.getText().toString());
+		workout.setExerciseList(adapter.getExercises());
+		return workout;
+	}
+
+	/**
+	 * Update workout data from layout fields data.
+	 * @param workout Workout to update with new data.
+	 * @return Workout.
+	 */
+	private Workout updateWorkout(Workout workout) {
+		workout.setName(txtExeName.getText().toString());
+		try {
+			String dateStr = txtDate.getText().toString();
+			if (!dateStr.isEmpty()) {
+				Date date = Workout.dateFormat.parse(dateStr);
+				workout.setDate(date);
+			}
+		} catch (ParseException e) {
+			Log.e(LOG_TAG, "", e);
+		}
+		try {
+			String weightStr = txtWeight.getText().toString();
+			if (!weightStr.isEmpty()) {
+				float weight = Float.parseFloat(weightStr);
+				workout.setWeight(weight);
+			}
+		} catch (NumberFormatException e) {
+			Log.e(LOG_TAG, "", e);
+		}
+		workout.setComment(txtExeName.getText().toString());
 		workout.setExerciseList(adapter.getExercises());
 		return workout;
 	}
@@ -146,7 +181,6 @@ public class WorkoutPos extends ActionBarActivity {
 			switch (requestCode) {
 				case REQUEST_CODE_ADD:
 					if (data.hasExtra(ExerBase.EXTRAS_KEY_EXERCISE)) {
-						Log.v(LOG_TAG, "Add item to exeList");
 						adapter.addItem((Exercise)data.getSerializableExtra(ExerBase.EXTRAS_KEY_EXERCISE));
 						adapter.notifyDataSetChanged();
 					}
@@ -169,6 +203,9 @@ public class WorkoutPos extends ActionBarActivity {
 	}
 
 
+	/** Action type by default. */
+	public static final String ACTION_DEFAULT = "action_default";
+
 	/** Action type - Add */
 	public static final String ACTION_ADD = "add_exercise";
 
@@ -178,15 +215,20 @@ public class WorkoutPos extends ActionBarActivity {
 	private static final int REQUEST_CODE_ADD = 1;
 	private static final int REQUEST_CODE_REPLACE = 2;
 
+	/** Action type. */
+	private String action = ACTION_DEFAULT;
+
+	private Workout editingWorkout;
+
 	private EditText txtExeName;
 	private EditText txtDate;
 	private EditText txtWeight;
-	private EditText txtComment;
+//	private EditText txtComment;
 	private ListView exeList;
 	private int selectedItemPos = -1;
 
-	/** Intent to return {@link ua.com.sofon.workoutlogger.activities.WorkoutBase} */
-	private Intent intent;
+//	/** Intent to return {@link ua.com.sofon.workoutlogger.activities.WorkoutBase} */
+//	private Intent intent;
 
 	private ExercisesListAdapter adapter;
 
@@ -218,11 +260,18 @@ public class WorkoutPos extends ActionBarActivity {
 		}
 
 		/**
+		 * Add new Exercises to adapter.
+		 * @param exercises Exercise.
+		 */
+		public void addItems(List<Exercise> exercises) {
+			exerciseList.addAll(exercises);
+		}
+
+		/**
 		 * Add new Exercise to adapter.
 		 * @param exe Exercise.
 		 */
 		public void insertItem(Exercise exe, int position) {
-			Log.v(LOG_TAG, "Insert item pos = " + position);
 			exerciseList.add(position, exe);
 		}
 
@@ -272,7 +321,6 @@ public class WorkoutPos extends ActionBarActivity {
 			itemMenu.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.v(LOG_TAG, "Show item menu pos = " + position);
 					showPopupMenu(v, position);
 				}
 			});

@@ -1,5 +1,7 @@
 package ua.com.sofon.workoutlogger;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,17 +21,19 @@ public class Workout implements Serializable {
 		this.date = new Date();
 		this.weight = 0;
 		this.duration = 0;
+		this.state = STATE_DEFAULT;
 		this.comment = "";
 		this.exerciseList = new ArrayList<>();
 	}
 
 	public Workout(long id, String name, Date date, int weight, int duration,
-						String comment, List<Exercise> exerciseList) {
+						String comment, int state, List<Exercise> exerciseList) {
 		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.weight = weight;
 		this.duration = duration;
+		this.state = state;
 		this.comment = comment;
 		this.exerciseList = exerciseList;
 	}
@@ -63,7 +67,7 @@ public class Workout implements Serializable {
 	}
 
 	public String getDateStr() {
-		return dateFormat.format(new Date());
+		return dateFormat.format(date);
 	}
 
 	public void setDate(Date date) {
@@ -94,9 +98,25 @@ public class Workout implements Serializable {
 		this.comment = comment;
 	}
 
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
 	public List<Exercise> getExerciseList() {
 		return exerciseList;
 	}
+
+//	public List<Long> getPerformedExeIDs() {
+//		return performedExeIDs;
+//	}
+//
+//	public void setPerformedExeIDs(List<Long> performedExeIDs) {
+//		this.performedExeIDs = performedExeIDs;
+//	}
 
 	public void setExerciseList(List<Exercise> exerciseList) {
 		this.exerciseList = exerciseList;
@@ -109,11 +129,18 @@ public class Workout implements Serializable {
 	/** Date format to show in date field. */
 	public static final SimpleDateFormat dateFormat =
 			new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+	public static final int STATE_DEFAULT = 0;
+	public static final int STATE_ACTIVE = 1;
+	public static final int STATE_DONE = 2;
+
 	private long id = NO_ID;
 	private String name;
 	private Date date;
 	private float weight;
 	private int duration;
 	private String comment;
+	private int state = STATE_DEFAULT;
+//	private List<Long> performedExeIDs;
 	private List<Exercise> exerciseList;
 }

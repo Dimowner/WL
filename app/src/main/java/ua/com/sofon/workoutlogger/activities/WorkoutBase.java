@@ -55,6 +55,7 @@ public class WorkoutBase extends ActionBarActivity {
 				return true;
 			case R.id.action_add:
 				Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
+				intent.setAction(WorkoutPos.ACTION_ADD);
 				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
 				return true;
 			default:
@@ -66,24 +67,30 @@ public class WorkoutBase extends ActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-				case REQUEST_ADD_WORKOUT:
-					Workout w = (Workout)data.getSerializableExtra(EXTRAS_KEY_WORKOUT);
-					listAdapter.addItem(
-							workoutDataSource.createWorkout(
-									w.getName(),
-									w.getDate(),
-									w.getWeight(),
-									w.getDuration(),
-									w.getComment(),
-									w.getExerciseList()
-							)
-					);
-					listAdapter.notifyDataSetChanged();
-					break;
-				case REQUEST_EDIT_WORKOUT:
-					Toast.makeText(this, "Update list item", Toast.LENGTH_LONG).show();
-					break;
+			if (data.hasExtra(EXTRAS_KEY_WORKOUT)) {
+				Workout w = (Workout) data.getSerializableExtra(EXTRAS_KEY_WORKOUT);
+				switch (requestCode) {
+					case REQUEST_ADD_WORKOUT:
+						listAdapter.addItem(
+								workoutDataSource.createWorkout(
+										w.getName(),
+										w.getDate(),
+										w.getWeight(),
+										w.getDuration(),
+										w.getComment(),
+										w.getState(),
+										w.getExerciseList()
+								)
+						);
+						break;
+					case REQUEST_EDIT_WORKOUT:
+						//Update item in DB and in listAdaptper.
+						listAdapter.updateEditingItem(w);
+						listAdapter.resetEditItemPos();
+						workoutDataSource.updateWorkout(w);
+						break;
+				}
+				listAdapter.notifyDataSetChanged();
 			}
 		}
 	}
@@ -92,7 +99,7 @@ public class WorkoutBase extends ActionBarActivity {
 	private final int REQUEST_ADD_WORKOUT = 101;
 	private final int REQUEST_EDIT_WORKOUT = 102;
 
-	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
+//	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
 	public static final String EXTRAS_KEY_WORKOUT = "workout";
 	private ListView mListView;
 	private WorkoutListAdapter listAdapter;
@@ -115,6 +122,17 @@ public class WorkoutBase extends ActionBarActivity {
 		public WorkoutListAdapter(Context context, List<Workout> workoutList) {
 			this.context = context;
 			this.workoutList = workoutList;
+		}
+
+		public void resetEditItemPos () {
+			editItemPos = NOT_ON_EDITION;
+		}
+
+		public void updateEditingItem(Workout workout) {
+			if (editItemPos != NOT_ON_EDITION) {
+				workoutList.remove(editItemPos);
+				workoutList.add(editItemPos, workout);
+			}
 		}
 
 		/**
@@ -153,7 +171,7 @@ public class WorkoutBase extends ActionBarActivity {
 
 			Workout workout = workoutList.get(position);
 			name.setText(workout.getName());
-			content.setText("Date:" + workout.getDateStr() + " weight:" + workout.getWeight());
+			content.setText("Date: " + workout.getDateStr() + " weight: " + workout.getWeight());
 
 			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.btn_item_menu);
 			itemMenu.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +202,8 @@ public class WorkoutBase extends ActionBarActivity {
 						case R.id.action_edit:
 							Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
 							intent.setAction(ExerPos.ACTION_EDIT);
-							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
+							editItemPos = position;
+//							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
 							intent.putExtra(EXTRAS_KEY_WORKOUT, w);
 							startActivityForResult(intent, REQUEST_EDIT_WORKOUT);
 							return true;
@@ -213,6 +232,13 @@ public class WorkoutBase extends ActionBarActivity {
 			});
 			popupMenu.show();
 		}
+
+
+		/** No items on edit. */
+		private static final int NOT_ON_EDITION = -1;
+
+		/** Position of editing item. */
+		private int editItemPos = NOT_ON_EDITION;
 
 		/** Application context. */
 		private Context context;

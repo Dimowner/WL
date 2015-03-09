@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Exercise implements Serializable {
 
 	public Exercise() {
-		this.id = 0;
+		this.id = NO_ID;
 		this.name = null;
 		this.description = null;
 	}
@@ -18,6 +18,14 @@ public class Exercise implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+	}
+
+	/**
+	 * Check that Exercise has ID.
+	 * @return Return true if ID not equals NO_ID;
+	 */
+	public boolean hasID() {
+		return  (id != NO_ID);
 	}
 
 	public long getId() {
@@ -45,6 +53,8 @@ public class Exercise implements Serializable {
 	}
 
 	private static final long serialVersionUID = 4018750221300108624L;
+
+	public static final long NO_ID = -1;
 	private long id;
 	private String name;
 	private String description;

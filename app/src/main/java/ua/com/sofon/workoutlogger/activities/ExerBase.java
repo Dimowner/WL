@@ -73,32 +73,26 @@ public class ExerBase extends ActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-				case REQUEST_ADD_EXERCISE:
-					//Add new item to DB and to listAdaptper.
-					listAdapter.addItem(
-							workoutDataSource.createExersice(
-									data.getExtras().getString(EXTRAS_KEY_NAME),
-									data.getExtras().getString(EXTRAS_KEY_DESCRIPTION)
-							)
-					);
-					listAdapter.notifyDataSetChanged();
-					break;
-				case REQUEST_EDIT_EXERCISE:
-					//Update item in DB and in listAdaptper.
-					Bundle extras = data.getExtras();
-					String name = extras.getString(EXTRAS_KEY_NAME);
-					String description = extras.getString(EXTRAS_KEY_DESCRIPTION);
-					workoutDataSource.updateExercise(
-							extras.getLong(EXTRAS_KEY_ID),
-							name,
-							description
-					);
-					Exercise e =  (Exercise) listAdapter.getItem(extras.getInt(EXTRAS_KEY_ITEM_POSITION));
-					e.setName(name);
-					e.setDescription(description);
-					listAdapter.notifyDataSetChanged();
-					break;
+			if (data.hasExtra(EXTRAS_KEY_EXERCISE)) {
+				Exercise e = (Exercise) data.getSerializableExtra(EXTRAS_KEY_EXERCISE);
+				switch (requestCode) {
+					case REQUEST_ADD_EXERCISE:
+						//Add new item to DB and to listAdaptper.
+						listAdapter.addItem(
+								workoutDataSource.createExersice(
+										e.getName(),
+										e.getDescription()
+								)
+						);
+						break;
+					case REQUEST_EDIT_EXERCISE:
+						//Update item in DB and in listAdaptper.
+						listAdapter.updateEditingItem(e);
+						listAdapter.resetEditItemPos();
+						workoutDataSource.updateExercise(e);
+						break;
+				}
+				listAdapter.notifyDataSetChanged();
 			}
 		}
 	}
@@ -114,11 +108,6 @@ public class ExerBase extends ActionBarActivity {
 	private final int REQUEST_EDIT_EXERCISE = 102;
 	public static final String ACTION_SELECT = "action_select";
 	public static final String ACTION_DEFAULT = "action_default";
-
-	public static final String EXTRAS_KEY_ID = "exercise_id";
-	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
-	public static final String EXTRAS_KEY_NAME = "exercise_name";
-	public static final String EXTRAS_KEY_DESCRIPTION = "exercise_description";
 	public static final String EXTRAS_KEY_EXERCISE = "exercise";
 
 	private String action = ACTION_DEFAULT;
@@ -159,6 +148,17 @@ public class ExerBase extends ActionBarActivity {
 		 */
 		public void removeItem(Exercise exe) {
 			exerciseList.remove(exe);
+		}
+
+		public void resetEditItemPos () {
+			editItemPos = NOT_ON_EDITION;
+		}
+
+		public void updateEditingItem(Exercise exe) {
+			if (editItemPos != NOT_ON_EDITION) {
+				exerciseList.remove(editItemPos);
+				exerciseList.add(editItemPos, exe);
+			}
 		}
 
 		@Override
@@ -236,10 +236,12 @@ public class ExerBase extends ActionBarActivity {
 							Log.v(LOG_TAG, "name = " + e.getName() + " desc = " + e.getDescription() + " id = " + e.getId());
 							Intent intent = new Intent(ExerBase.this, ExerPos.class);
 							intent.setAction(ExerPos.ACTION_EDIT);
-							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
-							intent.putExtra(EXTRAS_KEY_ID, e.getId());
-							intent.putExtra(EXTRAS_KEY_NAME, e.getName());
-							intent.putExtra(EXTRAS_KEY_DESCRIPTION, e.getDescription());
+							editItemPos = position;
+//							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
+//							intent.putExtra(EXTRAS_KEY_ID, e.getId());
+//							intent.putExtra(EXTRAS_KEY_NAME, e.getName());
+//							intent.putExtra(EXTRAS_KEY_DESCRIPTION, e.getDescription());
+							intent.putExtra(EXTRAS_KEY_EXERCISE, e);
 							startActivityForResult(intent, REQUEST_EDIT_EXERCISE);
 
 							return true;
@@ -268,6 +270,13 @@ public class ExerBase extends ActionBarActivity {
 			});
 			popupMenu.show();
 		}
+
+
+		/** No items on edit. */
+		private static final int NOT_ON_EDITION = -1;
+
+		/** Position of editing item. */
+		private int editItemPos = NOT_ON_EDITION;
 
 		/** Application context. */
 		private Context context;

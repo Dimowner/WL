@@ -6,6 +6,8 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
+import ua.com.sofon.workoutlogger.Exercise;
 import ua.com.sofon.workoutlogger.R;
 
 /**
@@ -26,23 +28,16 @@ public class ExerPos extends ActionBarActivity {
 		exeName = (EditText) findViewById(R.id.txt_exercise_name);
 		exeDescription = (EditText) findViewById(R.id.txt_exercise_description);
 
-		intent = new Intent();
-		if (getIntent().getAction() != null
-				&& getIntent().getAction().equals(ACTION_EDIT)) {
-			Bundle extras = getIntent().getExtras();
-			if (extras.containsKey(ExerBase.EXTRAS_KEY_ITEM_POSITION)) {
-				intent.putExtra(ExerBase.EXTRAS_KEY_ITEM_POSITION,
-						extras.getInt(ExerBase.EXTRAS_KEY_ITEM_POSITION));
-			}
-			if (extras.containsKey(ExerBase.EXTRAS_KEY_ID)) {
-				intent.putExtra(ExerBase.EXTRAS_KEY_ID,
-						extras.getLong(ExerBase.EXTRAS_KEY_ID));
-			}
-			if (extras.containsKey(ExerBase.EXTRAS_KEY_NAME)) {
-				exeName.setText(extras.getString(ExerBase.EXTRAS_KEY_NAME));
-			}
-			if (extras.containsKey(ExerBase.EXTRAS_KEY_DESCRIPTION)) {
-				exeDescription.setText(extras.getString(ExerBase.EXTRAS_KEY_DESCRIPTION));
+		if (getIntent().getAction() != null) {
+			action = getIntent().getAction();
+		}
+
+		Bundle extras = getIntent().getExtras();
+		if (action.equals(ACTION_EDIT)) {
+			if (extras.containsKey(ExerBase.EXTRAS_KEY_EXERCISE)) {
+				editingExercise = (Exercise) extras.getSerializable(ExerBase.EXTRAS_KEY_EXERCISE);
+				exeName.setText(editingExercise.getName());
+				exeDescription.setText(editingExercise.getDescription());
 			}
 		}
 	}
@@ -62,10 +57,17 @@ public class ExerPos extends ActionBarActivity {
 				return true;
 			case R.id.action_accept:
 				if (exeName.getText().length() > 0) {
-					intent.putExtra(ExerBase.EXTRAS_KEY_NAME,
-							exeName.getText().toString());
-					intent.putExtra(ExerBase.EXTRAS_KEY_DESCRIPTION,
-							exeDescription.getText().toString());
+					Intent intent = new Intent();
+					if (action.equals(ACTION_ADD)) {
+						Exercise e = new Exercise();
+						e.setName(exeName.getText().toString());
+						e.setDescription(exeDescription.getText().toString());
+						intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, e);
+					} else if (action.equals(ACTION_EDIT)) {
+						editingExercise.setName(exeName.getText().toString());
+						editingExercise.setDescription(exeDescription.getText().toString());
+						intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, editingExercise);
+					}
 					setResult(RESULT_OK, intent);
 					finish();
 				} else {
@@ -79,14 +81,20 @@ public class ExerPos extends ActionBarActivity {
 	}
 
 
+	/** Action type by default. */
+	public static final String ACTION_DEFAULT = "action_default";
+
 	/** Action type - Add */
 	public static final String ACTION_ADD = "add_exercise";
 
 	/** Action type - Edit */
 	public static final String ACTION_EDIT = "edit_exercise";
 
-	/** Intent to return {@link ua.com.sofon.workoutlogger.activities.ExerBase} */
-	private Intent intent;
+	/** Action type. */
+	private String action = ACTION_DEFAULT;
+
+	/** Exercise to edit. */
+	private Exercise editingExercise;
 
 	/** Text field contains exercise name. */
 	private EditText exeName;
