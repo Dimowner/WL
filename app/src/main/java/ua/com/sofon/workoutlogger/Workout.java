@@ -122,6 +122,23 @@ public class Workout implements Serializable {
 		this.exerciseList = exerciseList;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Workout[ id: '").append(id).append("', ");
+		sb.append("name: '").append(name).append("', ");
+		sb.append("date: '").append(getDateStr()).append("', ");
+		sb.append("weight: '").append(weight).append("', ");
+		sb.append("duration: '").append(duration).append("', ");
+		sb.append("comment: '").append(comment).append("', ");
+		sb.append("state: '").append(state).append("' \n");
+		for (Exercise e : exerciseList) {
+			sb.append(e.toString()).append(", ");
+		}
+		sb.append("];");
+		return sb.toString();
+	}
+
 	private static final long serialVersionUID = 5085350331476735410L;
 
 	public static final int NO_ID = -1;

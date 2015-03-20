@@ -35,7 +35,7 @@ public class WorkoutPos extends ActionBarActivity {
 		exeList = (ListView) findViewById(R.id.workout_pos_exe_list);
 
 		TextView listHeader = new TextView(this);
-		listHeader.setText("Exercises:");
+		listHeader.setText(R.string.workoutpos_exercises);
 		listHeader.setGravity(Gravity.CENTER);
 		listHeader.setPadding(16,16,16,16);
 		exeList.addHeaderView(listHeader);
@@ -57,27 +57,36 @@ public class WorkoutPos extends ActionBarActivity {
 			action = getIntent().getAction();
 		}
 
-		if (action.equals(ACTION_EDIT)) {
-			if (getIntent().hasExtra(WorkoutBase.EXTRAS_KEY_WORKOUT)) {
-				editingWorkout = (Workout)getIntent()
-						.getSerializableExtra(WorkoutBase.EXTRAS_KEY_WORKOUT);
-				txtExeName.setText(editingWorkout.getName());
-				txtDate.setText(editingWorkout.getDateStr());
-				txtWeight.setText(String.valueOf(editingWorkout.getWeight()));
+		switch (action) {
+			case ACTION_VIEW:
+				txtExeName.setEnabled(false);
+				txtDate.setEnabled(false);
+				txtWeight.setEnabled(false);
+				btnAddExe.setVisibility(View.GONE);
+			case ACTION_EDIT:
+				if (getIntent().hasExtra(WorkoutBase.EXTRAS_KEY_WORKOUT)) {
+					editingWorkout = (Workout)getIntent()
+							.getSerializableExtra(WorkoutBase.EXTRAS_KEY_WORKOUT);
+					txtExeName.setText(editingWorkout.getName());
+					txtDate.setText(editingWorkout.getDateStr());
+					txtWeight.setText(String.valueOf(editingWorkout.getWeight()));
 
-				adapter.addItems(editingWorkout.getExerciseList());
-				adapter.notifyDataSetChanged();
+					adapter.addItems(editingWorkout.getExerciseList());
+					adapter.notifyDataSetChanged();
 //				txtComment.setText(workout.getComment());
-			}
-		} else {
-//			TODO: Make normal date for other locations
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-//			DateFormat df = DateFormat.getDateInstance();
-//			df.setTimeZone(TimeZone.);
-//			String curDateStr = sdf.format(new Date());
-			String curDateStr = Workout.dateFormat.format(new Date());
-			txtDate.setText(curDateStr);
-			txtExeName.setText("Workout");
+				}
+				break;
+			case ACTION_ADD:
+			case ACTION_DEFAULT:
+				default:
+//					TODO: Make normal date for other locations
+//					SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+//					DateFormat df = DateFormat.getDateInstance();
+//					df.setTimeZone(TimeZone.);
+//					String curDateStr = sdf.format(new Date());
+					String curDateStr = Workout.dateFormat.format(new Date());
+					txtDate.setText(curDateStr);
+					txtExeName.setText("Workout");
 		}
 	}
 
@@ -85,6 +94,17 @@ public class WorkoutPos extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_workout_pos, menu);
+		switch (action) {
+			case ACTION_VIEW:
+				menu.findItem(R.id.action_accept).setVisible(false);
+				break;
+			case ACTION_EDIT:
+			case ACTION_ADD:
+			case ACTION_DEFAULT:
+			default:
+				menu.findItem(R.id.action_edit).setVisible(false);
+				menu.findItem(R.id.action_delete).setVisible(false);
+		}
 		return true;
 	}
 
@@ -106,6 +126,30 @@ public class WorkoutPos extends ActionBarActivity {
 					finish();
 				} else {
 					Toast.makeText(this, "Field date must be filled!", Toast.LENGTH_LONG).show();
+				}
+				return true;
+			case R.id.action_edit:
+				//TODO: make WorkoutPos editable.
+				return true;
+			case R.id.action_delete:
+				if (action.equals(ACTION_VIEW)) {
+					Util.showWarningDialog(WorkoutPos.this, "Delete workout?",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									Intent intent = new Intent();
+									intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, editingWorkout);
+									setResult(RESULT_OK, intent);
+									finish();
+								}
+							},
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.cancel();
+								}
+							}
+					);
 				}
 				return true;
 			default:
@@ -207,13 +251,17 @@ public class WorkoutPos extends ActionBarActivity {
 	public static final String ACTION_DEFAULT = "action_default";
 
 	/** Action type - Add */
-	public static final String ACTION_ADD = "add_exercise";
+	public static final String ACTION_ADD = "add_workout";
+
+	/** Action type - View */
+	public static final String ACTION_VIEW = "view_workout";
 
 	/** Action type - Edit */
-	public static final String ACTION_EDIT = "edit_exercise";
+	public static final String ACTION_EDIT = "edit_workout";
 
 	private static final int REQUEST_CODE_ADD = 1;
-	private static final int REQUEST_CODE_REPLACE = 2;
+	private static final int REQUEST_CODE_VIEW = 2;
+	private static final int REQUEST_CODE_REPLACE = 3;
 
 	/** Action type. */
 	private String action = ACTION_DEFAULT;
@@ -307,24 +355,39 @@ public class WorkoutPos extends ActionBarActivity {
 			View view = convertView;
 			if (view == null) {
 				LayoutInflater inflater = getLayoutInflater();
-				view = inflater.inflate(R.layout.list_item, parent, false);
+				view = inflater.inflate(R.layout.workout_pos_list_item, parent, false);
 			}
 
-			TextView name = (TextView) view.findViewById(R.id.list_item_title);
-			TextView description = (TextView) view.findViewById(R.id.list_item_content);
+			TextView number = (TextView) view.findViewById(R.id.workout_pos_list_item_number);
+			TextView content = (TextView) view.findViewById(R.id.workout_pos_list_item_content);
 
 			Exercise exe = exerciseList.get(position);
-			name.setText(exe.getName());
-			description.setText(exe.getDescription());
+			number.setText((position+1) + ") ");
+			content.setText(exe.getName());
 
-			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.btn_item_menu);
-			itemMenu.setOnClickListener(new View.OnClickListener() {
+			LinearLayout itemPnl = (LinearLayout) view.findViewById(R.id.workout_pos_list_item_pnl);
+			itemPnl.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					showPopupMenu(v, position);
+					Intent intent = new Intent(context, ExerPos.class);
+					intent.setAction(ExerPos.ACTION_VIEW);
+					intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, exerciseList.get(position));
+					selectedItemPos = position;
+					startActivityForResult(intent, REQUEST_CODE_VIEW);
 				}
 			});
 
+			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.workout_pos_list_item_menu);
+			if (action.equals(ACTION_VIEW)) {
+				itemMenu.setVisibility(View.GONE);
+			} else {
+				itemMenu.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						showPopupMenu(v, position);
+					}
+				});
+			}
 			return view;
 		}
 

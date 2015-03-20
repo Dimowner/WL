@@ -9,12 +9,4 @@
 			android:orderInCategory="100"
 			android:title="@string/menu_item_exer_add"
 			app:showAsAction="ifRoom" />
-
-	<!--<item-->
-			<!--android:id="@+id/action_cancel"-->
-			<!--android:icon="@mipmap/ic_close_grey600_24dp"-->
-			<!--android:orderInCategory="100"-->
-			<!--android:title="Cancel"-->
-			<!--app:showAsAction="ifRoom" />-->
-
 </menu>

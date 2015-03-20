@@ -13,11 +13,12 @@
 	<string name="exer_pos_name">Name</string>
 	<string name="exer_pos_description">Description</string>
 
-	<string name="workoutpos_name">Workout name</string>
+	<string name="workoutpos_name">Name</string>
 	<string name="workoutpos_date">Date</string>
 	<string name="workoutpos_weight">Weight</string>
 	<string name="workoutpos_comment">Comment</string>
 	<string name="workoutpos_add_exercise">Add exercise</string>
+	<string name="workoutpos_exercises">Exercises:</string>
 
 	<string name="list_item_cont_desc">Item menu</string>
 

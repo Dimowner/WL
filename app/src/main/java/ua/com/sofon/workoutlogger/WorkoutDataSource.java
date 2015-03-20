@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * Created on 21.02.2015.
+ * Class to communicate with database.
  * @author Dimowner
  */
 public class WorkoutDataSource {

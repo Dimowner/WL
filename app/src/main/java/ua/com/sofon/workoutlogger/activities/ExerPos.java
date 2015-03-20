@@ -6,7 +6,6 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-
 import ua.com.sofon.workoutlogger.Exercise;
 import ua.com.sofon.workoutlogger.R;
 
@@ -33,12 +32,20 @@ public class ExerPos extends ActionBarActivity {
 		}
 
 		Bundle extras = getIntent().getExtras();
-		if (action.equals(ACTION_EDIT)) {
-			if (extras.containsKey(ExerBase.EXTRAS_KEY_EXERCISE)) {
-				editingExercise = (Exercise) extras.getSerializable(ExerBase.EXTRAS_KEY_EXERCISE);
-				exeName.setText(editingExercise.getName());
-				exeDescription.setText(editingExercise.getDescription());
-			}
+		switch (action) {
+			case ACTION_VIEW:
+				exeName.setEnabled(false);
+				exeDescription.setEnabled(false);
+			case ACTION_EDIT:
+				if (extras.containsKey(ExerBase.EXTRAS_KEY_EXERCISE)) {
+					editingExercise = (Exercise) extras.getSerializable(ExerBase.EXTRAS_KEY_EXERCISE);
+					exeName.setText(editingExercise.getName());
+					exeDescription.setText(editingExercise.getDescription());
+				}
+				break;
+			case ACTION_ADD:
+			case ACTION_DEFAULT:
+			default:
 		}
 	}
 
@@ -46,6 +53,9 @@ public class ExerPos extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_exer_pos, menu);
+		if (action.equals(ACTION_VIEW)) {
+			menu.findItem(R.id.action_accept).setVisible(false);
+		}
 		return true;
 	}
 
@@ -83,6 +93,9 @@ public class ExerPos extends ActionBarActivity {
 
 	/** Action type by default. */
 	public static final String ACTION_DEFAULT = "action_default";
+
+	/** Action type - View */
+	public static final String ACTION_VIEW = "view_exercise";
 
 	/** Action type - Add */
 	public static final String ACTION_ADD = "add_exercise";

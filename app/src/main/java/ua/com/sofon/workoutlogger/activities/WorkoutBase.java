@@ -84,10 +84,21 @@ public class WorkoutBase extends ActionBarActivity {
 						);
 						break;
 					case REQUEST_EDIT_WORKOUT:
-						//Update item in DB and in listAdaptper.
+						//Update item in DB and in listAdaptper.);
 						listAdapter.updateEditingItem(w);
 						listAdapter.resetEditItemPos();
 						workoutDataSource.updateWorkout(w);
+						break;
+					case REQUEST_VIEW_WORKOUT:
+						//Probably in Posform VIEW_MODE RESULT_OK only when delete workout requested.
+						if (listAdapter.removeItem(w.getId())) {
+							workoutDataSource.deleteWorkout(w);
+							Toast.makeText(this, "Workout was deleted successfully.",
+									Toast.LENGTH_LONG).show();
+						} else {
+							Log.e(LOG_TAG, "Unsuccessful deletion");
+						}
+						listAdapter.notifyDataSetChanged();
 						break;
 				}
 				listAdapter.notifyDataSetChanged();
@@ -97,7 +108,8 @@ public class WorkoutBase extends ActionBarActivity {
 
 
 	private final int REQUEST_ADD_WORKOUT = 101;
-	private final int REQUEST_EDIT_WORKOUT = 102;
+	private final int REQUEST_VIEW_WORKOUT = 102;
+	private final int REQUEST_EDIT_WORKOUT = 103;
 
 //	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
 	public static final String EXTRAS_KEY_WORKOUT = "workout";
@@ -143,6 +155,25 @@ public class WorkoutBase extends ActionBarActivity {
 			workoutList.add(workout);
 		}
 
+//		/**
+//		 * Remove Workout from adapter.
+//		 * @param w Workout.
+//		 * @return Removing result.
+//		 */
+//		public boolean removeItem(Workout w) {
+//			return workoutList.remove(w);
+//		}
+
+		public boolean removeItem(long id) {
+			for (int i = workoutList.size() - 1; i >= 0; i--) {
+				if (workoutList.get(i).getId() == id) {
+					workoutList.remove(i);
+					return true;
+				}
+			}
+			return false;
+		}
+
 		@Override
 		public int getCount() {
 			return workoutList.size();
@@ -173,6 +204,18 @@ public class WorkoutBase extends ActionBarActivity {
 			name.setText(workout.getName());
 			content.setText("Date: " + workout.getDateStr() + " weight: " + workout.getWeight());
 
+			LinearLayout itemContent = (LinearLayout) view.findViewById(R.id.list_item_pnl);
+			itemContent.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
+					intent.setAction(WorkoutPos.ACTION_VIEW);
+					editItemPos = position;
+					intent.putExtra(EXTRAS_KEY_WORKOUT, workoutList.get(position));
+					startActivityForResult(intent, REQUEST_VIEW_WORKOUT);
+				}
+			});
+
 			ImageButton itemMenu = (ImageButton) view.findViewById(R.id.btn_item_menu);
 			itemMenu.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -201,7 +244,7 @@ public class WorkoutBase extends ActionBarActivity {
 					switch (item.getItemId()) {
 						case R.id.action_edit:
 							Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
-							intent.setAction(ExerPos.ACTION_EDIT);
+							intent.setAction(WorkoutPos.ACTION_EDIT);
 							editItemPos = position;
 //							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
 							intent.putExtra(EXTRAS_KEY_WORKOUT, w);

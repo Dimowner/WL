@@ -105,7 +105,8 @@ public class ExerBase extends ActionBarActivity {
 
 
 	private final int REQUEST_ADD_EXERCISE = 101;
-	private final int REQUEST_EDIT_EXERCISE = 102;
+	private final int REQUEST_VIEW_EXERCISE = 102;
+	private final int REQUEST_EDIT_EXERCISE = 103;
 	public static final String ACTION_SELECT = "action_select";
 	public static final String ACTION_DEFAULT = "action_default";
 	public static final String EXTRAS_KEY_EXERCISE = "exercise";
@@ -145,9 +146,10 @@ public class ExerBase extends ActionBarActivity {
 		/**
 		 * Remove Exercise from adapter.
 		 * @param exe Exercise.
+		 * @return Removing result.
 		 */
-		public void removeItem(Exercise exe) {
-			exerciseList.remove(exe);
+		public boolean removeItem(Exercise exe) {
+			return exerciseList.remove(exe);
 		}
 
 		public void resetEditItemPos () {

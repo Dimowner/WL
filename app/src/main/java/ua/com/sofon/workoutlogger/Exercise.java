@@ -52,6 +52,13 @@ public class Exercise implements Serializable {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "Exercise:[ id = '" + id + "', "
+				+ "name = '" + name + "', "
+				+ "description = '" + description + "']";
+	}
+
 	private static final long serialVersionUID = 4018750221300108624L;
 
 	public static final long NO_ID = -1;
