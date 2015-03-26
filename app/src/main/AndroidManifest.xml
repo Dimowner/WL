@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ua.com.sofon.workoutlogger" >
+<manifest
+		package="ua.com.sofon.workoutlogger"
+		xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_workout_logger1"
-        android:label="@string/app_name"
-        android:theme="@style/WorkOutTheme" >
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activities.ExerPos"
-            android:label="@string/title_activity_exer_pos" >
-        </activity>
-        <activity
-            android:name=".activities.ExerBase"
-            android:label="@string/title_activity_exer_base" >
-        </activity>
-        <activity
-            android:name=".activities.WorkoutBase"
-            android:label="@string/title_activity_workout_base" >
-			  <intent-filter>
-				  <action android:name="android.intent.action.MAIN" />
+	<application
+			android:allowBackup="true"
+			android:icon="@mipmap/ic_workout_logger1"
+			android:label="@string/app_name"
+			android:theme="@style/WorkOutTheme">
+		<activity
+				android:name=".activities.MainActivity"
+				android:label="@string/app_name">
+		</activity>
+		<activity
+				android:name=".activities.BaseActivity"
+				android:label="@string/app_name">
+		</activity>
+		<activity
+				android:name=".activities.ExerPos"
+				android:label="@string/title_activity_exer_pos">
+		</activity>
+		<activity
+				android:name=".activities.ExerBase"
+				android:label="@string/title_activity_exer_base">
+		</activity>
+		<activity
+				android:name=".activities.WorkoutBase"
+				android:label="@string/title_activity_workout_base">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
-				  <category android:name="android.intent.category.LAUNCHER" />
-			  </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.WorkoutPos"
-            android:label="@string/title_activity_workout_pos" >
-        </activity>
-    </application>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity
+				android:name=".activities.WorkoutPos"
+				android:label="@string/title_activity_workout_pos">
+		</activity>
+	</application>
 
 </manifest>

@@ -6,37 +6,21 @@
 		tools:context="ua.com.sofon.workoutlogger.activities.ExerPos">
 
 	<android.support.v7.widget.Toolbar
-			android:id="@+id/add_exercise_toolbar"
+			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
 			android:background="?attr/colorPrimary"
 			android:minHeight="?attr/actionBarSize" />
 
-	<TextView
-			android:id="@+id/lbl_exercise_name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:padding="16dp"
-			android:layout_below="@+id/add_exercise_toolbar"
-			android:text="@string/exer_pos_name" />
-
 	<EditText
 			android:id="@+id/txt_exercise_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_below="@+id/lbl_exercise_name"
-			android:inputType="text" />
-
-	<TextView
-			android:id="@+id/lbl_exercise_description"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:padding="16dp"
-			android:layout_below="@+id/txt_exercise_name"
-			android:text="@string/exer_pos_description" />
+			android:layout_margin="16dp"
+			android:layout_below="@+id/toolbar"
+			android:inputType="text"
+			android:hint="@string/exer_pos_name"/>
 
 	<EditText
 			android:id="@+id/txt_exercise_description"
@@ -44,29 +28,8 @@
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="16dp"
 			android:layout_marginRight="16dp"
-			android:layout_below="@+id/lbl_exercise_description"
-			android:inputType="textMultiLine" />
+			android:layout_below="@+id/txt_exercise_name"
+			android:inputType="textMultiLine"
+			android:hint="@string/exer_pos_description"/>
 
-	<!--<LinearLayout-->
-			<!--android:id="@+id/ok_cancel_btns"-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:padding="16dp"-->
-			<!--android:layout_alignParentBottom="true"-->
-			<!--android:orientation="horizontal">-->
-
-		<!--<Button-->
-				<!--android:id="@+id/btn_ok"-->
-				<!--android:layout_width="0dp"-->
-				<!--android:layout_height="wrap_content"-->
-				<!--android:layout_weight="1"-->
-				<!--android:text="Add"/>-->
-
-		<!--<Button-->
-				<!--android:id="@+id/btn_cancel"-->
-				<!--android:layout_width="0dp"-->
-				<!--android:layout_height="wrap_content"-->
-				<!--android:layout_weight="1"-->
-				<!--android:text="Cancel"/>-->
-	<!--</LinearLayout>-->
 </RelativeLayout>

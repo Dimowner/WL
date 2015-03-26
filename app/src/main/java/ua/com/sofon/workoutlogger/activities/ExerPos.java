@@ -20,7 +20,7 @@ public class ExerPos extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exer_pos);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.add_exercise_toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

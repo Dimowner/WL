@@ -24,7 +24,7 @@ public class WorkoutPos extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.workout_pos);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.workout_pos_toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -34,11 +34,11 @@ public class WorkoutPos extends ActionBarActivity {
 //		txtComment = (EditText) findViewById(R.id.workout_pos_txt_comment);
 		exeList = (ListView) findViewById(R.id.workout_pos_exe_list);
 
-		TextView listHeader = new TextView(this);
-		listHeader.setText(R.string.workoutpos_exercises);
-		listHeader.setGravity(Gravity.CENTER);
-		listHeader.setPadding(16,16,16,16);
-		exeList.addHeaderView(listHeader);
+//		TextView listHeader = new TextView(this);
+//		listHeader.setText(R.string.workoutpos_exercises);
+//		listHeader.setGravity(Gravity.CENTER);
+//		listHeader.setPadding(16,16,16,16);
+//		exeList.addHeaderView(listHeader);
 		List<Exercise> exercises = new ArrayList<>();
 		adapter = new ExercisesListAdapter(this, exercises);
 		exeList.setAdapter(adapter);
@@ -84,9 +84,9 @@ public class WorkoutPos extends ActionBarActivity {
 //					DateFormat df = DateFormat.getDateInstance();
 //					df.setTimeZone(TimeZone.);
 //					String curDateStr = sdf.format(new Date());
-					String curDateStr = Workout.dateFormat.format(new Date());
-					txtDate.setText(curDateStr);
-					txtExeName.setText("Workout");
+//					String curDateStr = Workout.dateFormat.format(new Date());
+//					txtDate.setText(curDateStr);
+//					txtExeName.setText("Workout");
 		}
 	}
 
