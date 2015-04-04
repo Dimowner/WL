@@ -9,24 +9,9 @@
 			android:label="@string/app_name"
 			android:theme="@style/WorkOutTheme">
 		<activity
-				android:name=".activities.MainActivity"
+				android:name=".ui.MainActivity"
 				android:label="@string/app_name">
-		</activity>
-		<activity
-				android:name=".activities.BaseActivity"
-				android:label="@string/app_name">
-		</activity>
-		<activity
-				android:name=".activities.ExerPos"
-				android:label="@string/title_activity_exer_pos">
-		</activity>
-		<activity
-				android:name=".activities.ExerBase"
-				android:label="@string/title_activity_exer_base">
-		</activity>
-		<activity
-				android:name=".activities.WorkoutBase"
-				android:label="@string/title_activity_workout_base">
+
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
@@ -34,9 +19,30 @@
 			</intent-filter>
 		</activity>
 		<activity
-				android:name=".activities.WorkoutPos"
+				android:name=".ui.BaseActivity"
+				android:label="@string/app_name">
+		</activity>
+		<activity
+				android:name=".ui.EditExerciseActivity"
+				android:label="@string/title_activity_exer_pos">
+		</activity>
+		<activity
+				android:name=".ui.ExercisesActivity"
+				android:label="@string/title_activity_exer_base">
+		</activity>
+		<activity
+				android:name=".ui.WorkoutsActivity"
+				android:label="@string/title_activity_workout_base">
+
+		</activity>
+		<activity
+				android:name=".ui.EditWorkoutActivity"
 				android:label="@string/title_activity_workout_pos">
 		</activity>
+		<activity
+				android:name=".ui.SettingsActivity"
+				android:label="@string/activity_settings"
+				android:parentActivityName=".ui.MainActivity" />
 	</application>
 
 </manifest>

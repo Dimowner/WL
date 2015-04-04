@@ -1,4 +1,17 @@
 <resources>
+
+	<string name="datepicker_set_date">Set date</string>
+	<string name="datepicker_select">Select</string>
+	<string name="datepicker_clear">Clear</string>
+
+	<string name="timepicker_set_time">Set time</string>
+	<string name="timepicker_select">Select</string>
+	<string name="timepicker_clear">Clear</string>
+
+	<string name="numpicker_set_number">Set number</string>
+	<string name="numpicker_select">Select</string>
+	<string name="numpicker_clear">Clear</string>
+
 	<string name="app_name">Workout Logger</string>
 	<string name="action_settings">Settings</string>
 	<string name="title_activity_exer_pos">Exercise</string>
@@ -78,4 +91,6 @@
 	<!-- Menu item to open a list of current and past I/O videos [CHAR_LIMIT=20] -->
 	<string name="navdrawer_item_video_library">Video library</string>
 
+	<!-- Label for Settings activity -->
+	<string name="activity_settings">Settings</string>
 </resources>

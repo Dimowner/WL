@@ -43,7 +43,7 @@ public class LogUtils {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (
 //				  BuildConfig.DEBUG ||
-						  Config.IS_DOGFOOD_BUILD || Log.isLoggable(tag, Log.DEBUG)) {
+						  Config.IS_DEBUG_BUILD || Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, message);
         }
     }
@@ -52,7 +52,7 @@ public class LogUtils {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (
 //				  BuildConfig.DEBUG ||
-						  Config.IS_DOGFOOD_BUILD || Log.isLoggable(tag, Log.DEBUG)) {
+						  Config.IS_DEBUG_BUILD || Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, message, cause);
         }
     }
@@ -61,7 +61,7 @@ public class LogUtils {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (
 //				  BuildConfig.DEBUG &&
-						  Log.isLoggable(tag, Log.VERBOSE)) {
+				  Config.IS_DEBUG_BUILD || Log.isLoggable(tag, Log.VERBOSE)) {
             Log.v(tag, message);
         }
     }
@@ -70,7 +70,7 @@ public class LogUtils {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (
 //				  BuildConfig.DEBUG &&
-						  Log.isLoggable(tag, Log.VERBOSE)) {
+				  Config.IS_DEBUG_BUILD || Log.isLoggable(tag, Log.VERBOSE)) {
             Log.v(tag, message, cause);
         }
     }

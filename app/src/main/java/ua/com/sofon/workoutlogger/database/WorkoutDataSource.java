@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger;
+package ua.com.sofon.workoutlogger.database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.parts.Workout;
 
 /**
  * Class to communicate with database.
@@ -40,7 +43,7 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Write {@link ua.com.sofon.workoutlogger.Exercise Exercise} to database.
+	 * Write {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} to database.
 	 * @param name Exercisce name.
 	 * @param description Exercise description.
 	 */
@@ -64,7 +67,7 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Write {@link ua.com.sofon.workoutlogger.Workout Workout} to database.
+	 * Write {@link ua.com.sofon.workoutlogger.parts.Workout Workout} to database.
 	 * @param name Workout name.
 	 */
 	public Workout createWorkout(String name, Date date, float weight,
@@ -163,7 +166,7 @@ public class WorkoutDataSource {
 //	}
 
 	/**
-	 * Update {@link ua.com.sofon.workoutlogger.Exercise Exercise} in databese.
+	 * Update {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} in databese.
 	 * @param exercise Exercise to update.
 	 */
 	public void updateExercise(Exercise exercise) {
@@ -180,7 +183,7 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Update {@link ua.com.sofon.workoutlogger.Exercise Exercise} in databese.
+	 * Update {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} in databese.
 	 * @param id Exercise ID in database.
 	 * @param name Exercise name.
 	 * @param description Exercise description.
@@ -199,7 +202,7 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Delete {@link ua.com.sofon.workoutlogger.Exercise Exercise} from database
+	 * Delete {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} from database
 	 * @param exercise Exercise to delete.
 	 */
 	public void deleteExersice(Exercise exercise) {
@@ -209,7 +212,7 @@ public class WorkoutDataSource {
 	}
 
 	/**
-	 * Delete {@link ua.com.sofon.workoutlogger.Exercise Exercise} from database
+	 * Delete {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} from database
 	 * @param workout Workout to delete.
 	 */
 	public void deleteWorkout(Workout workout) {
@@ -220,7 +223,7 @@ public class WorkoutDataSource {
 
 	/**
 	 * Get all exercises records from database.
-	 * @return List of {@link ua.com.sofon.workoutlogger.Exercise Exercise}
+	 * @return List of {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise}
 	 */
 	public List<Exercise> getAllExercises() {
 		List<Exercise> exercises = new ArrayList<>();
@@ -240,7 +243,7 @@ public class WorkoutDataSource {
 
 	/**
 	 * Get all workout records from database.
-	 * @return List of {@link ua.com.sofon.workoutlogger.Workout Workouts}
+	 * @return List of {@link ua.com.sofon.workoutlogger.parts.Workout Workouts}
 	 */
 	public List<Workout> getAllWorkouts() {
 		List<Workout> workouts = new ArrayList<>();
@@ -262,7 +265,7 @@ public class WorkoutDataSource {
 
 	/**
 	 * Convert {@link android.database.Cursor Cursor} to
-	 * {@link ua.com.sofon.workoutlogger.Exercise Exercise}.
+	 * {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise}.
 	 * @param cursor Cursor item.
 	 * @return Exercise item.
 	 */
@@ -276,7 +279,7 @@ public class WorkoutDataSource {
 
 	/**
 	 * Convert {@link android.database.Cursor Cursor} to
-	 * {@link ua.com.sofon.workoutlogger.Exercise Exercise}.
+	 * {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise}.
 	 * @param cursor Cursor item.
 	 * @return Exercise item.
 	 */

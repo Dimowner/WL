@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger;
+package ua.com.sofon.workoutlogger.parts;
 
 import java.io.Serializable;
 

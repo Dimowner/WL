@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		tools:context="ua.com.sofon.workoutlogger.activities.WorkoutPos">
+		tools:context="ua.com.sofon.workoutlogger.ui.EditWorkoutActivity">
 
 	<item
 			android:id="@+id/action_accept"
-			android:icon="@mipmap/ic_check_grey600_24dp"
+			android:icon="@drawable/ic_check_grey600_24dp"
 			android:orderInCategory="100"
 			android:title="Add workout"
 			app:showAsAction="ifRoom"/>

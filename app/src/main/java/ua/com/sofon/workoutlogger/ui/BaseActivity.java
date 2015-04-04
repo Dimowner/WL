@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -55,11 +55,11 @@ import java.util.List;
 
 import ua.com.sofon.workoutlogger.R;
 
-//import static com.google.samples.apps.iosched.util.LogUtils.LOGD;
-//import static com.google.samples.apps.iosched.util.LogUtils.LOGE;
-//import static com.google.samples.apps.iosched.util.LogUtils.LOGI;
-//import static com.google.samples.apps.iosched.util.LogUtils.LOGW;
-//import static com.google.samples.apps.iosched.util.LogUtils.makeLogTag;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGD;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGI;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGV;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGW;
 
 /**
  * A base activity that handles common functionality in the app. This includes the
@@ -285,8 +285,8 @@ public abstract class BaseActivity extends ActionBarActivity implements
 		if (mDrawerLayout == null) {
 			return;
 		}
-//		mDrawerLayout.setStatusBarBackgroundColor(
-//				getResources().getColor(R.color.theme_primary_dark));
+		mDrawerLayout.setStatusBarBackgroundColor(
+				getResources().getColor(R.color.theme_primary_dark));
 //		ScrimInsetsScrollView navDrawer = (ScrimInsetsScrollView)
 //				mDrawerLayout.findViewById(R.id.navdrawer);
 //		if (selfItem == NAVDRAWER_ITEM_INVALID) {
@@ -397,109 +397,110 @@ public abstract class BaseActivity extends ActionBarActivity implements
 			mDrawerLayout.closeDrawer(Gravity.START);
 		}
 	}
-//
-//	/** Populates the navigation drawer with the appropriate items. */
-//	private void populateNavDrawer() {
+
+	/** Populates the navigation drawer with the appropriate items. */
+	private void populateNavDrawer() {
 //		boolean attendeeAtVenue = PrefUtils.isAttendeeAtVenue(this);
-//		mNavDrawerItems.clear();
-//
-//		// decide which items will appear in the nav drawer
+		mNavDrawerItems.clear();
+
+		// decide which items will appear in the nav drawer
 //		if (AccountUtils.hasActiveAccount(this)) {
 //			// Only logged-in users can save sessions, so if there is no active account,
 //			// there is no My Schedule
 //			mNavDrawerItems.add(NAVDRAWER_ITEM_MY_SCHEDULE);
 //		} else {
-//			// If no active account, show Sign In
-//			mNavDrawerItems.add(NAVDRAWER_ITEM_SIGN_IN);
+			// If no active account, show Sign In
+			mNavDrawerItems.add(NAVDRAWER_ITEM_SIGN_IN);
 //		}
-//
-//		// Explore is always shown
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_EXPLORE);
-//
-//		// If the attendee is on-site, show Map on the nav drawer
+
+		// Explore is always shown
+		mNavDrawerItems.add(NAVDRAWER_ITEM_EXPLORE);
+
+		// If the attendee is on-site, show Map on the nav drawer
 //		if (attendeeAtVenue) {
 //			mNavDrawerItems.add(NAVDRAWER_ITEM_MAP);
 //		}
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR);
-//
-//		// If attendee is on-site, show the People I've Met item
+		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR);
+
+		// If attendee is on-site, show the People I've Met item
 //		if (attendeeAtVenue) {
 //			mNavDrawerItems.add(NAVDRAWER_ITEM_PEOPLE_IVE_MET);
 //		}
-//
-//		// If the experts directory hasn't expired, show it
+
+		// If the experts directory hasn't expired, show it
 //		if (!Config.hasExpertsDirectoryExpired()) {
 //			mNavDrawerItems.add(NAVDRAWER_ITEM_EXPERTS_DIRECTORY);
 //		}
-//
-//		// Other items that are always in the nav drawer irrespective of whether the
-//		// attendee is on-site or remote:
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_SOCIAL);
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_VIDEO_LIBRARY);
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR_SPECIAL);
-//		mNavDrawerItems.add(NAVDRAWER_ITEM_SETTINGS);
-//
-//		createNavDrawerItems();
-//	}
-//
-//	@Override
-//	public void onBackPressed() {
-//		if (isNavDrawerOpen()) {
-//			closeNavDrawer();
-//		} else {
-//			super.onBackPressed();
-//		}
-//	}
-//
-//	private void createNavDrawerItems() {
-//		mDrawerItemsListContainer = (ViewGroup) findViewById(R.id.navdrawer_items_list);
-//		if (mDrawerItemsListContainer == null) {
-//			return;
-//		}
-//
-//		mNavDrawerItemViews = new View[mNavDrawerItems.size()];
-//		mDrawerItemsListContainer.removeAllViews();
-//		int i = 0;
-//		for (int itemId : mNavDrawerItems) {
-//			mNavDrawerItemViews[i] = makeNavDrawerItem(itemId, mDrawerItemsListContainer);
-//			mDrawerItemsListContainer.addView(mNavDrawerItemViews[i]);
-//			++i;
-//		}
-//	}
-//
-//	/**
-//	 * Sets up the given navdrawer item's appearance to the selected state. Note: this could
-//	 * also be accomplished (perhaps more cleanly) with state-based layouts.
-//	 */
-//	private void setSelectedNavDrawerItem(int itemId) {
-//		if (mNavDrawerItemViews != null) {
-//			for (int i = 0; i < mNavDrawerItemViews.length; i++) {
-//				if (i < mNavDrawerItems.size()) {
-//					int thisItemId = mNavDrawerItems.get(i);
-//					formatNavDrawerItem(mNavDrawerItemViews[i], thisItemId, itemId == thisItemId);
-//				}
-//			}
-//		}
-//	}
-//
-//	@Override
-//	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+		// Other items that are always in the nav drawer irrespective of whether the
+		// attendee is on-site or remote:
+		mNavDrawerItems.add(NAVDRAWER_ITEM_SOCIAL);
+		mNavDrawerItems.add(NAVDRAWER_ITEM_VIDEO_LIBRARY);
+		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR_SPECIAL);
+		mNavDrawerItems.add(NAVDRAWER_ITEM_SETTINGS);
+
+		createNavDrawerItems();
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (isNavDrawerOpen()) {
+			closeNavDrawer();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	private void createNavDrawerItems() {
+		mDrawerItemsListContainer = (ViewGroup) findViewById(R.id.navdrawer_items_list);
+		if (mDrawerItemsListContainer == null) {
+			return;
+		}
+
+		mNavDrawerItemViews = new View[mNavDrawerItems.size()];
+		mDrawerItemsListContainer.removeAllViews();
+		int i = 0;
+		for (int itemId : mNavDrawerItems) {
+			mNavDrawerItemViews[i] = makeNavDrawerItem(itemId, mDrawerItemsListContainer);
+			mDrawerItemsListContainer.addView(mNavDrawerItemViews[i]);
+			++i;
+		}
+	}
+
+	/**
+	 * Sets up the given navdrawer item's appearance to the selected state. Note: this could
+	 * also be accomplished (perhaps more cleanly) with state-based layouts.
+	 */
+	private void setSelectedNavDrawerItem(int itemId) {
+		if (mNavDrawerItemViews != null) {
+			for (int i = 0; i < mNavDrawerItemViews.length; i++) {
+				if (i < mNavDrawerItems.size()) {
+					int thisItemId = mNavDrawerItems.get(i);
+					formatNavDrawerItem(mNavDrawerItemViews[i], thisItemId, itemId == thisItemId);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		LOGV(TAG, "onSharedPreferenceChanged");
 //		if (key.equals(PrefUtils.PREF_ATTENDEE_AT_VENUE)) {
 //			LOGD(TAG, "Attendee at venue preference changed, repopulating nav drawer and menu.");
 //			populateNavDrawer();
 //			invalidateOptionsMenu();
 //		}
-//	}
-//
-//	@Override
-//	protected void onPostCreate(Bundle savedInstanceState) {
-//		super.onPostCreate(savedInstanceState);
-//		setupNavDrawer();
-//		setupAccountBox();
-//
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		setupNavDrawer();
+		setupAccountBox();
+
 //		trySetupSwipeRefresh();
 //		updateSwipeRefreshProgressBarTop();
-//
+
 //		View mainContent = findViewById(R.id.main_content);
 //		if (mainContent != null) {
 //			mainContent.setAlpha(0);
@@ -507,38 +508,38 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		} else {
 //			LOGW(TAG, "No view with ID main_content to fade in.");
 //		}
-//	}
-//
-//	/**
-//	 * Sets up the account box. The account box is the area at the top of the nav drawer that
-//	 * shows which account the user is logged in as, and lets them switch accounts. It also
-//	 * shows the user's Google+ cover photo as background.
-//	 */
-//	private void setupAccountBox() {
-//		mAccountListContainer = (LinearLayout) findViewById(R.id.account_list);
-//
-//		if (mAccountListContainer == null) {
-//			//This activity does not have an account box
-//			return;
-//		}
-//
-//		final View chosenAccountView = findViewById(R.id.chosen_account_view);
-//		Account chosenAccount = AccountUtils.getActiveAccount(this);
-//		if (chosenAccount == null) {
-//			// No account logged in; hide account box
-//			chosenAccountView.setVisibility(View.GONE);
-//			mAccountListContainer.setVisibility(View.GONE);
-//			return;
-//		} else {
-//			chosenAccountView.setVisibility(View.VISIBLE);
-//			mAccountListContainer.setVisibility(View.INVISIBLE);
-//		}
-//
+	}
+
+	/**
+	 * Sets up the account box. The account box is the area at the top of the nav drawer that
+	 * shows which account the user is logged in as, and lets them switch accounts. It also
+	 * shows the user's Google+ cover photo as background.
+	 */
+	private void setupAccountBox() {
+		mAccountListContainer = (LinearLayout) findViewById(R.id.account_list);
+
+		if (mAccountListContainer == null) {
+			//This activity does not have an account box
+			return;
+		}
+
+		final View chosenAccountView = findViewById(R.id.chosen_account_view);
+		Account chosenAccount = null;//AccountUtils.getActiveAccount(this);
+		if (chosenAccount == null) {
+			// No account logged in; hide account box
+			chosenAccountView.setVisibility(View.GONE);
+			mAccountListContainer.setVisibility(View.GONE);
+			return;
+		} else {
+			chosenAccountView.setVisibility(View.VISIBLE);
+			mAccountListContainer.setVisibility(View.INVISIBLE);
+		}
+
 //		AccountManager am = AccountManager.get(this);
 //		Account[] accountArray = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
 //		List<Account> accounts = new ArrayList<Account>(Arrays.asList(accountArray));
 //		accounts.remove(chosenAccount);
-//
+
 //		ImageView coverImageView = (ImageView) chosenAccountView.findViewById(R.id.profile_cover_image);
 //		ImageView profileImageView = (ImageView) chosenAccountView.findViewById(R.id.profile_image);
 //		TextView nameTextView = (TextView) chosenAccountView.findViewById(R.id.profile_name_text);
@@ -574,24 +575,24 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //			chosenAccountView.setEnabled(false);
 //			return;
 //		}
-//
-//		chosenAccountView.setEnabled(true);
-//
-//		mExpandAccountBoxIndicator.setVisibility(View.VISIBLE);
-//		chosenAccountView.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mAccountBoxExpanded = !mAccountBoxExpanded;
-//				setupAccountBoxToggle();
-//			}
-//		});
-//		setupAccountBoxToggle();
-//
+
+		chosenAccountView.setEnabled(true);
+
+		mExpandAccountBoxIndicator.setVisibility(View.VISIBLE);
+		chosenAccountView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mAccountBoxExpanded = !mAccountBoxExpanded;
+				setupAccountBoxToggle();
+			}
+		});
+		setupAccountBoxToggle();
+
 //		populateAccountList(accounts);
-//	}
-//
-//	private void populateAccountList(List<Account> accounts) {
-//		mAccountListContainer.removeAllViews();
+	}
+
+	private void populateAccountList(List<Account> accounts) {
+		mAccountListContainer.removeAllViews();
 //
 //		LayoutInflater layoutInflater = LayoutInflater.from(this);
 //		for (Account account : accounts) {
@@ -631,78 +632,78 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //			});
 //			mAccountListContainer.addView(itemView);
 //		}
-//	}
-//
-//	protected void onAccountChangeRequested() {
-//		// override if you want to be notified when another account has been selected account has changed
-//	}
-//
-//	private void setupAccountBoxToggle() {
-//		int selfItem = getSelfNavDrawerItem();
-//		if (mDrawerLayout == null || selfItem == NAVDRAWER_ITEM_INVALID) {
-//			// this Activity does not have a nav drawer
-//			return;
-//		}
-//		mExpandAccountBoxIndicator.setImageResource(mAccountBoxExpanded
-//				? R.drawable.ic_drawer_accounts_collapse
-//				: R.drawable.ic_drawer_accounts_expand);
-//		int hideTranslateY = -mAccountListContainer.getHeight() / 4; // last 25% of animation
-//		if (mAccountBoxExpanded && mAccountListContainer.getTranslationY() == 0) {
-//			// initial setup
-//			mAccountListContainer.setAlpha(0);
-//			mAccountListContainer.setTranslationY(hideTranslateY);
-//		}
-//
-//		AnimatorSet set = new AnimatorSet();
-//		set.addListener(new AnimatorListenerAdapter() {
-//			@Override
-//			public void onAnimationEnd(Animator animation) {
-//				mDrawerItemsListContainer.setVisibility(mAccountBoxExpanded
-//						? View.INVISIBLE : View.VISIBLE);
-//				mAccountListContainer.setVisibility(mAccountBoxExpanded
-//						? View.VISIBLE : View.INVISIBLE);
-//			}
-//
-//			@Override
-//			public void onAnimationCancel(Animator animation) {
-//				onAnimationEnd(animation);
-//			}
-//		});
-//
-//		if (mAccountBoxExpanded) {
-//			mAccountListContainer.setVisibility(View.VISIBLE);
-//			AnimatorSet subSet = new AnimatorSet();
-//			subSet.playTogether(
-//					ObjectAnimator.ofFloat(mAccountListContainer, View.ALPHA, 1)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
-//					ObjectAnimator.ofFloat(mAccountListContainer, View.TRANSLATION_Y, 0)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
-//			set.playSequentially(
-//					ObjectAnimator.ofFloat(mDrawerItemsListContainer, View.ALPHA, 0)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
-//					subSet);
-//			set.start();
-//		} else {
-//			mDrawerItemsListContainer.setVisibility(View.VISIBLE);
-//			AnimatorSet subSet = new AnimatorSet();
-//			subSet.playTogether(
-//					ObjectAnimator.ofFloat(mAccountListContainer, View.ALPHA, 0)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
-//					ObjectAnimator.ofFloat(mAccountListContainer, View.TRANSLATION_Y,
-//							hideTranslateY)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
-//			set.playSequentially(
-//					subSet,
-//					ObjectAnimator.ofFloat(mDrawerItemsListContainer, View.ALPHA, 1)
-//							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
-//			set.start();
-//		}
-//
-//		set.start();
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
+	}
+
+	protected void onAccountChangeRequested() {
+		// override if you want to be notified when another account has been selected account has changed
+	}
+
+	private void setupAccountBoxToggle() {
+		int selfItem = getSelfNavDrawerItem();
+		if (mDrawerLayout == null || selfItem == NAVDRAWER_ITEM_INVALID) {
+			// this Activity does not have a nav drawer
+			return;
+		}
+		mExpandAccountBoxIndicator.setImageResource(mAccountBoxExpanded
+				? R.drawable.ic_drawer_accounts_collapse
+				: R.drawable.ic_drawer_accounts_expand);
+		int hideTranslateY = -mAccountListContainer.getHeight() / 4; // last 25% of animation
+		if (mAccountBoxExpanded && mAccountListContainer.getTranslationY() == 0) {
+			// initial setup
+			mAccountListContainer.setAlpha(0);
+			mAccountListContainer.setTranslationY(hideTranslateY);
+		}
+
+		AnimatorSet set = new AnimatorSet();
+		set.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				mDrawerItemsListContainer.setVisibility(mAccountBoxExpanded
+						? View.INVISIBLE : View.VISIBLE);
+				mAccountListContainer.setVisibility(mAccountBoxExpanded
+						? View.VISIBLE : View.INVISIBLE);
+			}
+
+			@Override
+			public void onAnimationCancel(Animator animation) {
+				onAnimationEnd(animation);
+			}
+		});
+
+		if (mAccountBoxExpanded) {
+			mAccountListContainer.setVisibility(View.VISIBLE);
+			AnimatorSet subSet = new AnimatorSet();
+			subSet.playTogether(
+					ObjectAnimator.ofFloat(mAccountListContainer, View.ALPHA, 1)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
+					ObjectAnimator.ofFloat(mAccountListContainer, View.TRANSLATION_Y, 0)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
+			set.playSequentially(
+					ObjectAnimator.ofFloat(mDrawerItemsListContainer, View.ALPHA, 0)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
+					subSet);
+			set.start();
+		} else {
+			mDrawerItemsListContainer.setVisibility(View.VISIBLE);
+			AnimatorSet subSet = new AnimatorSet();
+			subSet.playTogether(
+					ObjectAnimator.ofFloat(mAccountListContainer, View.ALPHA, 0)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
+					ObjectAnimator.ofFloat(mAccountListContainer, View.TRANSLATION_Y,
+							hideTranslateY)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
+			set.playSequentially(
+					subSet,
+					ObjectAnimator.ofFloat(mDrawerItemsListContainer, View.ALPHA, 1)
+							.setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
+			set.start();
+		}
+
+		set.start();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 //		int id = item.getItemId();
 //		switch (id) {
 //			case R.id.menu_about:
@@ -737,10 +738,10 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //				finish();
 //				break;
 //		}
-//		return super.onOptionsItemSelected(item);
-//	}
-//
-//	private void launchIoHunt() {
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void launchIoHunt() {
 //		if (!TextUtils.isEmpty(Config.IO_HUNT_PACKAGE_NAME)) {
 //			LOGD(TAG, "Attempting to launch I/O hunt.");
 //			PackageManager pm = getPackageManager();
@@ -757,9 +758,9 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //				startActivity(intent);
 //			}
 //		}
-//	}
-//
-//	protected void requestDataRefresh() {
+	}
+
+	protected void requestDataRefresh() {
 //		Account activeAccount = AccountUtils.getActiveAccount(this);
 //		ContentResolver contentResolver = getContentResolver();
 //		if (contentResolver.isSyncActive(activeAccount, ScheduleContract.CONTENT_AUTHORITY)) {
@@ -769,58 +770,66 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		mManualSyncRequest = true;
 //		LOGD(TAG, "Requesting manual data refresh.");
 //		SyncHelper.requestManualSync(activeAccount);
-//	}
-//
-//	private void goToNavDrawerItem(int item) {
-//		Intent intent;
-//		switch (item) {
-//			case NAVDRAWER_ITEM_MY_SCHEDULE:
+	}
+
+	private void goToNavDrawerItem(int item) {
+		Intent intent;
+		switch (item) {
+			case NAVDRAWER_ITEM_MY_SCHEDULE:
 //				intent = new Intent(this, MyScheduleActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_EXPLORE:
+				LOGV(TAG, "StartActivity MySchdule");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_EXPLORE:
 //				intent = new Intent(this, BrowseSessionsActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_MAP:
+				LOGV(TAG, "StartActivity BrowseSession");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_MAP:
 //				intent = new Intent(this, UIUtils.getMapActivityClass(this));
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_SOCIAL:
+				LOGV(TAG, "StartActivity Map");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_SOCIAL:
 //				intent = new Intent(this, SocialActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_EXPERTS_DIRECTORY:
+				LOGV(TAG, "StartActivity Social");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_EXPERTS_DIRECTORY:
 //				intent = new Intent(this, ExpertsDirectoryActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_PEOPLE_IVE_MET:
+				LOGV(TAG, "StartActivity ExpertsDirectory");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_PEOPLE_IVE_MET:
 //				intent = new Intent(this, PeopleIveMetActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//			case NAVDRAWER_ITEM_SIGN_IN:
-//				signInOrCreateAnAccount();
-//				break;
-//			case NAVDRAWER_ITEM_SETTINGS:
+				LOGV(TAG, "StartActivity People i met");
+				finish();
+				break;
+			case NAVDRAWER_ITEM_SIGN_IN:
+				signInOrCreateAnAccount();
+				break;
+			case NAVDRAWER_ITEM_SETTINGS:
 //				intent = new Intent(this, SettingsActivity.class);
 //				startActivity(intent);
-//				break;
-//			case NAVDRAWER_ITEM_VIDEO_LIBRARY:
+				LOGV(TAG, "StartActivity Settiongs");
+				break;
+			case NAVDRAWER_ITEM_VIDEO_LIBRARY:
 //				intent = new Intent(this, VideoLibraryActivity.class);
 //				startActivity(intent);
-//				finish();
-//				break;
-//		}
-//	}
-//
-//	private void signInOrCreateAnAccount() {
-//		//Get list of accounts on device.
+				LOGV(TAG, "StartActivity Video library");
+				finish();
+				break;
+		}
+	}
+
+	private void signInOrCreateAnAccount() {
+		//Get list of accounts on device.
 //		AccountManager am = AccountManager.get(BaseActivity.this);
 //		Account[] accountArray = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
 //		if (accountArray.length == 0) {
@@ -833,38 +842,38 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //			startLoginProcess();
 //			mDrawerLayout.closeDrawer(Gravity.START);
 //		}
-//	}
-//
-//	private void onNavDrawerItemClicked(final int itemId) {
-//		if (itemId == getSelfNavDrawerItem()) {
-//			mDrawerLayout.closeDrawer(Gravity.START);
-//			return;
-//		}
-//
-//		if (isSpecialItem(itemId)) {
-//			goToNavDrawerItem(itemId);
-//		} else {
-//			// launch the target Activity after a short delay, to allow the close animation to play
-//			mHandler.postDelayed(new Runnable() {
-//				@Override
-//				public void run() {
-//					goToNavDrawerItem(itemId);
-//				}
-//			}, NAVDRAWER_LAUNCH_DELAY);
-//
-//			// change the active item on the list so the user can see the item changed
-//			setSelectedNavDrawerItem(itemId);
-//			// fade out the main content
+	}
+
+	private void onNavDrawerItemClicked(final int itemId) {
+		if (itemId == getSelfNavDrawerItem()) {
+			mDrawerLayout.closeDrawer(Gravity.START);
+			return;
+		}
+
+		if (isSpecialItem(itemId)) {
+			goToNavDrawerItem(itemId);
+		} else {
+			// launch the target Activity after a short delay, to allow the close animation to play
+			mHandler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					goToNavDrawerItem(itemId);
+				}
+			}, NAVDRAWER_LAUNCH_DELAY);
+
+			// change the active item on the list so the user can see the item changed
+			setSelectedNavDrawerItem(itemId);
+			// fade out the main content
 //			View mainContent = findViewById(R.id.main_content);
 //			if (mainContent != null) {
 //				mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
 //			}
-//		}
-//
-//		mDrawerLayout.closeDrawer(Gravity.START);
-//	}
-//
-//	protected void configureStandardMenuItems(Menu menu) {
+		}
+
+		mDrawerLayout.closeDrawer(Gravity.START);
+	}
+
+	protected void configureStandardMenuItems(Menu menu) {
 //		MenuItem wifiItem = menu.findItem(R.id.menu_wifi);
 //		if (wifiItem != null && !WiFiUtils.shouldOfferToSetupWifi(this, false)) {
 //			wifiItem.setVisible(false);
@@ -891,94 +900,94 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		if (ioHuntItem != null) {
 //			ioHuntItem.setVisible(!isRemote && !TextUtils.isEmpty(Config.IO_HUNT_PACKAGE_NAME));
 //		}
-//	}
-//
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//
-//		// Verifies the proper version of Google Play Services exists on the device.
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		// Verifies the proper version of Google Play Services exists on the device.
 //		PlayServicesUtils.checkGooglePlaySevices(this);
-//
-//		// Watch for sync state changes
-//		mSyncStatusObserver.onStatusChanged(0);
-//		final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
-//				ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
-//		mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
-//	}
-//
-//	@Override
-//	protected void onPause() {
-//		super.onPause();
-//		if (mSyncObserverHandle != null) {
-//			ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
-//			mSyncObserverHandle = null;
-//		}
-//	}
-//
-//	/**
-//	 * Converts an intent into a {@link Bundle} suitable for use as fragment arguments.
-//	 */
-//	public static Bundle intentToFragmentArguments(Intent intent) {
-//		Bundle arguments = new Bundle();
-//		if (intent == null) {
-//			return arguments;
-//		}
-//
-//		final Uri data = intent.getData();
-//		if (data != null) {
-//			arguments.putParcelable("_uri", data);
-//		}
-//
-//		final Bundle extras = intent.getExtras();
-//		if (extras != null) {
-//			arguments.putAll(intent.getExtras());
-//		}
-//
-//		return arguments;
-//	}
-//
-//	/**
-//	 * Converts a fragment arguments bundle into an intent.
-//	 */
-//	public static Intent fragmentArgumentsToIntent(Bundle arguments) {
-//		Intent intent = new Intent();
-//		if (arguments == null) {
-//			return intent;
-//		}
-//
-//		final Uri data = arguments.getParcelable("_uri");
-//		if (data != null) {
-//			intent.setData(data);
-//		}
-//
-//		intent.putExtras(arguments);
-//		intent.removeExtra("_uri");
-//		return intent;
-//	}
-//
-//	@Override
-//	public void onStart() {
-//		LOGD(TAG, "onStart");
-//		super.onStart();
-//
-//		// Perform one-time bootstrap setup, if needed
+
+		// Watch for sync state changes
+		mSyncStatusObserver.onStatusChanged(0);
+		final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
+				ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
+		mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (mSyncObserverHandle != null) {
+			ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
+			mSyncObserverHandle = null;
+		}
+	}
+
+	/**
+	 * Converts an intent into a {@link Bundle} suitable for use as fragment arguments.
+	 */
+	public static Bundle intentToFragmentArguments(Intent intent) {
+		Bundle arguments = new Bundle();
+		if (intent == null) {
+			return arguments;
+		}
+
+		final Uri data = intent.getData();
+		if (data != null) {
+			arguments.putParcelable("_uri", data);
+		}
+
+		final Bundle extras = intent.getExtras();
+		if (extras != null) {
+			arguments.putAll(intent.getExtras());
+		}
+
+		return arguments;
+	}
+
+	/**
+	 * Converts a fragment arguments bundle into an intent.
+	 */
+	public static Intent fragmentArgumentsToIntent(Bundle arguments) {
+		Intent intent = new Intent();
+		if (arguments == null) {
+			return intent;
+		}
+
+		final Uri data = arguments.getParcelable("_uri");
+		if (data != null) {
+			intent.setData(data);
+		}
+
+		intent.putExtras(arguments);
+		intent.removeExtra("_uri");
+		return intent;
+	}
+
+	@Override
+	public void onStart() {
+		LOGD(TAG, "onStart");
+		super.onStart();
+
+		// Perform one-time bootstrap setup, if needed
 //		if (!PrefUtils.isDataBootstrapDone(this) && mDataBootstrapThread == null) {
 //			LOGD(TAG, "One-time data bootstrap not done yet. Doing now.");
 //			performDataBootstrap();
 //		}
-//
-//		startLoginProcess();
-//	}
-//
-//	/**
-//	 * Performs the one-time data bootstrap. This means taking our prepackaged conference data
-//	 * from the R.raw.bootstrap_data resource, and parsing it to populate the database. This
-//	 * data contains the sessions, speakers, etc.
-//	 */
-//	private void performDataBootstrap() {
-//		final Context appContext = getApplicationContext();
-//		LOGD(TAG, "Starting data bootstrap background thread.");
+
+		startLoginProcess();
+	}
+
+	/**
+	 * Performs the one-time data bootstrap. This means taking our prepackaged conference data
+	 * from the R.raw.bootstrap_data resource, and parsing it to populate the database. This
+	 * data contains the sessions, speakers, etc.
+	 */
+	private void performDataBootstrap() {
+		final Context appContext = getApplicationContext();
+		LOGD(TAG, "Starting data bootstrap background thread.");
 //		mDataBootstrapThread = new Thread(new Runnable() {
 //			@Override
 //			public void run() {
@@ -1015,15 +1024,15 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //			}
 //		});
 //		mDataBootstrapThread.start();
-//	}
-//
-//	/**
-//	 * Returns the default account on the device. We use the rule that the first account
-//	 * should be the default. It's arbitrary, but the alternative would be showing an account
-//	 * chooser popup which wouldn't be a smooth first experience with the app. Since the user
-//	 * can easily switch the account with the nav drawer, we opted for this implementation.
-//	 */
-//	private String getDefaultAccount() {
+	}
+
+	/**
+	 * Returns the default account on the device. We use the rule that the first account
+	 * should be the default. It's arbitrary, but the alternative would be showing an account
+	 * chooser popup which wouldn't be a smooth first experience with the app. Since the user
+	 * can easily switch the account with the nav drawer, we opted for this implementation.
+	 */
+	private String getDefaultAccount() {
 //		// Choose first account on device.
 //		LOGD(TAG, "Choosing default account (first account on device)");
 //		AccountManager am = AccountManager.get(this);
@@ -1035,39 +1044,39 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		}
 //
 //		LOGD(TAG, "Default account is: " + accounts[0].name);
-//		return accounts[0].name;
-//	}
-//
-//
-//	private void complainMustHaveGoogleAccount() {
-//		LOGD(TAG, "Complaining about missing Google account.");
-//		new AlertDialog.Builder(this)
-//				.setTitle(R.string.google_account_required_title)
-//				.setMessage(R.string.google_account_required_message)
-//				.setPositiveButton(R.string.add_account, new DialogInterface.OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int which) {
-//						promptAddAccount();
-//					}
-//				})
-//				.setNegativeButton(R.string.not_now, new DialogInterface.OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int which) {
-//						finish();
-//					}
-//				})
-//				.show();
-//	}
-//
-//	private void promptAddAccount() {
-//		Intent intent = new Intent(Settings.ACTION_ADD_ACCOUNT);
-//		intent.putExtra(Settings.EXTRA_ACCOUNT_TYPES, new String[]{"com.google"});
-//		startActivity(intent);
-//		finish();
-//	}
-//
-//	private void startLoginProcess() {
-//		LOGD(TAG, "Starting login process.");
+		return "getDefaultAccount";// accounts[0].name;
+	}
+
+
+	private void complainMustHaveGoogleAccount() {
+		LOGD(TAG, "Complaining about missing Google account.");
+		new AlertDialog.Builder(this)
+				.setTitle("Google account required")//R.string.google_account_required_title)
+				.setMessage("Google account required message")//R.string.google_account_required_message)
+				.setPositiveButton("add account", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						promptAddAccount();
+					}
+				})
+				.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				})
+				.show();
+	}
+
+	private void promptAddAccount() {
+		Intent intent = new Intent(Settings.ACTION_ADD_ACCOUNT);
+		intent.putExtra(Settings.EXTRA_ACCOUNT_TYPES, new String[]{"com.google"});
+		startActivity(intent);
+		finish();
+	}
+
+	private void startLoginProcess() {
+		LOGD(TAG, "Starting login process.");
 //		if (!AccountUtils.hasActiveAccount(this)) {
 //			LOGD(TAG, "No active account, attempting to pick a default.");
 //			String defaultAccount = getDefaultAccount();
@@ -1110,25 +1119,25 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		LOGD(TAG, "Creating and starting new Helper with account: " + accountName);
 //		mLoginAndAuthHelper = new LoginAndAuthHelper(this, this, accountName);
 //		mLoginAndAuthHelper.start();
-//	}
-//
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //		if (mLoginAndAuthHelper == null || !mLoginAndAuthHelper.onActivityResult(requestCode,
 //				resultCode, data)) {
 //			super.onActivityResult(requestCode, resultCode, data);
 //		}
-//	}
-//
-//	@Override
-//	public void onStop() {
-//		LOGD(TAG, "onStop");
-//		super.onStop();
+	}
+
+	@Override
+	public void onStop() {
+		LOGD(TAG, "onStop");
+		super.onStop();
 //		if (mLoginAndAuthHelper != null) {
 //			mLoginAndAuthHelper.stop();
 //		}
-//	}
-//
+	}
+
 //	@Override
 //	public void onPlusInfoLoaded(String accountName) {
 //		setupAccountBox();
@@ -1160,178 +1169,180 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		populateNavDrawer();
 //		registerGCMClient();
 //	}
-//
+
 //	@Override
 //	public void onAuthFailure(String accountName) {
 //		LOGD(TAG, "Auth failed for account " + accountName);
 //		refreshAccountDependantData();
 //	}
-//
-//	protected void refreshAccountDependantData() {
-//		// Force local data refresh for data that depends on the logged user:
-//		LOGD(TAG, "Refreshing MySchedule data");
+
+	protected void refreshAccountDependantData() {
+		// Force local data refresh for data that depends on the logged user:
+		LOGD(TAG, "Refreshing MySchedule data");
 //		getContentResolver().notifyChange(ScheduleContract.MySchedule.CONTENT_URI, null, false);
-//	}
-//
-//	protected void retryAuth() {
+	}
+
+	protected void retryAuth() {
 //		mLoginAndAuthHelper.retryAuthByUserRequest();
-//	}
-//
-//	/**
-//	 * Initializes the Action Bar auto-hide (aka Quick Recall) effect.
-//	 */
-//	private void initActionBarAutoHide() {
-//		mActionBarAutoHideEnabled = true;
-//		mActionBarAutoHideMinY = getResources().getDimensionPixelSize(
+	}
+
+	/**
+	 * Initializes the Action Bar auto-hide (aka Quick Recall) effect.
+	 */
+	private void initActionBarAutoHide() {
+		mActionBarAutoHideEnabled = true;
+		mActionBarAutoHideMinY = 152;
+//				getResources().getDimensionPixelSize(
 //				R.dimen.action_bar_auto_hide_min_y);
-//		mActionBarAutoHideSensivity = getResources().getDimensionPixelSize(
+		mActionBarAutoHideSensivity = 48;
+//				getResources().getDimensionPixelSize(
 //				R.dimen.action_bar_auto_hide_sensivity);
-//	}
-//
-//	/**
-//	 * Indicates that the main content has scrolled (for the purposes of showing/hiding
-//	 * the action bar for the "action bar auto hide" effect). currentY and deltaY may be exact
-//	 * (if the underlying view supports it) or may be approximate indications:
-//	 * deltaY may be INT_MAX to mean "scrolled forward indeterminately" and INT_MIN to mean
-//	 * "scrolled backward indeterminately".  currentY may be 0 to mean "somewhere close to the
-//	 * start of the list" and INT_MAX to mean "we don't know, but not at the start of the list"
-//	 */
-//	private void onMainContentScrolled(int currentY, int deltaY) {
-//		if (deltaY > mActionBarAutoHideSensivity) {
-//			deltaY = mActionBarAutoHideSensivity;
-//		} else if (deltaY < -mActionBarAutoHideSensivity) {
-//			deltaY = -mActionBarAutoHideSensivity;
-//		}
-//
-//		if (Math.signum(deltaY) * Math.signum(mActionBarAutoHideSignal) < 0) {
-//			// deltaY is a motion opposite to the accumulated signal, so reset signal
-//			mActionBarAutoHideSignal = deltaY;
-//		} else {
-//			// add to accumulated signal
-//			mActionBarAutoHideSignal += deltaY;
-//		}
-//
-//		boolean shouldShow = currentY < mActionBarAutoHideMinY ||
-//				(mActionBarAutoHideSignal <= -mActionBarAutoHideSensivity);
-//		autoShowOrHideActionBar(shouldShow);
-//	}
-//
-//	protected Toolbar getActionBarToolbar() {
-//		if (mActionBarToolbar == null) {
-//			mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-//			if (mActionBarToolbar != null) {
-//				setSupportActionBar(mActionBarToolbar);
-//			}
-//		}
-//		return mActionBarToolbar;
-//	}
-//
-//	protected void autoShowOrHideActionBar(boolean show) {
-//		if (show == mActionBarShown) {
-//			return;
-//		}
-//
-//		mActionBarShown = show;
-//		onActionBarAutoShowOrHide(show);
-//	}
-//
-//	protected void enableActionBarAutoHide(final ListView listView) {
-//		initActionBarAutoHide();
-//		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//			final static int ITEMS_THRESHOLD = 3;
-//			int lastFvi = 0;
-//
-//			@Override
-//			public void onScrollStateChanged(AbsListView view, int scrollState) {
-//			}
-//
-//			@Override
-//			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//				onMainContentScrolled(firstVisibleItem <= ITEMS_THRESHOLD ? 0 : Integer.MAX_VALUE,
-//						lastFvi - firstVisibleItem > 0 ? Integer.MIN_VALUE :
-//								lastFvi == firstVisibleItem ? 0 : Integer.MAX_VALUE
-//				);
-//				lastFvi = firstVisibleItem;
-//			}
-//		});
-//	}
-//
-//	private View makeNavDrawerItem(final int itemId, ViewGroup container) {
-//		boolean selected = getSelfNavDrawerItem() == itemId;
-//		int layoutToInflate = 0;
-//		if (itemId == NAVDRAWER_ITEM_SEPARATOR) {
-//			layoutToInflate = R.layout.navdrawer_separator;
-//		} else if (itemId == NAVDRAWER_ITEM_SEPARATOR_SPECIAL) {
-//			layoutToInflate = R.layout.navdrawer_separator;
-//		} else {
-//			layoutToInflate = R.layout.navdrawer_item;
-//		}
-//		View view = getLayoutInflater().inflate(layoutToInflate, container, false);
-//
-//		if (isSeparator(itemId)) {
-//			// we are done
+	}
+
+	/**
+	 * Indicates that the main content has scrolled (for the purposes of showing/hiding
+	 * the action bar for the "action bar auto hide" effect). currentY and deltaY may be exact
+	 * (if the underlying view supports it) or may be approximate indications:
+	 * deltaY may be INT_MAX to mean "scrolled forward indeterminately" and INT_MIN to mean
+	 * "scrolled backward indeterminately".  currentY may be 0 to mean "somewhere close to the
+	 * start of the list" and INT_MAX to mean "we don't know, but not at the start of the list"
+	 */
+	private void onMainContentScrolled(int currentY, int deltaY) {
+		if (deltaY > mActionBarAutoHideSensivity) {
+			deltaY = mActionBarAutoHideSensivity;
+		} else if (deltaY < -mActionBarAutoHideSensivity) {
+			deltaY = -mActionBarAutoHideSensivity;
+		}
+
+		if (Math.signum(deltaY) * Math.signum(mActionBarAutoHideSignal) < 0) {
+			// deltaY is a motion opposite to the accumulated signal, so reset signal
+			mActionBarAutoHideSignal = deltaY;
+		} else {
+			// add to accumulated signal
+			mActionBarAutoHideSignal += deltaY;
+		}
+
+		boolean shouldShow = currentY < mActionBarAutoHideMinY ||
+				(mActionBarAutoHideSignal <= -mActionBarAutoHideSensivity);
+		autoShowOrHideActionBar(shouldShow);
+	}
+
+	protected Toolbar getActionBarToolbar() {
+		if (mActionBarToolbar == null) {
+			mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+			if (mActionBarToolbar != null) {
+				setSupportActionBar(mActionBarToolbar);
+			}
+		}
+		return mActionBarToolbar;
+	}
+
+	protected void autoShowOrHideActionBar(boolean show) {
+		if (show == mActionBarShown) {
+			return;
+		}
+
+		mActionBarShown = show;
+		onActionBarAutoShowOrHide(show);
+	}
+
+	protected void enableActionBarAutoHide(final ListView listView) {
+		initActionBarAutoHide();
+		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+			final static int ITEMS_THRESHOLD = 3;
+			int lastFvi = 0;
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				onMainContentScrolled(firstVisibleItem <= ITEMS_THRESHOLD ? 0 : Integer.MAX_VALUE,
+						lastFvi - firstVisibleItem > 0 ? Integer.MIN_VALUE :
+								lastFvi == firstVisibleItem ? 0 : Integer.MAX_VALUE
+				);
+				lastFvi = firstVisibleItem;
+			}
+		});
+	}
+
+	private View makeNavDrawerItem(final int itemId, ViewGroup container) {
+		boolean selected = getSelfNavDrawerItem() == itemId;
+		int layoutToInflate = 0;
+		if (itemId == NAVDRAWER_ITEM_SEPARATOR) {
+			layoutToInflate = R.layout.navdrawer_separator;
+		} else if (itemId == NAVDRAWER_ITEM_SEPARATOR_SPECIAL) {
+			layoutToInflate = R.layout.navdrawer_separator;
+		} else {
+			layoutToInflate = R.layout.navdrawer_item;
+		}
+		View view = getLayoutInflater().inflate(layoutToInflate, container, false);
+
+		if (isSeparator(itemId)) {
+			// we are done
 //			UIUtils.setAccessibilityIgnore(view);
-//			return view;
-//		}
-//
-//		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-//		TextView titleView = (TextView) view.findViewById(R.id.title);
-//		int iconId = itemId >= 0 && itemId < NAVDRAWER_ICON_RES_ID.length ?
-//				NAVDRAWER_ICON_RES_ID[itemId] : 0;
-//		int titleId = itemId >= 0 && itemId < NAVDRAWER_TITLE_RES_ID.length ?
-//				NAVDRAWER_TITLE_RES_ID[itemId] : 0;
-//
-//		// set icon and text
-//		iconView.setVisibility(iconId > 0 ? View.VISIBLE : View.GONE);
-//		if (iconId > 0) {
-//			iconView.setImageResource(iconId);
-//		}
-//		titleView.setText(getString(titleId));
-//
-//		formatNavDrawerItem(view, itemId, selected);
-//
-//		view.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				onNavDrawerItemClicked(itemId);
-//			}
-//		});
-//
-//		return view;
-//	}
-//
-//	private boolean isSpecialItem(int itemId) {
-//		return itemId == NAVDRAWER_ITEM_SETTINGS;
-//	}
-//
-//	private boolean isSeparator(int itemId) {
-//		return itemId == NAVDRAWER_ITEM_SEPARATOR || itemId == NAVDRAWER_ITEM_SEPARATOR_SPECIAL;
-//	}
-//
-//	private void formatNavDrawerItem(View view, int itemId, boolean selected) {
-//		if (isSeparator(itemId)) {
-//			// not applicable
-//			return;
-//		}
-//
-//		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-//		TextView titleView = (TextView) view.findViewById(R.id.title);
-//
-//		if (selected) {
-//			view.setBackgroundResource(R.drawable.selected_navdrawer_item_background);
-//		}
-//
-//		// configure its appearance according to whether or not it's selected
-//		titleView.setTextColor(selected ?
-//				getResources().getColor(R.color.navdrawer_text_color_selected) :
-//				getResources().getColor(R.color.navdrawer_text_color));
-//		iconView.setColorFilter(selected ?
-//				getResources().getColor(R.color.navdrawer_icon_tint_selected) :
-//				getResources().getColor(R.color.navdrawer_icon_tint));
-//	}
-//
-//	/** Registers device on the GCM server, if necessary. */
-//	private void registerGCMClient() {
+			return view;
+		}
+
+		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+		TextView titleView = (TextView) view.findViewById(R.id.title);
+		int iconId = itemId >= 0 && itemId < NAVDRAWER_ICON_RES_ID.length ?
+				NAVDRAWER_ICON_RES_ID[itemId] : 0;
+		int titleId = itemId >= 0 && itemId < NAVDRAWER_TITLE_RES_ID.length ?
+				NAVDRAWER_TITLE_RES_ID[itemId] : 0;
+
+		// set icon and text
+		iconView.setVisibility(iconId > 0 ? View.VISIBLE : View.GONE);
+		if (iconId > 0) {
+			iconView.setImageResource(iconId);
+		}
+		titleView.setText(getString(titleId));
+
+		formatNavDrawerItem(view, itemId, selected);
+
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onNavDrawerItemClicked(itemId);
+			}
+		});
+
+		return view;
+	}
+
+	private boolean isSpecialItem(int itemId) {
+		return itemId == NAVDRAWER_ITEM_SETTINGS;
+	}
+
+	private boolean isSeparator(int itemId) {
+		return itemId == NAVDRAWER_ITEM_SEPARATOR || itemId == NAVDRAWER_ITEM_SEPARATOR_SPECIAL;
+	}
+
+	private void formatNavDrawerItem(View view, int itemId, boolean selected) {
+		if (isSeparator(itemId)) {
+			// not applicable
+			return;
+		}
+
+		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+		TextView titleView = (TextView) view.findViewById(R.id.title);
+
+		if (selected) {
+			view.setBackgroundResource(R.drawable.selected_navdrawer_item_background);
+		}
+
+		// configure its appearance according to whether or not it's selected
+		titleView.setTextColor(selected ?
+				getResources().getColor(R.color.navdrawer_text_color_selected) :
+				getResources().getColor(R.color.navdrawer_text_color));
+		iconView.setColorFilter(selected ?
+				getResources().getColor(R.color.navdrawer_icon_tint_selected) :
+				getResources().getColor(R.color.navdrawer_icon_tint));
+	}
+
+	/** Registers device on the GCM server, if necessary. */
+	private void registerGCMClient() {
 //		GCMRegistrar.checkDevice(this);
 //		GCMRegistrar.checkManifest(this);
 //
@@ -1385,40 +1396,40 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //				mGCMRegisterTask.execute(null, null, null);
 //			}
 //		}
-//	}
-//
-//	@Override
-//	protected void onDestroy() {
-//		super.onDestroy();
-//
-//		if (mGCMRegisterTask != null) {
-//			LOGD(TAG, "Cancelling GCM registration task.");
-//			mGCMRegisterTask.cancel(true);
-//		}
-//
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		if (mGCMRegisterTask != null) {
+			LOGD(TAG, "Cancelling GCM registration task.");
+			mGCMRegisterTask.cancel(true);
+		}
+
 //		try {
 //			GCMRegistrar.onDestroy(this);
 //		} catch (Exception e) {
 //			LOGW(TAG, "C2DM unregistration error", e);
 //		}
-//
-//		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//		sp.unregisterOnSharedPreferenceChangeListener(this);
-//	}
-//
-//	private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
-//		@Override
-//		public void onStatusChanged(int which) {
-//			runOnUiThread(new Runnable() {
-//				@Override
-//				public void run() {
-//					String accountName = AccountUtils.getActiveAccountName(BaseActivity.this);
-//					if (TextUtils.isEmpty(accountName)) {
-//						onRefreshingStateChanged(false);
-//						mManualSyncRequest = false;
-//						return;
-//					}
-//
+
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		sp.unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
+		@Override
+		public void onStatusChanged(int which) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					String accountName = "account Name";// AccountUtils.getActiveAccountName(BaseActivity.this);
+					if (TextUtils.isEmpty(accountName)) {
+						onRefreshingStateChanged(false);
+						mManualSyncRequest = false;
+						return;
+					}
+
 //					Account account = new Account(accountName, GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
 //					boolean syncActive = ContentResolver.isSyncActive(
 //							account, ScheduleContract.CONTENT_AUTHORITY);
@@ -1428,54 +1439,54 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //						mManualSyncRequest = false;
 //					}
 //					onRefreshingStateChanged(syncActive || (mManualSyncRequest && syncPending));
-//				}
-//			});
-//		}
-//	};
-//
-//	protected void onRefreshingStateChanged(boolean refreshing) {
-//		if (mSwipeRefreshLayout != null) {
-//			mSwipeRefreshLayout.setRefreshing(refreshing);
-//		}
-//	}
-//
-//	protected void enableDisableSwipeRefresh(boolean enable) {
-//		if (mSwipeRefreshLayout != null) {
-//			mSwipeRefreshLayout.setEnabled(enable);
-//		}
-//	}
-//
-//	protected void registerHideableHeaderView(View hideableHeaderView) {
-//		if (!mHideableHeaderViews.contains(hideableHeaderView)) {
-//			mHideableHeaderViews.add(hideableHeaderView);
-//		}
-//	}
-//
-//	protected void deregisterHideableHeaderView(View hideableHeaderView) {
-//		if (mHideableHeaderViews.contains(hideableHeaderView)) {
-//			mHideableHeaderViews.remove(hideableHeaderView);
-//		}
-//	}
-//
+				}
+			});
+		}
+	};
+
+	protected void onRefreshingStateChanged(boolean refreshing) {
+		if (mSwipeRefreshLayout != null) {
+			mSwipeRefreshLayout.setRefreshing(refreshing);
+		}
+	}
+
+	protected void enableDisableSwipeRefresh(boolean enable) {
+		if (mSwipeRefreshLayout != null) {
+			mSwipeRefreshLayout.setEnabled(enable);
+		}
+	}
+
+	protected void registerHideableHeaderView(View hideableHeaderView) {
+		if (!mHideableHeaderViews.contains(hideableHeaderView)) {
+			mHideableHeaderViews.add(hideableHeaderView);
+		}
+	}
+
+	protected void deregisterHideableHeaderView(View hideableHeaderView) {
+		if (mHideableHeaderViews.contains(hideableHeaderView)) {
+			mHideableHeaderViews.remove(hideableHeaderView);
+		}
+	}
+
 //	public LUtils getLUtils() {
 //		return mLUtils;
 //	}
-//
-//	public int getThemedStatusBarColor() {
-//		return mThemedStatusBarColor;
-//	}
-//
-//	public void setNormalStatusBarColor(int color) {
-//		mNormalStatusBarColor = color;
-//		if (mDrawerLayout != null) {
-//			mDrawerLayout.setStatusBarBackgroundColor(mNormalStatusBarColor);
-//		}
-//	}
-//
-//	protected void onActionBarAutoShowOrHide(boolean shown) {
-//		if (mStatusBarColorAnimator != null) {
-//			mStatusBarColorAnimator.cancel();
-//		}
+
+	public int getThemedStatusBarColor() {
+		return mThemedStatusBarColor;
+	}
+
+	public void setNormalStatusBarColor(int color) {
+		mNormalStatusBarColor = color;
+		if (mDrawerLayout != null) {
+			mDrawerLayout.setStatusBarBackgroundColor(mNormalStatusBarColor);
+		}
+	}
+
+	protected void onActionBarAutoShowOrHide(boolean shown) {
+		if (mStatusBarColorAnimator != null) {
+			mStatusBarColorAnimator.cancel();
+		}
 //		mStatusBarColorAnimator = ObjectAnimator.ofInt(
 //				(mDrawerLayout != null) ? mDrawerLayout : mLUtils,
 //				(mDrawerLayout != null) ? "statusBarBackgroundColor" : "statusBarColor",
@@ -1492,26 +1503,26 @@ public abstract class BaseActivity extends ActionBarActivity implements
 //		}
 //		mStatusBarColorAnimator.setEvaluator(ARGB_EVALUATOR);
 //		mStatusBarColorAnimator.start();
-//
+
 //		updateSwipeRefreshProgressBarTop();
-//
-//		for (View view : mHideableHeaderViews) {
-//			if (shown) {
-//				view.animate()
-//						.translationY(0)
-//						.alpha(1)
-//						.setDuration(HEADER_HIDE_ANIM_DURATION)
-//						.setInterpolator(new DecelerateInterpolator());
-//			} else {
-//				view.animate()
-//						.translationY(-view.getBottom())
-//						.alpha(0)
-//						.setDuration(HEADER_HIDE_ANIM_DURATION)
-//						.setInterpolator(new DecelerateInterpolator());
-//			}
-//		}
-//	}
-//
+
+		for (View view : mHideableHeaderViews) {
+			if (shown) {
+				view.animate()
+						.translationY(0)
+						.alpha(1)
+						.setDuration(HEADER_HIDE_ANIM_DURATION)
+						.setInterpolator(new DecelerateInterpolator());
+			} else {
+				view.animate()
+						.translationY(-view.getBottom())
+						.alpha(0)
+						.setDuration(HEADER_HIDE_ANIM_DURATION)
+						.setInterpolator(new DecelerateInterpolator());
+			}
+		}
+	}
+
 //	@Override
 //	public boolean canSwipeRefreshChildScrollUp() {
 //		return false;

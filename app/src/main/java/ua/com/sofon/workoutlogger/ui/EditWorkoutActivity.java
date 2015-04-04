@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import java.text.*;
 import java.util.*;
@@ -10,14 +10,17 @@ import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import ua.com.sofon.workoutlogger.*;
+
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.parts.Workout;
+import ua.com.sofon.workoutlogger.util.UIUtil;
 
 /**
  * Activity for add and edit workouts.
  * @author Dimowner.
  */
-public class WorkoutPos extends ActionBarActivity {
+public class EditWorkoutActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,8 @@ public class WorkoutPos extends ActionBarActivity {
 		btnAddExe.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(WorkoutPos.this, ExerBase.class);
-				intent.setAction(ExerBase.ACTION_SELECT);
+				Intent intent = new Intent(EditWorkoutActivity.this, ExercisesActivity.class);
+				intent.setAction(ExercisesActivity.ACTION_SELECT);
 				startActivityForResult(intent, REQUEST_CODE_ADD);
 			}
 		});
@@ -64,9 +67,9 @@ public class WorkoutPos extends ActionBarActivity {
 				txtWeight.setEnabled(false);
 				btnAddExe.setVisibility(View.GONE);
 			case ACTION_EDIT:
-				if (getIntent().hasExtra(WorkoutBase.EXTRAS_KEY_WORKOUT)) {
+				if (getIntent().hasExtra(WorkoutsActivity.EXTRAS_KEY_WORKOUT)) {
 					editingWorkout = (Workout)getIntent()
-							.getSerializableExtra(WorkoutBase.EXTRAS_KEY_WORKOUT);
+							.getSerializableExtra(WorkoutsActivity.EXTRAS_KEY_WORKOUT);
 					txtExeName.setText(editingWorkout.getName());
 					txtDate.setText(editingWorkout.getDateStr());
 					txtWeight.setText(String.valueOf(editingWorkout.getWeight()));
@@ -118,9 +121,9 @@ public class WorkoutPos extends ActionBarActivity {
 				if (txtDate.getText().length() > 0) {
 					Intent intent = new Intent();
 					if (action.equals(ACTION_ADD)) {
-						intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, makeWorkout());
+						intent.putExtra(WorkoutsActivity.EXTRAS_KEY_WORKOUT, makeWorkout());
 					} else if (action.equals(ACTION_EDIT)) {
-						intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, updateWorkout(editingWorkout));
+						intent.putExtra(WorkoutsActivity.EXTRAS_KEY_WORKOUT, updateWorkout(editingWorkout));
 					}
 					setResult(RESULT_OK, intent);
 					finish();
@@ -129,16 +132,16 @@ public class WorkoutPos extends ActionBarActivity {
 				}
 				return true;
 			case R.id.action_edit:
-				//TODO: make WorkoutPos editable.
+				//TODO: make EditWorkoutActivity editable.
 				return true;
 			case R.id.action_delete:
 				if (action.equals(ACTION_VIEW)) {
-					Util.showWarningDialog(WorkoutPos.this, "Delete workout?",
+					UIUtil.showWarningDialog(EditWorkoutActivity.this, "Delete workout?",
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									Intent intent = new Intent();
-									intent.putExtra(WorkoutBase.EXTRAS_KEY_WORKOUT, editingWorkout);
+									intent.putExtra(WorkoutsActivity.EXTRAS_KEY_WORKOUT, editingWorkout);
 									setResult(RESULT_OK, intent);
 									finish();
 								}
@@ -159,7 +162,7 @@ public class WorkoutPos extends ActionBarActivity {
 
 	/**
 	 * Extract layout fields data and instantiate
-	 * {@link ua.com.sofon.workoutlogger.Workout Workout} with this data.
+	 * {@link ua.com.sofon.workoutlogger.parts.Workout Workout} with this data.
 	 * @return Workout.
 	 */
 	private Workout makeWorkout() {
@@ -224,17 +227,17 @@ public class WorkoutPos extends ActionBarActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_CODE_ADD:
-					if (data.hasExtra(ExerBase.EXTRAS_KEY_EXERCISE)) {
-						adapter.addItem((Exercise)data.getSerializableExtra(ExerBase.EXTRAS_KEY_EXERCISE));
+					if (data.hasExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE)) {
+						adapter.addItem((Exercise)data.getSerializableExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE));
 						adapter.notifyDataSetChanged();
 					}
 					break;
 				case REQUEST_CODE_REPLACE:
-					if (data.hasExtra(ExerBase.EXTRAS_KEY_EXERCISE)) {
+					if (data.hasExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE)) {
 						if (selectedItemPos != -1) {
 							adapter.removeItem(adapter.getItem(selectedItemPos));
 							adapter.insertItem(
-									(Exercise) data.getSerializableExtra(ExerBase.EXTRAS_KEY_EXERCISE),
+									(Exercise) data.getSerializableExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE),
 									selectedItemPos
 								);
 							adapter.notifyDataSetChanged();
@@ -275,7 +278,7 @@ public class WorkoutPos extends ActionBarActivity {
 	private ListView exeList;
 	private int selectedItemPos = -1;
 
-//	/** Intent to return {@link ua.com.sofon.workoutlogger.activities.WorkoutBase} */
+//	/** Intent to return {@link ua.com.sofon.workoutlogger.ui.WorkoutsActivity} */
 //	private Intent intent;
 
 	private ExercisesListAdapter adapter;
@@ -369,9 +372,9 @@ public class WorkoutPos extends ActionBarActivity {
 			itemPnl.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(context, ExerPos.class);
-					intent.setAction(ExerPos.ACTION_VIEW);
-					intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, exerciseList.get(position));
+					Intent intent = new Intent(context, EditExerciseActivity.class);
+					intent.setAction(EditExerciseActivity.ACTION_VIEW);
+					intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE, exerciseList.get(position));
 					selectedItemPos = position;
 					startActivityForResult(intent, REQUEST_CODE_VIEW);
 				}
@@ -408,13 +411,13 @@ public class WorkoutPos extends ActionBarActivity {
 
 					switch (item.getItemId()) {
 						case R.id.action_replace:
-							Intent intent = new Intent(context, ExerBase.class);
-							intent.setAction(ExerBase.ACTION_SELECT);
+							Intent intent = new Intent(context, ExercisesActivity.class);
+							intent.setAction(ExercisesActivity.ACTION_SELECT);
 							selectedItemPos = position;
 							startActivityForResult(intent, REQUEST_CODE_REPLACE);
 							return true;
 						case R.id.action_delete:
-							Util.showWarningDialog(WorkoutPos.this, "Delete exercise?",
+							UIUtil.showWarningDialog(EditWorkoutActivity.this, "Delete exercise?",
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(DialogInterface dialog, int which) {

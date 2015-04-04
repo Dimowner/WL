@@ -33,6 +33,6 @@
 			android:layout_weight="10"
 			android:padding="16dp"
 			android:background="@drawable/image_button_selector"
-			android:src="@mipmap/ic_dots_vertical_grey600_24dp"/>
+			android:src="@drawable/ic_dots_vertical_grey600_24dp"/>
 
 </LinearLayout>

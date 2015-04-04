@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

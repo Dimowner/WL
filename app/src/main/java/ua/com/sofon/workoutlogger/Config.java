@@ -5,13 +5,7 @@ package ua.com.sofon.workoutlogger;
  */
 public class Config {
     // General configuration
-
-    // Is this an internal dogfood build?
-    public static final boolean IS_DOGFOOD_BUILD = false;
-
-    // Warning messages for dogfood build
-    public static final String DOGFOOD_BUILD_WARNING_TITLE = "Test build";
-    public static final String DOGFOOD_BUILD_WARNING_TEXT = "This is a test build.";
+    public static final boolean IS_DEBUG_BUILD = false;
 
     // shorthand for some units of time
     public static final long SECOND_MILLIS = 1000;

@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger;
+package ua.com.sofon.workoutlogger.parts;
 
 /**
  * Created on 22.02.2015.

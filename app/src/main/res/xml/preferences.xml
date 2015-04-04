@@ -1,0 +1,45 @@
+<PreferenceScreen
+		xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+			android:title="Pickers test">
+
+		<ua.com.sofon.workoutlogger.ui.widget.TimePickerPreference
+				android:key="timePicker"
+				android:title="Time picker"
+				android:icon="@drawable/ic_check_white_24dp" />
+		<ua.com.sofon.workoutlogger.ui.widget.DatePickerPreference
+				android:key="datePicker"
+				android:title="Date picker"
+				android:icon="@drawable/ic_check_white_24dp" />
+		<ua.com.sofon.workoutlogger.ui.widget.NumPickerPreference
+				android:key="numPicker"
+				android:title="Num picker"
+				android:icon="@drawable/ic_check_white_24dp" />
+	</PreferenceCategory>
+
+	<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="check1"
+			android:summary="If you check this, it will be checked"
+			android:title="Some check 1"/>
+
+	<CheckBoxPreference
+			android:defaultValue="true"
+			android:key="check2"
+			android:summary="If you check this, it will be checked"
+			android:title="Some check 2"/>
+
+	<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="check3"
+			android:summary="If you check this, it will be checked"
+			android:title="Some check 3"/>
+
+	<CheckBoxPreference
+			android:defaultValue="true"
+			android:key="check4"
+			android:summary="If you check this, it will be checked"
+			android:title="Some check 4"/>
+
+</PreferenceScreen>

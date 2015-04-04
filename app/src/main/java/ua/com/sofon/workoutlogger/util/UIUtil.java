@@ -1,20 +1,21 @@
-package ua.com.sofon.workoutlogger;
+package ua.com.sofon.workoutlogger.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import ua.com.sofon.workoutlogger.R;
 
 /**
- * Common methods, created on 01.03.2015.
+ * User interface common methods, created on 01.03.2015.
  * @author Dimowner
  */
-public class Util {
+public class UIUtil {
 
 	/**
 	 * Constructor
 	 * Is private to forbid creation of an object.
 	 */
-	private Util() {
+	private UIUtil() {
 	}
 
 	/**
@@ -31,7 +32,7 @@ public class Util {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle("Warning")
 				.setMessage(mesText)
-				.setIcon(R.mipmap.ic_alert_grey600_36dp)
+				.setIcon(R.drawable.ic_alert_grey600_36dp)
 				.setCancelable(false)
 				.setPositiveButton("OK", positivBtnClickListener)
 				.setNegativeButton("Cancel", negativeBtnClickListener);

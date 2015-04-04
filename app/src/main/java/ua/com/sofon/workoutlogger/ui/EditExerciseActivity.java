@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.ActionBarActivity;
@@ -6,14 +6,14 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-import ua.com.sofon.workoutlogger.Exercise;
+import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.R;
 
 /**
  * Activity for add and edit exercises.
  * @author Dimowner.
  */
-public class ExerPos extends ActionBarActivity {
+public class EditExerciseActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class ExerPos extends ActionBarActivity {
 				exeName.setEnabled(false);
 				exeDescription.setEnabled(false);
 			case ACTION_EDIT:
-				if (extras.containsKey(ExerBase.EXTRAS_KEY_EXERCISE)) {
-					editingExercise = (Exercise) extras.getSerializable(ExerBase.EXTRAS_KEY_EXERCISE);
+				if (extras.containsKey(ExercisesActivity.EXTRAS_KEY_EXERCISE)) {
+					editingExercise = (Exercise) extras.getSerializable(ExercisesActivity.EXTRAS_KEY_EXERCISE);
 					exeName.setText(editingExercise.getName());
 					exeDescription.setText(editingExercise.getDescription());
 				}
@@ -72,11 +72,11 @@ public class ExerPos extends ActionBarActivity {
 						Exercise e = new Exercise();
 						e.setName(exeName.getText().toString());
 						e.setDescription(exeDescription.getText().toString());
-						intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, e);
+						intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE, e);
 					} else if (action.equals(ACTION_EDIT)) {
 						editingExercise.setName(exeName.getText().toString());
 						editingExercise.setDescription(exeDescription.getText().toString());
-						intent.putExtra(ExerBase.EXTRAS_KEY_EXERCISE, editingExercise);
+						intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE, editingExercise);
 					}
 					setResult(RESULT_OK, intent);
 					finish();

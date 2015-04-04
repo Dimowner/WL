@@ -2,12 +2,12 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context="ua.com.sofon.workoutlogger.activities.ExerBase">
+		tools:context="ua.com.sofon.workoutlogger.ui.ExercisesActivity">
 
 	<android.support.v7.widget.Toolbar
 			android:id="@+id/list_toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="?actionBarSize"
 			android:background="?attr/colorPrimary"
 			android:minHeight="?attr/actionBarSize" />
 

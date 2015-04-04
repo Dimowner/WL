@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import java.util.*;
 import java.sql.*;
@@ -10,14 +10,17 @@ import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import ua.com.sofon.workoutlogger.*;
+
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
+import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.util.UIUtil;
 
 /**
  * Activity shows all exercises.
  * @author Dimowner
  */
-public class ExerBase extends ActionBarActivity {
+public class ExercisesActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,8 @@ public class ExerBase extends ActionBarActivity {
 				finish();
 				return true;
 			case R.id.action_add:
-				Intent intent = new Intent(ExerBase.this, ExerPos.class);
-				intent.setAction(ExerPos.ACTION_ADD);
+				Intent intent = new Intent(ExercisesActivity.this, EditExerciseActivity.class);
+				intent.setAction(EditExerciseActivity.ACTION_ADD);
 				startActivityForResult(intent, REQUEST_ADD_EXERCISE);
 				return true;
 			default:
@@ -236,8 +239,8 @@ public class ExerBase extends ActionBarActivity {
 					switch (item.getItemId()) {
 						case R.id.action_edit:
 							Log.v(LOG_TAG, "name = " + e.getName() + " desc = " + e.getDescription() + " id = " + e.getId());
-							Intent intent = new Intent(ExerBase.this, ExerPos.class);
-							intent.setAction(ExerPos.ACTION_EDIT);
+							Intent intent = new Intent(ExercisesActivity.this, EditExerciseActivity.class);
+							intent.setAction(EditExerciseActivity.ACTION_EDIT);
 							editItemPos = position;
 //							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
 //							intent.putExtra(EXTRAS_KEY_ID, e.getId());
@@ -248,7 +251,7 @@ public class ExerBase extends ActionBarActivity {
 
 							return true;
 						case R.id.action_delete:
-							Util.showWarningDialog(ExerBase.this, "Delete exercise?",
+							UIUtil.showWarningDialog(ExercisesActivity.this, "Delete exercise?",
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(DialogInterface dialog, int which) {

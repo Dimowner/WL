@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger;
+package ua.com.sofon.workoutlogger.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

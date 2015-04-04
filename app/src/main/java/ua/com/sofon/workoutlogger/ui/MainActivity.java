@@ -1,12 +1,14 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
-import android.support.v7.app.*;
 import android.support.v7.widget.Toolbar;
 import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.ui.widget.DatePickerView;
+import ua.com.sofon.workoutlogger.ui.widget.NumPickerView;
+import ua.com.sofon.workoutlogger.ui.widget.TimePickerView;
 
 //TODO LIST:
 /*
@@ -35,21 +37,21 @@ import ua.com.sofon.workoutlogger.R;
  * Application main activity.
  * @author Dimowner
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.main_activity_toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		Button btnExercisesList = (Button) findViewById(R.id.btn_show_exercises_list);
 		btnExercisesList.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, ExerBase.class);
+				Intent intent = new Intent(MainActivity.this, ExercisesActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -58,10 +60,24 @@ public class MainActivity extends ActionBarActivity {
 		btnWorkoutList.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, WorkoutBase.class);
+				Intent intent = new Intent(MainActivity.this, WorkoutsActivity.class);
 				startActivity(intent);
 			}
 		});
+
+		Button btn1 = (Button) findViewById(R.id.button1);
+		btn1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+				startActivity(i);
+			}
+		});
+
+		DatePickerView d = (DatePickerView) findViewById(R.id.datepicker);
+		TimePickerView t = (TimePickerView) findViewById(R.id.timepicker);
+		NumPickerView n = (NumPickerView) findViewById(R.id.numpicker);
+
 	}
 
 	@Override

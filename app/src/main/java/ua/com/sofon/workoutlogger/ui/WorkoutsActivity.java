@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.activities;
+package ua.com.sofon.workoutlogger.ui;
 
 import java.util.*;
 import java.sql.*;
@@ -10,14 +10,17 @@ import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import ua.com.sofon.workoutlogger.*;
+
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
+import ua.com.sofon.workoutlogger.parts.Workout;
+import ua.com.sofon.workoutlogger.util.UIUtil;
 
 /**
  * Activity shows all workouts.
  * @author Dimowner
  */
-public class WorkoutBase extends ActionBarActivity {
+public class WorkoutsActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,8 @@ public class WorkoutBase extends ActionBarActivity {
 				finish();
 				return true;
 			case R.id.action_add:
-				Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
-				intent.setAction(WorkoutPos.ACTION_ADD);
+				Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
+				intent.setAction(EditWorkoutActivity.ACTION_ADD);
 				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
 				return true;
 			default:
@@ -208,8 +211,8 @@ public class WorkoutBase extends ActionBarActivity {
 			itemContent.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
-					intent.setAction(WorkoutPos.ACTION_VIEW);
+					Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
+					intent.setAction(EditWorkoutActivity.ACTION_VIEW);
 					editItemPos = position;
 					intent.putExtra(EXTRAS_KEY_WORKOUT, workoutList.get(position));
 					startActivityForResult(intent, REQUEST_VIEW_WORKOUT);
@@ -243,15 +246,15 @@ public class WorkoutBase extends ActionBarActivity {
 					Workout w = workoutList.get(position);
 					switch (item.getItemId()) {
 						case R.id.action_edit:
-							Intent intent = new Intent(WorkoutBase.this, WorkoutPos.class);
-							intent.setAction(WorkoutPos.ACTION_EDIT);
+							Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
+							intent.setAction(EditWorkoutActivity.ACTION_EDIT);
 							editItemPos = position;
 //							intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
 							intent.putExtra(EXTRAS_KEY_WORKOUT, w);
 							startActivityForResult(intent, REQUEST_EDIT_WORKOUT);
 							return true;
 						case R.id.action_delete:
-							Util.showWarningDialog(WorkoutBase.this, "Delete workout?",
+							UIUtil.showWarningDialog(WorkoutsActivity.this, "Delete workout?",
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
