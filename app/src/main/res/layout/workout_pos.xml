@@ -5,63 +5,64 @@
 					 tools:context="ua.com.sofon.workoutlogger.ui.EditWorkoutActivity">
 
 	<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar"
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:background="?attr/colorPrimary"
+		android:minHeight="?attr/actionBarSize">
+
+		<LinearLayout
+			android:id="@+id/workout_pos_pnl"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:background="?attr/colorPrimary"
-			android:minHeight="?attr/actionBarSize" >
-		<LinearLayout
-				android:id="@+id/workout_pos_pnl"
+			android:layout_marginTop="8dp"
+			android:orientation="vertical">
+
+			<EditText
+				android:id="@+id/workout_pos_txt_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:orientation="vertical">
-			<EditText
-					android:id="@+id/workout_pos_txt_name"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:inputType="text"
-					android:hint="@string/workoutpos_name"/>
+				android:inputType="text"
+				android:hint="@string/workoutpos_name"/>
 
 			<LinearLayout
-					android:id="@+id/workout_pos_pnl_info"
+				android:id="@+id/workout_pos_pnl_info"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:baselineAligned="false"
+				android:layout_marginTop="8dp"
+				android:layout_marginBottom="8dp"
+				android:orientation="horizontal">
+
+				<ua.com.sofon.workoutlogger.ui.widget.DatePickerView
+					android:id="@+id/workout_pos_txt_date"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:baselineAligned="false"
-					android:layout_marginTop="8dp"
-					android:layout_marginBottom="8dp"
-					android:orientation="horizontal">
+					android:layout_weight="1"
+					android:hint="@string/workoutpos_date"/>
 
 				<EditText
-						android:id="@+id/workout_pos_txt_date"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:hint="@string/workoutpos_date"
-						android:inputType="date"/>
-
-				<EditText
-						android:id="@+id/workout_pos_txt_weight"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:hint="@string/workoutpos_weight"
-						android:inputType="numberDecimal"/>
+					android:id="@+id/workout_pos_txt_weight"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:hint="@string/workoutpos_weight"
+					android:inputType="numberDecimal"/>
 			</LinearLayout>
 		</LinearLayout>
 	</android.support.v7.widget.Toolbar>
 
 	<ListView
-			android:id="@+id/workout_pos_exe_list"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/toolbar" />
+		android:id="@+id/workout_pos_exe_list"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/toolbar"/>
 
 	<Button
-			android:id="@+id/workout_pos_btn_add_exe"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/workoutpos_add_exercise"
-			android:layout_below="@+id/workout_pos_exe_list"/>
+		android:id="@+id/workout_pos_btn_add_exe"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/workoutpos_add_exercise"
+		android:layout_below="@+id/workout_pos_exe_list"/>
 </RelativeLayout>

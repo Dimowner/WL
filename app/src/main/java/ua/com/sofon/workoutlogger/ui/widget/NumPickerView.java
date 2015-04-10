@@ -4,22 +4,22 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-
 import ua.com.sofon.workoutlogger.R;
 
 /**
- * Поле для ввода числа, заполняется с помощью {@link android.widget.NumberPicker NumberPicker}.
+ * View for number input with {@link android.widget.NumberPicker NumberPicker}.
  * @author Dimowner
  */
 public class NumPickerView extends EditText {
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
+	 * Constructor
+	 * @param context Application context.
 	 */
 	public NumPickerView(Context context) {
 		super(context);
@@ -27,9 +27,9 @@ public class NumPickerView extends EditText {
 	}
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public NumPickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -37,17 +37,16 @@ public class NumPickerView extends EditText {
 	}
 
 	/**
-	 * Инициализация поля.
-	 * @param context Контекст приложения.
+	 * View initialization
+	 * @param context Application context.
 	 */
 	private void initNumPickerView(Context context) {
 		setFocusable(false);
 		numberPicker = new NumberPicker(context);
-		setNewValues();
+		updateValues();
 
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(numberPicker)
-			.setTitle(R.string.numpicker_set_number)
 			.setPositiveButton(R.string.numpicker_select, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setText(Integer.toString((numberPicker.getValue() * valueStep)));
@@ -59,7 +58,6 @@ public class NumPickerView extends EditText {
 			})
 			.setNeutralButton(R.string.numpicker_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-//					setValue(null);
 					setText("");
 				}
 			})
@@ -67,57 +65,57 @@ public class NumPickerView extends EditText {
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(@NonNull MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
     		if (getText() == null || getText().length() == 0) {
     			numberPicker.setValue(minValue);
     		}
 			alertDialog.show();
 		}
-	    return true; 
+	    return true;
 	}
 
 	/**
-	 * Получить минимальное значение в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Минимальное значение
+	 * Get min value from {@link android.widget.NumberPicker NumberPicker}.
+	 * @return Min value.
 	 */
 	public int getMinValue() {
 		return minValue;
 	}
 
 	/**
-	 * Получить максимальное значение в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Максимальное значение
+	 * Get max value from {@link android.widget.NumberPicker NumberPicker}.
+	 * @return Max value
 	 */
 	public int getMaxValue() {
 		return maxValue;
 	}
 
 	/**
-	 * Получить шаг между значениями в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Шаг между значениями.
+	 * Get value step from {@link android.widget.NumberPicker NumberPicker}.
+	 * @return Value step.
 	 */
 	public int getStep() {
 		return valueStep;
 	}
 
 	/**
-	 * Задать новые значения в {@link android.widget.NumberPicker NumberPicker}.
-	 * @param minValue Минимальное значение.
-	 * @param maxValue Максимальное значение.
-	 * @param valueStep Шаг значений.
+	 * Set params for {@link android.widget.NumberPicker NumberPicker}.
+	 * @param minValue Min value.
+	 * @param maxValue Max value.
+	 * @param valueStep value step.
 	 */
 	public void setNumPickerParams(int minValue, int maxValue, int valueStep) {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.valueStep = valueStep;
-		setNewValues();
+		updateValues();
 	}
 
 	/**
-	 * Применить новые значения в {@link android.widget.NumberPicker NumberPicker}.
+	 * Update parameters in {@link android.widget.NumberPicker NumberPicker}.
 	 */
-	private void setNewValues() {
+	private void updateValues() {
 		if (valueStep <= 0) {
 			valueStep = 1;
 		}
@@ -141,7 +139,7 @@ public class NumPickerView extends EditText {
 
 	/**
 	 * Set the title using the given resource id.
-	 * @param titleId the title's text resource identifier 
+	 * @param titleId the title's text resource identifier
 	 */
 	public void setTitle(int titleId) {
 		alertDialog.setTitle(titleId);
@@ -164,7 +162,7 @@ public class NumPickerView extends EditText {
 	}
 
 	/**
-	 * Set the resource id of the {@link android.graphics.drawable.Drawable Drawable} 
+	 * Set the resource id of the {@link android.graphics.drawable.Drawable Drawable}
 	 * to be used in the title.
 	 * @param resId Resource of icon to display in dialog's title.
 	 */
@@ -172,18 +170,18 @@ public class NumPickerView extends EditText {
 		alertDialog.setIcon(resId);
 	}
 
-	/** Минимальное значение в {@link android.widget.NumberPicker NumberPicker}. */
+	/** Min value in {@link android.widget.NumberPicker NumberPicker}. */
 	private int minValue = 0;
 
-	/** Максимальное значение в {@link android.widget.NumberPicker NumberPicker}. */
+	/** Max value in {@link android.widget.NumberPicker NumberPicker}. */
 	private int maxValue = 9;
 
-	/** Шаг значений в {@link android.widget.NumberPicker NumberPicker}. */
+	/** Value step in {@link android.widget.NumberPicker NumberPicker}. */
 	private int valueStep = 1;
 
-	/** Диалоговое окно в котором отображается {@link android.widget.NumberPicker NumberPicker} */
+	/** Dialog window for showing {@link android.widget.NumberPicker NumberPicker} */
 	private AlertDialog alertDialog;
 
-	/** Вюшка для выбора числа. */
+	/** View for picking number. */
 	private NumberPicker numberPicker;
 }

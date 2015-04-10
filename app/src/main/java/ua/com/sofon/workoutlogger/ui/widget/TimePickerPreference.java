@@ -1,5 +1,7 @@
 package ua.com.sofon.workoutlogger.ui.widget;
 
+import java.util.Calendar;
+import java.util.Date;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,32 +11,29 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import java.util.Date;
-
 import ua.com.sofon.workoutlogger.R;
 
-
 /**
- * Поле в настройках для выбора времени, заполняется с помощью
+ * Preference field for input time with
  * {@link android.widget.TimePicker TimePicker}.
  * @author Dimowner
  */
 public class TimePickerPreference extends DialogPreference {
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public TimePickerPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-
 		setTitle(R.string.timepicker_set_time);
 	}
 
@@ -42,43 +41,47 @@ public class TimePickerPreference extends DialogPreference {
 	protected void showDialog(Bundle state) {
 		View contentView = onCreateDialogView();
 		AlertDialog alertDialog = new AlertDialog.Builder(context)
-		.setView(contentView)
-		.setTitle(R.string.timepicker_set_time)
-		.setPositiveButton(R.string.timepicker_select, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-//				selectedTime = DateUtil.getDateTime(DateUtil.getCurDate(),
-//						timePicker.getCurrentHour(), timePicker.getCurrentMinute()).getTime();
-//				if (callChangeListener(selectedTime)) {
-//					persistLong(selectedTime);
-//				}
-			}
-		})
-		.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			}
-		})
-		.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				if (callChangeListener(0L)) {
-					persistLong(0L);
-				}
-			}
-		})
-		.create();
+				.setView(contentView)
+				.setPositiveButton(R.string.timepicker_select, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Calendar calendar = Calendar.getInstance();
+						calendar.set(
+								calendar.get(Calendar.YEAR),
+								calendar.get(Calendar.MONTH),
+								calendar.get(Calendar.DAY_OF_MONTH),
+								timePicker.getCurrentHour(),
+								timePicker.getCurrentMinute()
+						);
+						selectedTime = calendar.getTimeInMillis();
+						if (callChangeListener(selectedTime)) {
+							persistLong(selectedTime);
+						}
+					}
+				})
+				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				})
+				.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Calendar calendar = Calendar.getInstance();
+						selectedTime = calendar.getTimeInMillis();
+						if (callChangeListener(selectedTime)) {
+							persistLong(selectedTime);
+						}
+					}
+				}).create();
 
-        if (state != null) {
-            alertDialog.onRestoreInstanceState(state);
-        }
-        alertDialog.show();
+		if (state != null) {
+			alertDialog.onRestoreInstanceState(state);
+		}
+		alertDialog.show();
 
 		if (showNeutralButton) {
-			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-					.setVisibility(View.VISIBLE);
+			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.VISIBLE);
 		} else {
-			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-					.setVisibility(View.GONE);
+			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
 		}
-//		super.showDialog(state);
 	}
 
 	@Override
@@ -91,9 +94,10 @@ public class TimePickerPreference extends DialogPreference {
 		timePicker.setIs24HourView(true);
 		view.addView(timePicker);
 
-//		Date selTime = new Date(selectedTime);
-//		timePicker.setCurrentHour(DateUtil.getHour(selTime));
-//		timePicker.setCurrentMinute(DateUtil.getMinute(selTime));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(selectedTime);
+		timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+		timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
 		return view;
 	}
 
@@ -120,14 +124,18 @@ public class TimePickerPreference extends DialogPreference {
 		// Create instance of custom BaseSavedState
 		final SavedState myState = new SavedState(superState);
 		// Set the state's value with the class member that holds current setting value
-
-		if (myState != null) {
-			if (timePicker != null) {
-//				myState.time = DateUtil.getDateTime(DateUtil.getCurDate(),
-//						timePicker.getCurrentHour(), timePicker.getCurrentMinute()).getTime();
-			} else {
-				myState.time = selectedTime;
-			}
+		if (timePicker != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(
+					calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH),
+					timePicker.getCurrentHour(),
+					timePicker.getCurrentMinute()
+			);
+			myState.time = calendar.getTimeInMillis();
+		} else {
+			myState.time = selectedTime;
 		}
 		return myState;
 	}
@@ -139,16 +147,17 @@ public class TimePickerPreference extends DialogPreference {
 		super.onRestoreInstanceState(myState.getSuperState());
 
 		// Set this Preference's widget to reflect the restored state
-		if (myState != null && timePicker != null) {
-			Date savedTime = new Date(myState.time);
-//			timePicker.setCurrentHour(DateUtil.getHour(savedTime));
-//			timePicker.setCurrentMinute(DateUtil.getMinute(savedTime));
+		if (timePicker != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(myState.time);
+			timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+			timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
 		}
 	}
 
 	/**
-	 * Сделать видимой или невидимой кнопку "Очистить".
-	 * @param showButton Признак потребности отображения кнопки.
+	 * Set button "Clear" visible.
+	 * @param showButton If true the button will be visible either not.
 	 */
 	public void showNeutralButton(boolean showButton) {
 		showNeutralButton = showButton;
@@ -203,19 +212,20 @@ public class TimePickerPreference extends DialogPreference {
 		setDialogIcon(resId);
 	}
 
-	/** Вюшка для выбора времени. */
+
+	/** View for picking time. */
 	private TimePicker timePicker;
 
-	/** Время по умолчанию в миллисекундах. */
-	private final long DEFAULT_TIME = new Date().getTime();//DateUtil.getCurDate().getTime();
+	/** Time by default in milliseconds. */
+	private final long DEFAULT_TIME = new Date().getTime();
 
-	/** Вбранное время в миллисекундах. */
+	/** Selected time in milliseconds. */
 	private long selectedTime;
 
-	/** Контекст приложения. */
+	/** Application context. */
 	private Context context;
 
-	/** Признак потребности отображения кнопки "Очистить". */
+	/** Need or not show button "Clear". */
 	private boolean showNeutralButton = true;
 
 
@@ -238,7 +248,7 @@ public class TimePickerPreference extends DialogPreference {
 		}
 
 		@Override
-		public void writeToParcel(Parcel dest, int flags) {
+		public void writeToParcel(@NonNull Parcel dest, int flags) {
 			super.writeToParcel(dest, flags);
 			// Write the preference's value
 			dest.writeLong(time);  // Change this to write the appropriate data type

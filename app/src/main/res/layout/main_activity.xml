@@ -1,53 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:context=".WorkoutMain">
+					 xmlns:tools="http://schemas.android.com/tools"
+					 android:layout_width="match_parent"
+					 android:layout_height="match_parent"
+					 tools:context=".WorkoutMain">
 
 	<include
-			android:id="@+id/toolbar"
-			layout="@layout/toolbar_actionbar" />
+		android:id="@+id/toolbar"
+		layout="@layout/toolbar_actionbar"/>
 
 	<Button
-			android:id="@+id/btn_show_exercises_list"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/toolbar"
-			android:layout_margin="16dp"
-			android:text="Exercises list" />
+		android:id="@+id/btn_show_exercises_list"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/toolbar"
+		android:layout_margin="16dp"
+		android:text="Exercises list"/>
 
 	<Button
-			android:id="@+id/btn_show_workout_list"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			android:layout_below="@+id/btn_show_exercises_list"
-			android:text="Workout list" />
+		android:id="@+id/btn_show_workout_list"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_below="@+id/btn_show_exercises_list"
+		android:text="Workout list"/>
 
 	<Button
-			android:id="@+id/button1"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			android:layout_below="@+id/btn_show_workout_list"
-			android:text="Settings"/>
+		android:id="@+id/button1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_below="@+id/btn_show_workout_list"
+		android:text="Settings"/>
 
 	<ua.com.sofon.workoutlogger.ui.widget.DatePickerView
-			android:id="@+id/datepicker"
-			android:layout_below="@+id/button1"
-			android:padding="8dp"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+		android:id="@+id/datepicker"
+		android:layout_below="@+id/button1"
+		android:padding="8dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+
 	<ua.com.sofon.workoutlogger.ui.widget.TimePickerView
-			android:id="@+id/timepicker"
-			android:layout_below="@+id/datepicker"
-			android:padding="8dp"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+		android:id="@+id/timepicker"
+		android:layout_below="@+id/datepicker"
+		android:padding="8dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+
 	<ua.com.sofon.workoutlogger.ui.widget.NumPickerView
-			android:id="@+id/numpicker"
-			android:layout_below="@+id/timepicker"
-			android:padding="8dp"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+		android:id="@+id/numpicker"
+		android:layout_below="@+id/timepicker"
+		android:padding="8dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
 </RelativeLayout>

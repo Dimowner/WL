@@ -20,7 +20,7 @@ import android.util.Log;
 import ua.com.sofon.workoutlogger.Config;
 
 public class LogUtils {
-    private static final String LOG_PREFIX = "WLogger_";
+    private static final String LOG_PREFIX = "";
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
@@ -30,13 +30,6 @@ public class LogUtils {
         }
 
         return LOG_PREFIX + str;
-    }
-
-    /**
-     * Don't use this when obfuscating class names!
-     */
-    public static String makeLogTag(Class cls) {
-        return makeLogTag(cls.getSimpleName());
     }
 
     public static void LOGD(final String tag, String message) {

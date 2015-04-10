@@ -14,22 +14,21 @@ import android.widget.NumberPicker;
 import ua.com.sofon.workoutlogger.R;
 
 /**
- * Поле в настройках для ввода числа, заполняется с помощью
+ * Preference field for input numbers with
  * {@link android.widget.NumberPicker NumberPicker}.
  * @author Dimowner
  */
 public class NumPickerPreference extends DialogPreference {
-	
+
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public NumPickerPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 
-		setTitle(R.string.numpicker_set_number);
 		setPositiveButtonText(R.string.numpicker_select);
 		setNegativeButtonText(R.string.btn_cancel);
 	}
@@ -72,7 +71,7 @@ public class NumPickerPreference extends DialogPreference {
 //		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 		view.addView(numberPicker);
 
-		setNewValues();
+		updateValues();
 		return view;
 	}
 
@@ -82,12 +81,10 @@ public class NumPickerPreference extends DialogPreference {
 		// Create instance of custom BaseSavedState
 		final SavedState myState = new SavedState(superState);
 		// Set the state's value with the class member that holds current setting value
-		if (myState != null) {
-			if (numberPicker != null) {
-				myState.value = numberPicker.getValue();
-			} else {
-				myState.value = selectedNumber;
-			}
+		if (numberPicker != null) {
+			myState.value = numberPicker.getValue();
+		} else {
+			myState.value = selectedNumber;
 		}
 		return myState;
 	}
@@ -99,52 +96,52 @@ public class NumPickerPreference extends DialogPreference {
 		super.onRestoreInstanceState(myState.getSuperState());
 
 		// Set this Preference's widget to reflect the restored state
-		if (myState != null && numberPicker != null) {
+		if (numberPicker != null) {
 			numberPicker.setValue(myState.value);
 		}
 	}
 
 	/**
-	 * Получить минимальное значение в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Минимальное значение
+	 * Get min value from{@link android.widget.NumberPicker NumberPicker}.
+	 * @return Min value.
 	 */
 	public int getMinValue() {
 		return minValue;
 	}
 
 	/**
-	 * Получить максимальное значение в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Максимальное значение
+	 * Get max value from {@link android.widget.NumberPicker NumberPicker}.
+	 * @return Max value.
 	 */
 	public int getMaxValue() {
 		return maxValue;
 	}
 
 	/**
-	 * Получить шаг между значениями в {@link android.widget.NumberPicker NumberPicker}.
-	 * @return Шаг между значениями.
+	 * Get values step from {@link android.widget.NumberPicker NumberPicker}.
+	 * @return Value step.
 	 */
 	public int getStep() {
 		return valueStep;
 	}
 
 	/**
-	 * Задать новые значения в {@link android.widget.NumberPicker NumberPicker}.
-	 * @param minValue Минимальное значение.
-	 * @param maxValue Максимальное значение.
-	 * @param valueStep Шаг значений.
+	 * Set new params for {@link android.widget.NumberPicker NumberPicker}.
+	 * @param minValue Min value.
+	 * @param maxValue max value.
+	 * @param valueStep Value step.
 	 */
 	public void setNumPickerParams(int minValue, int maxValue, int valueStep) {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.valueStep = valueStep;
-		setNewValues();
+		updateValues();
 	}
 
 	/**
-	 * Применить новые значения в {@link android.widget.NumberPicker NumberPicker}.
+	 * Update parameters in {@link android.widget.NumberPicker NumberPicker}.
 	 */
-	private void setNewValues() {
+	private void updateValues() {
 		if (valueStep <= 0) {
 			valueStep = 1;
 		}
@@ -208,25 +205,25 @@ public class NumPickerPreference extends DialogPreference {
 		setDialogIcon(resId);
 	}
 
-	/** Значение по умолчанию. */
+	/** Value by default in {@link android.widget.NumberPicker NumberPicker}. */
 	private final int DEFAULT_VALUE = 0;
 
-	/** Минимальное значение в {@link android.widget.NumberPicker NumberPicker}. */
+	/** max value in {@link android.widget.NumberPicker NumberPicker}. */
 	private int minValue = 0;
 
-	/** Максимальное значение в {@link android.widget.NumberPicker NumberPicker}. */
+	/** Min value in {@link android.widget.NumberPicker NumberPicker}. */
 	private int maxValue = 9;
 
-	/** Шаг значений в {@link android.widget.NumberPicker NumberPicker}. */
+	/** Value step in {@link android.widget.NumberPicker NumberPicker}. */
 	private int valueStep = 1;
 
-	/** Вюшка для выбора числа. */
+	/** View for picking the number. */
 	private NumberPicker numberPicker;
 
-	/** Значение выбранного элемента. */
+	/** Selected number. */
 	private int selectedNumber;
 
-	/** Контекст приложения. */
+	/** Application context. */
 	private Context context;
 
 

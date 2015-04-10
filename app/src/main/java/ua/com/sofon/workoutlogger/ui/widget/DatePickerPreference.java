@@ -20,21 +20,20 @@ import java.util.Date;
 import ua.com.sofon.workoutlogger.R;
 
 /**
- * Поле в настройках для выбора даты, заполняется с помощью
+ * Preference field for input time with
  * {@link android.widget.DatePicker DatePicker}.
  * @author Dimowner
  */
 public class DatePickerPreference extends DialogPreference {
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public DatePickerPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-
 		setTitle(R.string.datepicker_set_date);
 	}
 
@@ -42,39 +41,39 @@ public class DatePickerPreference extends DialogPreference {
 	protected void showDialog(Bundle state) {
 		View contentView = onCreateDialogView();
 		AlertDialog alertDialog = new AlertDialog.Builder(context)
-		.setView(contentView)
-		.setTitle(R.string.datepicker_set_date)
-		.setPositiveButton(R.string.datepicker_select, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			    Calendar calendar = Calendar.getInstance();
-			    calendar.set(
-			    		datePicker.getYear(),
-			    		datePicker.getMonth(),
-			    		datePicker.getDayOfMonth()
-			    	);
-				selectedDate = calendar.getTimeInMillis(); 
-				if (callChangeListener(selectedDate)) {
-					persistLong(selectedDate);
-				}
-			}
-		})
-		.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			}
-		})
-		.setNeutralButton(R.string.datepicker_clear, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				if (callChangeListener(0L)) {
-					persistLong(0L);
-				}
-			}
-		})
-		.create();
+				.setView(contentView)
+				.setPositiveButton(R.string.datepicker_select, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Calendar calendar = Calendar.getInstance();
+						calendar.set(
+								datePicker.getYear(),
+								datePicker.getMonth(),
+								datePicker.getDayOfMonth()
+						);
+						selectedDate = calendar.getTimeInMillis();
+						if (callChangeListener(selectedDate)) {
+							persistLong(selectedDate);
+						}
+					}
+				})
+				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				})
+				.setNeutralButton(R.string.datepicker_clear, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Calendar calendar = Calendar.getInstance();
+						selectedDate = calendar.getTimeInMillis();
+						if (callChangeListener(selectedDate)) {
+							persistLong(selectedDate);
+						}
+					}
+				}).create();
 
-        if (state != null) {
-            alertDialog.onRestoreInstanceState(state);
-        }
-        alertDialog.show();
+		if (state != null) {
+			alertDialog.onRestoreInstanceState(state);
+		}
+		alertDialog.show();
 
 		if (showNeutralButton) {
 			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
@@ -83,7 +82,6 @@ public class DatePickerPreference extends DialogPreference {
 			alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
 					.setVisibility(View.GONE);
 		}
-//		super.showDialog(state);
 	}
 
 	@Override
@@ -130,19 +128,16 @@ public class DatePickerPreference extends DialogPreference {
 		// Create instance of custom BaseSavedState
 		final SavedState myState = new SavedState(superState);
 		// Set the state's value with the class member that holds current setting value
-
-		if (myState != null) {
-			if (datePicker != null) {
-			    Calendar calendar = Calendar.getInstance();
-			    calendar.set(
-			    		datePicker.getYear(),
-			    		datePicker.getMonth(),
-			    		datePicker.getDayOfMonth()
-			    	);
-				myState.date = calendar.getTimeInMillis(); 
-			} else {
-				myState.date = selectedDate;
-			}
+		if (datePicker != null) {
+			 Calendar calendar = Calendar.getInstance();
+			 calendar.set(
+					datePicker.getYear(),
+					datePicker.getMonth(),
+					datePicker.getDayOfMonth()
+				);
+			myState.date = calendar.getTimeInMillis();
+		} else {
+			myState.date = selectedDate;
 		}
 		return myState;
 	}
@@ -154,7 +149,7 @@ public class DatePickerPreference extends DialogPreference {
 		super.onRestoreInstanceState(myState.getSuperState());
 
 		// Set this Preference's widget to reflect the restored state
-		if (myState != null && datePicker != null) {
+		if (datePicker != null) {
 			Calendar calendar = Calendar.getInstance(); 
 			calendar.setTimeInMillis(myState.date);
 			datePicker.updateDate(
@@ -166,8 +161,8 @@ public class DatePickerPreference extends DialogPreference {
 	}
 
 	/**
-	 * Сделать видимой или невидимой кнопку "Очистить".
-	 * @param showButton Признак потребности отображения кнопки.
+	 * Set button "Clear" visible.
+	 * @param showButton If true the button will be visible either not.
 	 */
 	public void showNeutralButton(boolean showButton) {
 		showNeutralButton = showButton;
@@ -222,19 +217,20 @@ public class DatePickerPreference extends DialogPreference {
 		setDialogIcon(resId);
 	}
 
-	/** Вюшка для выбора даты. */
+
+	/** View for picking date. */
 	private DatePicker datePicker;
 
-	/** Дата по умолчанию в миллисекундах. */
+	/** Date by default in milliseconds. */
 	private final long DEFAULT_DATE = new Date().getTime();
 
-	/** Вбранная дата в миллисекундах. */
+	/** Selected date in milliseconds. */
 	private long selectedDate;
 
-	/** Контекст приложения. */
+	/** Application context. */
 	private Context context;
 
-	/** Признак потребности отображения кнопки "Очистить". */
+	/** Need or not show button "Clear". */
 	private boolean showNeutralButton = true;
 
 

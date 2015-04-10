@@ -12,16 +12,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import java.util.Calendar;
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.util.DateUtil;
 
 /**
- * Поле для выбора даты, заполняется с помощью {@link android.widget.DatePicker DatePicker}.
+ * View for date input with {@link android.widget.DatePicker DatePicker}.
  * @author Dimowner
  */
 public class DatePickerView extends EditText {
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
+	 * Constructor
+	 * @param context Application context.
 	 */
 	public DatePickerView(Context context) {
 		super(context);
@@ -29,9 +30,9 @@ public class DatePickerView extends EditText {
 	}
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public DatePickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -39,8 +40,8 @@ public class DatePickerView extends EditText {
 	}
 
 	/**
-	 * Инициализация поля.
-	 * @param context Контекст приложения.
+	 * View initialization
+	 * @param context Application context.
 	 */
 	private void initDatePickerView(Context context) {
 		setFocusable(false);
@@ -48,27 +49,23 @@ public class DatePickerView extends EditText {
 
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(datePicker)
-			.setTitle(R.string.datepicker_set_date)
 			.setPositiveButton(R.string.datepicker_select, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-
-				    Calendar calendar = Calendar.getInstance();
-				    calendar.set(
-				    		datePicker.getYear(),
-				    		datePicker.getMonth(),
-				    		datePicker.getDayOfMonth()
-				    	);
-//				    setValue(calendar.getTime());
-					setText(calendar.getTime().toString());
+					Calendar calendar = Calendar.getInstance();
+					calendar.set(
+							datePicker.getYear(),
+							datePicker.getMonth(),
+							datePicker.getDayOfMonth()
+					);
+					setText(DateUtil.getActiveDateFormat().format(calendar.getTime()));
 				}
 			})
-			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 				}
 			})
 			.setNeutralButton(R.string.datepicker_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-//					setValue(null);
 					setText("");
 				}
 			})
@@ -78,18 +75,13 @@ public class DatePickerView extends EditText {
 	@Override
 	public boolean onTouchEvent(@NonNull MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
-
-//    		if (!(getValue() == null)) {
-//    			Calendar calendar = Calendar.getInstance();
-//    			calendar.setTimeInMillis(getValue().getTime());
-//
-//    			datePicker.updateDate(
-//    					calendar.get(Calendar.YEAR),
-//    					calendar.get(Calendar.MONTH),
-//    					calendar.get(Calendar.DAY_OF_MONTH)
-//    				);
-//    		}
-
+			Calendar calendar = DateUtil.parseCalendar(
+					DateUtil.getActiveDateFormat(), getText().toString());
+			datePicker.updateDate(
+					calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH)
+			);
 			alertDialog.show();
 			if (showNeutralButton) {
 				alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
@@ -103,8 +95,8 @@ public class DatePickerView extends EditText {
 	}
 
 	/**
-	 * Сделать видимой или невидимой кнопку "Очистить".
-	 * @param showButton Признак потребности отображения кнопки.
+	 * Set button "Clear" visible.
+	 * @param showButton If true the button will be visible either not.
 	 */
 	public void showNeutralButton(boolean showButton) {
 		showNeutralButton = showButton;
@@ -159,12 +151,12 @@ public class DatePickerView extends EditText {
 		alertDialog.setIcon(resId);
 	}
 
-	/** Диалоговое окно в котором отображается {@link android.widget.DatePicker DatePicker} */
+	/** Dialog window for showing{@link android.widget.DatePicker DatePicker} */
 	private AlertDialog alertDialog;
 
-	/** Вюшка для выбора времени. */
+	/** View for picking date. */
 	private DatePicker datePicker;
 
-	/** Признак потребности отображения кнопки "Очистить". */
+	/** Need or not show button "Clear". */
 	private boolean showNeutralButton = true;
 }

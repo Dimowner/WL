@@ -10,38 +10,33 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
-
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.util.DateUtil;
+
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
 
 /**
- * Поле для ввода времени, заполняется с помощью {@link android.widget.TimePicker TimePicker}.
+ * View for time input with {@link android.widget.TimePicker TimePicker}.
  * @author Dimowner
  */
 public class TimePickerView extends EditText {
 
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
+	 * Constructor
+	 * @param context Application context.
 	 */
 	public TimePickerView(Context context) {
 		super(context);
 		initTimePickerView(context);
 	}
 
-//    /**
-//     * Установить переменные стиля приложения.
-//     */
-//    protected void setStyleVaribles(Context context) {
-//        TypedArray a = context.getTheme().obtainStyledAttributes(pApplication.themeResID,
-//                new int[] {R.attr.colorControlNormal});
-//        colorControlNormal = a.getColor(0, 0);
-//    }
-
 	/**
-	 * Конструктор.
-	 * @param context Контекст приложения.
-	 * @param attrs Атрибуты поля.
+	 * Constructor
+	 * @param context Application context.
+	 * @param attrs View attributes.
 	 */
 	public TimePickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -49,49 +44,47 @@ public class TimePickerView extends EditText {
 	}
 
 	/**
-	 * Инициализация поля.
-	 * @param context Контекст приложения.
+	 * View initialization
+	 * @param context Application context.
 	 */
 	private void initTimePickerView(Context context) {
 		setFocusable(false);
-		TimePicker timePicker = new TimePicker(context);
+		timePicker = new TimePicker(context);
 		timePicker.setIs24HourView(true);
 
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(timePicker)
-			.setTitle(R.string.timepicker_set_time)
 			.setPositiveButton(
 					R.string.timepicker_select, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-//					setValue(DateUtil.getDateTime(DateUtil.getCurDate(),
-//							timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
-				}
-			})
+						public void onClick(DialogInterface dialog, int whichButton) {
+							Calendar calendar = Calendar.getInstance();
+							calendar.set(
+									calendar.get(Calendar.YEAR),
+									calendar.get(Calendar.MONTH),
+									calendar.get(Calendar.DAY_OF_MONTH),
+									timePicker.getCurrentHour(),
+									timePicker.getCurrentMinute()
+							);
+							setText(DateUtil.timeFormat.format(calendar.getTime()));
+						}
+					})
 			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 				}
 			})
-			.setNeutralButton(R.string.timepicker_select, new DialogInterface.OnClickListener() {
+			.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-//					setValue(null);
 					setText("");
 				}
-			})
-			.create();
+			}).create();
 	}
 
 	@Override
 	public boolean onTouchEvent(@NonNull MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
-//			Date curDate = new Date();//DateUtil.getCurDateTime();
-//
-//    		if (getValue() == null) {
-//    			timePicker.setCurrentHour(DateUtil.getHour(curDate));
-//    			timePicker.setCurrentMinute(DateUtil.getMinute(curDate));
-//    		} else {
-//    			timePicker.setCurrentHour(DateUtil.getHour(getValue()));
-//    			timePicker.setCurrentMinute(DateUtil.getMinute(getValue()));
-//    		}
+			Calendar calendar = DateUtil.parseCalendar(DateUtil.timeFormat, getText().toString());
+			timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+			timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
 			alertDialog.show();
 
 			if (showNeutralButton) {
@@ -105,9 +98,28 @@ public class TimePickerView extends EditText {
 	    return true; 
 	}
 
+//	/**
+//	 * Parse time from string.
+//	 * @param timeStr string whith time to parse.
+//	 * @return Calendar that contains parsed time or current time if failed to parse.
+//	 */
+//	private Calendar parseTimeStr(String timeStr) {
+//		Date date = null;
+//		try {
+//			date = DateUtil.timeFormat.parse(timeStr);
+//		} catch (ParseException e) {
+//			LOGE(VIEW_LOG_TAG, "", e);
+//		}
+//		Calendar calendar = Calendar.getInstance();
+//		if (date != null) {
+//			calendar.setTime(date);
+//		}
+//		return calendar;
+//	}
+
 	/**
-	 * Сделать видимой или невидимой кнопку "Очистить".
-	 * @param showButton Признак потребности отображения кнопки.
+	 * Set button "Clear" visible.
+	 * @param showButton If true the button will be visible either not.
 	 */
 	public void showNeutralButton(boolean showButton) {
 		showNeutralButton = showButton;
@@ -154,15 +166,18 @@ public class TimePickerView extends EditText {
 		alertDialog.setIcon(resId);
 	}
 
-	/** Диалоговое окно в котором отображается {@link android.widget.TimePicker TimePicker} */
+//	/** Pattern for time format that will be used in view */
+//	private static final String TIME_PATTERN = "HH:mm";
+//
+//	/** Time format that will be used in view */
+//	private SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
+
+	/** Dialog window for showing {@link android.widget.TimePicker TimePicker} */
 	private AlertDialog alertDialog;
 
-//	/** Вюшка для выбора времени. */
-//	private TimePicker timePicker;
+	/** View for picking time. */
+	private TimePicker timePicker;
 
-	/** Признак потребности отображения кнопки "Очистить". */
+	/** Need or not show button "Clear". */
 	private boolean showNeutralButton = true;
-
-//    /** Цвет элемента. */
-//    private int colorControlNormal;
 }
