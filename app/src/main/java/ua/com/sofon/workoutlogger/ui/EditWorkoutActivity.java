@@ -25,7 +25,7 @@ public class EditWorkoutActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.workout_pos);
+		setContentView(R.layout.activity_workout_edit);
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -358,7 +358,7 @@ public class EditWorkoutActivity extends ActionBarActivity {
 			View view = convertView;
 			if (view == null) {
 				LayoutInflater inflater = getLayoutInflater();
-				view = inflater.inflate(R.layout.workout_pos_list_item, parent, false);
+				view = inflater.inflate(R.layout.list_item_workout_edit, parent, false);
 			}
 
 			TextView number = (TextView) view.findViewById(R.id.workout_pos_list_item_number);

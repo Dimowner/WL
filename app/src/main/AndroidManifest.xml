@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-		package="ua.com.sofon.workoutlogger"
-		xmlns:android="http://schemas.android.com/apk/res/android">
+	package="ua.com.sofon.workoutlogger"
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<application
-			android:allowBackup="true"
-			android:icon="@mipmap/ic_workout_logger1"
-			android:label="@string/app_name"
-			android:theme="@style/WorkOutTheme">
+		android:allowBackup="true"
+		android:icon="@mipmap/ic_workout_logger1"
+		android:label="@string/app_name"
+		android:theme="@style/WorkOutTheme">
 		<activity
-				android:name=".ui.MainActivity"
-				android:label="@string/app_name">
+			android:name=".ui.BaseActivity"
+			android:label="@string/app_name">
 
+		</activity>
+		<activity
+			android:name=".ui.EditExerciseActivity"
+			android:label="@string/title_exercise">
+		</activity>
+		<activity
+			android:name=".ui.ExercisesActivity"
+			android:label="@string/title_exercises">
+		</activity>
+		<activity
+			android:name=".ui.WorkoutsActivity"
+			android:label="@string/title_workouts">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
@@ -19,30 +31,13 @@
 			</intent-filter>
 		</activity>
 		<activity
-				android:name=".ui.BaseActivity"
-				android:label="@string/app_name">
+			android:name=".ui.EditWorkoutActivity"
+			android:label="@string/title_workout">
 		</activity>
 		<activity
-				android:name=".ui.EditExerciseActivity"
-				android:label="@string/title_activity_exer_pos">
+			android:name=".ui.SettingsActivity"
+			android:label="@string/title_settings">
 		</activity>
-		<activity
-				android:name=".ui.ExercisesActivity"
-				android:label="@string/title_activity_exer_base">
-		</activity>
-		<activity
-				android:name=".ui.WorkoutsActivity"
-				android:label="@string/title_activity_workout_base">
-
-		</activity>
-		<activity
-				android:name=".ui.EditWorkoutActivity"
-				android:label="@string/title_activity_workout_pos">
-		</activity>
-		<activity
-				android:name=".ui.SettingsActivity"
-				android:label="@string/activity_settings"
-				android:parentActivityName=".ui.MainActivity" />
 	</application>
 
 </manifest>

@@ -1,5 +1,13 @@
 <resources>
 
+	<string name="app_name">Workout Logger</string>
+	<string name="title_exercise">Exercise</string>
+	<string name="title_exercises">Exercises</string>
+	<string name="title_workouts">Workouts</string>
+	<string name="title_workout">Workout</string>
+	<string name="title_settings">Settings</string>
+	<string name="title_warning">Warning</string>
+
 	<string name="datepicker_set_date">Set date</string>
 	<string name="datepicker_select">Select</string>
 	<string name="datepicker_clear">Clear</string>
@@ -11,14 +19,6 @@
 	<string name="numpicker_set_number">Set number</string>
 	<string name="numpicker_select">Select</string>
 	<string name="numpicker_clear">Clear</string>
-
-	<string name="app_name">Workout Logger</string>
-	<string name="action_settings">Settings</string>
-	<string name="title_activity_exer_pos">Exercise</string>
-	<string name="title_activity_exer_base">Exercises list</string>
-	<string name="title_activity_workout_base">Workouts list</string>
-	<string name="title_activity_workout_pos">Workout</string>
-	<string name="titile_warning">Warning</string>
 
 	<string name="btn_ok">OK</string>
 	<string name="btn_cancel">Cancel</string>
@@ -43,54 +43,17 @@
 	<string name="drawer_open">Main menu opened</string>
 	<string name="drawer_closed">Main menu closed</string>
 
-	<string-array name="planets_array">
-		<item>Mercury</item>
-		<item>Venus</item>
-		<item>Earth</item>
-		<item>Mars</item>
-		<item>Jupiter</item>
-		<item>Saturn</item>
-		<item>Uranus</item>
-		<item>Neptune</item>
-	</string-array>
-
-	<!-- Menu item to open the Experts screen [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_experts_directory">Experts</string>
-
-	<!-- Accessibility description for menu item to open the Experts screen. -->
-	<string name="navdrawer_item_experts_directory_a11y">Experts Directory</string>
-
-	<!-- Menu item to open the Explore screen [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_explore">Explore</string>
-
-	<!-- Accessibility description for menu item to open the Explore screen. -->
-	<string name="navdrawer_item_explore_a11y">Explore Google I/O</string>
-
-	<!-- Menu item to open the Map screen [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_map">Map</string>
-
-	<!-- Menu item to open the My Schedule screen [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_my_schedule">My Schedule</string>
-
-	<!-- Menu item to open the People I've Met screen [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_people_ive_met">People I\'ve Met</string>
-
-	<!-- Accessibility description of item to open the People I've Met screen -->
-	<string name="navdrawer_item_people_ive_met_a11y">People I\'ve Met</string>
-
+	<!-- Menu item to open the Workouts screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_workouts">Workouts</string>
+	<!-- Menu item to open the Exercises screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_exercises">Exercises</string>
+	<!-- Menu item to open the Weight screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_weight">Weight</string>
+	<!-- Menu item to open the Statistics screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_statistics">Statistics</string>
 	<!-- Menu item to open the Settings screen [CHAR_LIMIT=20] -->
 	<string name="navdrawer_item_settings">Settings</string>
+	<!-- Menu item to open the About screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_about">About</string>
 
-	<!-- Menu item to start the Sign In flow [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_sign_in">Sign in</string>
-
-	<!-- Menu item to open a screen that lists I/O related hashtags. Each hashtag, when clicked, will
-	 open Google+ stream of posts that uses the hashtag [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_social">Social</string>
-
-	<!-- Menu item to open a list of current and past I/O videos [CHAR_LIMIT=20] -->
-	<string name="navdrawer_item_video_library">Video library</string>
-
-	<!-- Label for Settings activity -->
-	<string name="activity_settings">Settings</string>
 </resources>

@@ -24,11 +24,10 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
-
 import ua.com.sofon.workoutlogger.R;
 
 /**
- * A layout that draws something in the insets passed to {@link #fitSystemWindows(android.graphics.Rect)}, i.e. the area above UI chrome
+ * A layout that draws something in the insets passed to {@link #fitSystemWindows(Rect)}, i.e. the area above UI chrome
  * (status and navigation bars, overlay action bars).
  */
 public class ScrimInsetsScrollView extends ScrollView {
@@ -54,12 +53,12 @@ public class ScrimInsetsScrollView extends ScrollView {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
-        final TypedArray a = null;
-//        context.obtainStyledAttributes(attrs, R.styleable.ScrimInsetsView, defStyle, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.ScrimInsetsView, defStyle, 0);
         if (a == null) {
             return;
         }
-//        mInsetForeground = a.getDrawable(R.styleable.ScrimInsetsView_insetForeground);
+        mInsetForeground = a.getDrawable(R.styleable.ScrimInsetsView_insetForeground);
         a.recycle();
 
         setWillNotDraw(true);
@@ -128,7 +127,7 @@ public class ScrimInsetsScrollView extends ScrollView {
 
     /**
      * Allows the calling container to specify a callback for custom processing when insets change (i.e. when
-     * {@link #fitSystemWindows(android.graphics.Rect)} is called. This is useful for setting padding on UI elements based on
+     * {@link #fitSystemWindows(Rect)} is called. This is useful for setting padding on UI elements based on
      * UI chrome insets (e.g. a Google Map or a ListView). When using with ListView or GridView, remember to set
      * clipToPadding to false.
      */

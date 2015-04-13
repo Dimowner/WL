@@ -20,16 +20,12 @@ import ua.com.sofon.workoutlogger.util.UIUtil;
  * Activity shows all workouts.
  * @author Dimowner
  */
-public class WorkoutsActivity extends ActionBarActivity {
+public class WorkoutsActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_activity);
-
-		Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		workoutDataSource = new WorkoutDataSource(this);
 		try {
@@ -41,6 +37,11 @@ public class WorkoutsActivity extends ActionBarActivity {
 		mListView = (ListView) findViewById(R.id.list);
 		listAdapter = new WorkoutListAdapter(this, workoutDataSource.getAllWorkouts());
 		mListView.setAdapter(listAdapter);
+	}
+
+	@Override
+	protected int getSelfNavDrawerItem() {
+		return NAVDRAWER_ITEM_WORKOUTS;
 	}
 
 	@Override

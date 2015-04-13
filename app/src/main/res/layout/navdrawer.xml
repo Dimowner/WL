@@ -22,8 +22,8 @@
 	android:layout_gravity="start"
 	android:id="@+id/navdrawer"
 	android:background="@color/navdrawer_background"
-	android:fitsSystemWindows="true">
-	<!--app:insetForeground="#4000">-->
+	android:fitsSystemWindows="true"
+	app:insetForeground="#4000">
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -33,16 +33,16 @@
 		<FrameLayout
 			android:id="@+id/chosen_account_view"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/navdrawer_chosen_account_height">
-			<!--android:foreground="?photoItemForeground">-->
+			android:layout_height="@dimen/navdrawer_chosen_account_height"
+			android:foreground="?photoItemForeground">
 
 			<ImageView
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
 				android:scaleType="centerCrop"
-				android:src="@drawable/ic_drawer_social"
-				android:tint="@color/session_photo_scrim"
+				android:src="@drawable/default_cover"
 				android:id="@+id/profile_cover_image"/>
+			<!--android:tint="@color/session_photo_scrim"-->
 
 			<RelativeLayout
 				android:layout_width="match_parent"
@@ -52,13 +52,13 @@
 				android:paddingTop="@dimen/keyline_1"
 				android:id="@+id/chosen_account_content_view">
 
-				<TextView
+				<ua.com.sofon.workoutlogger.ui.widget.BezelImageView
 					android:id="@+id/profile_image"
 					android:layout_width="@dimen/navdrawer_profile_image_size"
-					android:layout_height="@dimen/navdrawer_profile_image_size"/>
-				<!--android:src="@drawable/person_image_empty"-->
-				<!--android:scaleType="centerCrop"-->
-				<!--app:maskDrawable="@drawable/circle_mask" />-->
+					android:layout_height="@dimen/navdrawer_profile_image_size"
+					android:src="@drawable/person_image_empty"
+					android:scaleType="centerCrop"
+					app:maskDrawable="@drawable/circle_mask"/>
 
 				<ImageView
 					android:id="@+id/expand_account_box_indicator"
@@ -100,7 +100,6 @@
 					android:ellipsize="end"/>
 
 			</RelativeLayout>
-
 		</FrameLayout>
 
 		<FrameLayout
@@ -126,5 +125,4 @@
 				android:orientation="vertical"/>
 		</FrameLayout>
 	</LinearLayout>
-
 </ua.com.sofon.workoutlogger.ui.widget.ScrimInsetsScrollView>
