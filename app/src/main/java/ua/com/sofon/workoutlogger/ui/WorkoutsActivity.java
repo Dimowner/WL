@@ -14,6 +14,7 @@ import android.widget.*;
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.parts.Workout;
+import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.util.UIUtil;
 
 /**
@@ -122,7 +123,7 @@ public class WorkoutsActivity extends BaseActivity {
 	private WorkoutDataSource workoutDataSource;
 
 	/** Tag for logging messages. */
-	private final String LOG_TAG = getClass().getSimpleName();
+	private final String LOG_TAG = LogUtils.makeLogTag("WorkoutsActivity");
 
 
 	/**

@@ -1,5 +1,8 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.ui.widget.BezelImageView;
 import ua.com.sofon.workoutlogger.ui.widget.ScrimInsetsScrollView;
 
 /**
@@ -99,6 +103,9 @@ public class BaseActivity extends ActionBarActivity {
 					chosenAccountView.setLayoutParams(lp2);
 				}
 			});
+
+			BezelImageView profileIcon = (BezelImageView) findViewById(R.id.profile_image);
+			profileIcon.setVisibility(View.INVISIBLE);
 		}
 
 		if (mActionBarToolbar != null) {
@@ -171,8 +178,6 @@ public class BaseActivity extends ActionBarActivity {
 		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR_SPECIAL);
 
 		mNavDrawerItems.add(NAVDRAWER_ITEM_SETTINGS);
-		mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR);
-		mNavDrawerItems.add(NAVDRAWER_ITEM_ABOUT);
 		createNavDrawerItems();
 	}
 
@@ -332,6 +337,16 @@ public class BaseActivity extends ActionBarActivity {
 				startActivity(intent);
 				finish();
 				break;
+			case NAVDRAWER_ITEM_WEIGHT:
+				intent = new Intent(this, WeightActivity.class);
+				startActivity(intent);
+				finish();
+				break;
+			case NAVDRAWER_ITEM_STATISTICS:
+				intent = new Intent(this, StatisticsActivity.class);
+				startActivity(intent);
+				finish();
+				break;
 			case NAVDRAWER_ITEM_SETTINGS:
 				intent = new Intent(this, SettingsActivity.class);
 				startActivity(intent);
@@ -368,7 +383,6 @@ public class BaseActivity extends ActionBarActivity {
 	protected static final int NAVDRAWER_ITEM_WEIGHT = 2;
 	protected static final int NAVDRAWER_ITEM_STATISTICS = 3;
 	protected static final int NAVDRAWER_ITEM_SETTINGS = 4;
-	protected static final int NAVDRAWER_ITEM_ABOUT= 5;
 	protected static final int NAVDRAWER_ITEM_INVALID = -1;
 	protected static final int NAVDRAWER_ITEM_SEPARATOR = -2;
 	protected static final int NAVDRAWER_ITEM_SEPARATOR_SPECIAL = -3;

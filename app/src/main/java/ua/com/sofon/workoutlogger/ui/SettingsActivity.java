@@ -16,9 +16,13 @@ package ua.com.sofon.workoutlogger.ui;
  * limitations under the License.
  */
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +74,21 @@ public class SettingsActivity extends BaseActivity {
 			super.onCreate(savedInstanceState);
 			setupSimplePreferencesScreen();
             PrefUtils.registerOnSharedPreferenceChangeListener(getActivity(), this);
+			prefAbout = findPreference("about");
+			prefAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					FragmentManager fm = getActivity().getFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					Fragment prev = fm.findFragmentByTag("dialog_about");
+					if (prev != null) {
+						ft.remove(prev);
+					}
+					ft.addToBackStack(null);
+					new AboutDialog().show(ft, "dialog_about");
+					return false;
+				}
+			});
 		}
 
 		@Override
@@ -87,5 +106,7 @@ public class SettingsActivity extends BaseActivity {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			LOGV("SettingsActivity", "onPreferenceChanged");
 		}
+
+		Preference prefAbout;
 	}
 }

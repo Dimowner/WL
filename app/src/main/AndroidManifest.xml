@@ -22,6 +22,14 @@
 			android:label="@string/title_exercises">
 		</activity>
 		<activity
+			android:name=".ui.WeightActivity"
+			android:label="@string/title_weight">
+		</activity>
+		<activity
+			android:name=".ui.StatisticsActivity"
+			android:label="@string/title_weight">
+		</activity>
+		<activity
 			android:name=".ui.WorkoutsActivity"
 			android:label="@string/title_workouts">
 			<intent-filter>
