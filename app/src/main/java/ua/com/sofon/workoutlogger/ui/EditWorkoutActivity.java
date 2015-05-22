@@ -3,6 +3,7 @@ package ua.com.sofon.workoutlogger.ui;
 import java.text.*;
 import java.util.*;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.content.*;
@@ -20,7 +21,7 @@ import ua.com.sofon.workoutlogger.util.UIUtil;
  * Activity for add and edit workouts.
  * @author Dimowner.
  */
-public class EditWorkoutActivity extends ActionBarActivity {
+public class EditWorkoutActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,9 @@ public class EditWorkoutActivity extends ActionBarActivity {
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		txtExeName = (EditText) findViewById(R.id.workout_pos_txt_name);
 		txtDate = (EditText) findViewById(R.id.workout_pos_txt_date);

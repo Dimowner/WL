@@ -9,4 +9,16 @@
 		android:orderInCategory="100"
 		android:title="@string/menu_item_exer_add"
 		app:showAsAction="ifRoom"/>
+
+	<item
+		android:id="@+id/action_exer_edit"
+		android:orderInCategory="100"
+		android:title="Edit"
+		app:showAsAction="never"/>
+
+	<item
+		android:id="@+id/action_exer_delete"
+		android:orderInCategory="100"
+		android:title="Delete"
+		app:showAsAction="never"/>
 </menu>

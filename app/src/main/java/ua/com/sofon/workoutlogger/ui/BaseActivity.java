@@ -1,8 +1,5 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -10,11 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ import ua.com.sofon.workoutlogger.ui.widget.ScrimInsetsScrollView;
  * Base activity with base functionality and drawer layout.
  * @author Dimowner
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,15 @@ public class BaseActivity extends ActionBarActivity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		setupNavDrawer();
+		ImageButton btnCloseDrawer = (ImageButton) findViewById(R.id.btn_close_drawer);
+		if (btnCloseDrawer != null) {
+			btnCloseDrawer.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mDrawerLayout.closeDrawer(Gravity.START);
+				}
+			});
+		}
 	}
 
 	@Override

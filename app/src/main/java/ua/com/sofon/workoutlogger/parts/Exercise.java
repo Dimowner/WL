@@ -52,6 +52,14 @@ public class Exercise implements Serializable {
 		this.description = description;
 	}
 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "Exercise:[ id = '" + id + "', "
@@ -61,8 +69,21 @@ public class Exercise implements Serializable {
 
 	private static final long serialVersionUID = 4018750221300108624L;
 
+	public static final int EXERCISE_TYPE_OTHER		= 0;
+	public static final int EXERCISE_TYPE_BACK		= 1;
+	public static final int EXERCISE_TYPE_BREAST		= 2;
+	public static final int EXERCISE_TYPE_SHOULDERS	= 3;
+	public static final int EXERCISE_TYPE_BELLY		= 4;
+	public static final int EXERCISE_TYPE_BICEPS		= 5;
+	public static final int EXERCISE_TYPE_TRICEPS 	= 6;
+	public static final int EXERCISE_TYPE_FOREARMS	= 7;
+	public static final int EXERCISE_TYPE_FEET		= 8;
+	public static final int EXERCISE_TYPE_SHIN		= 9;
+
 	public static final long NO_ID = -1;
+
 	private long id;
+	private int type;
 	private String name;
 	private String description;
 }

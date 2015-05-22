@@ -8,6 +8,6 @@
 		android:icon="@drawable/ic_plus_grey600_24dp"
 		android:orderInCategory="100"
 		android:title="@string/menu_item_exer_add"
-		app:showAsAction="ifRoom"/>
+		app:showAsAction="never"/>
 
 </menu>

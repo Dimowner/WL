@@ -36,7 +36,7 @@
 
 	<string name="list_item_cont_desc">Item menu</string>
 
-	<string name="menu_item_exer_add">Add</string>
+	<string name="menu_item_exer_add">Add exercise</string>
 	<string name="menu_item_replace">Replace</string>
 	<string name="menu_item_edit">Edit</string>
 	<string name="menu_item_delete">Delete</string>
@@ -72,5 +72,18 @@
 	<string-array name="units_values">
 		<item>1</item>
 		<item>2</item>
+	</string-array>
+
+	<string-array name="exercises_types_array">
+		<item>Exercise type</item>
+		<item>Back</item>
+		<item>Breast</item>
+		<item>Shoulders</item>
+		<item>Belly</item>
+		<item>Biceps</item>
+		<item>Triceps</item>
+		<item>Forearms</item>
+		<item>Feet</item>
+		<item>Shin</item>
 	</string-array>
 </resources>

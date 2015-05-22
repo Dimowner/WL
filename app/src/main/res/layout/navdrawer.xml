@@ -100,6 +100,13 @@
 					android:ellipsize="end"/>
 
 			</RelativeLayout>
+			<ImageButton
+				android:id="@+id/btn_close_drawer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/keyline_1"
+				android:background="@android:color/transparent"
+				android:src="@drawable/ic_arrow_left_white_24dp"/>
 		</FrameLayout>
 
 		<FrameLayout
