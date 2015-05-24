@@ -14,14 +14,7 @@
   limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/toolbar"
-	android:layout_width="match_parent"
-	android:layout_height="?actionBarSize"
-	android:background="?attr/colorPrimary"
-	app:theme="@style/ActionBarThemeOverlay"
-	app:popupTheme="@style/ActionBarPopupThemeOverlay"
-	app:titleTextAppearance="@style/ActionBar.TitleText"
-	app:contentInsetStart="?actionBarInsetStart" />
+<resources>
+    <integer name="font_textStyle_medium">1</integer> <!-- bold -->
+    <string name="font_fontFamily_medium">sans-serif</string>
+</resources>

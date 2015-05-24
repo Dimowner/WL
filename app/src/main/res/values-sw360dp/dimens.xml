@@ -13,15 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
+<resources>
 
-<android.support.v7.widget.Toolbar
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/toolbar"
-	android:layout_width="match_parent"
-	android:layout_height="?actionBarSize"
-	android:background="?attr/colorPrimary"
-	app:theme="@style/ActionBarThemeOverlay"
-	app:popupTheme="@style/ActionBarPopupThemeOverlay"
-	app:titleTextAppearance="@style/ActionBar.TitleText"
-	app:contentInsetStart="?actionBarInsetStart" />
+	<dimen name="navdrawer_chosen_account_height">164dp</dimen>
+	<dimen name="navdrawer_width">304dp</dimen>
+	<dimen name="navdrawer_profile_image_size">64dp</dimen>
+
+</resources>

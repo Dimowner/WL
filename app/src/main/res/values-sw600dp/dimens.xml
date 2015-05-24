@@ -13,15 +13,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
+<resources>
 
-<android.support.v7.widget.Toolbar
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/toolbar"
-	android:layout_width="match_parent"
-	android:layout_height="?actionBarSize"
-	android:background="?attr/colorPrimary"
-	app:theme="@style/ActionBarThemeOverlay"
-	app:popupTheme="@style/ActionBarPopupThemeOverlay"
-	app:titleTextAppearance="@style/ActionBar.TitleText"
-	app:contentInsetStart="?actionBarInsetStart" />
+    <dimen name="keyline_1">24dp</dimen>
+    <dimen name="keyline_1_minus_8dp">16dp</dimen>
+    <dimen name="keyline_2">80dp</dimen>
+    <dimen name="keyline_2_minus_16dp">64dp</dimen>
+    <dimen name="keyline_2_session_detail">104dp</dimen>
+
+</resources>

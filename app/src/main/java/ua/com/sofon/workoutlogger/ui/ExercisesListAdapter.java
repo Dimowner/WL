@@ -1,4 +1,4 @@
-package ua.com.sofon.workoutlogger.ui.widget;
+package ua.com.sofon.workoutlogger.ui;
 
 import java.util.List;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.parts.Exercise;
-import ua.com.sofon.workoutlogger.ui.ExercisesActivity;
 
 /**
  * Data adapter for exercises list.
@@ -41,7 +40,7 @@ public class ExercisesListAdapter
 	public ExercisesListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		// create a new view
 		View v = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.exercises_list_item, parent, false);
+				.inflate(R.layout.list_item_exercises, parent, false);
 		return new ViewHolder(v);
 	}
 

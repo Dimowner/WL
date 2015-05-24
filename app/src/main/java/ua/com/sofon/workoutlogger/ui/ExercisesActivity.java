@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
-import ua.com.sofon.workoutlogger.ui.widget.ExercisesListAdapter;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.R;
 

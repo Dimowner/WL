@@ -2,30 +2,34 @@
 <resources>
 
 	<!-- Base application theme. -->
-	<style name="WorkOutTheme" parent="Theme.AppCompat.Light">
+	<style name="WorkoutTheme" parent="Theme.AppCompat.Light">
+		<!-- Main theme colors -->
 		<!-- colorPrimary is used for the default action bar background -->
 		<item name="colorPrimary">@color/md_grey_300</item>
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
-		<item name="actionBarSize">56dp</item>
-		<!-- Main theme colors -->
-
 		<!--   darker variant for the status bar and contextual app bars -->
-		<item name="colorPrimaryDark">@color/md_grey_300</item>
+		<item name="colorPrimaryDark">@color/md_grey_400</item>
 		<!--   theme UI controls like checkboxes and text fields -->
-		<item name="colorAccent">@color/md_grey_400</item>
+		<item name="colorAccent">@color/md_grey_500</item>
 
 		<item name="android:textColorPrimary">@color/md_grey_800</item>
 		<item name="android:textColorSecondary">@color/md_grey_700</item>
-		<!--<item name="actionMenuTextColor">@android:color/white</item>-->
-		<!--<item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>-->
 
-		<!--<item name="android:textColor">@color/md_grey_50</item>-->
-		<!--<item name="android:popupBackground">@color/md_grey_50</item>-->
-		<!--<item name="toolbarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>-->
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+
 		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
 
+		<item name="actionBarIconColor">@color/md_grey_800</item>
+		<item name="actionBarInsetStart">@dimen/keyline_2</item>
+		<item name="spinnerBarInsetStart">@dimen/keyline_2_minus_16dp</item>
+		<item name="popupItemBackground">?android:selectableItemBackground</item>
 		<item name="photoItemForeground">?android:selectableItemBackground</item>
+		<item name="photoItemForegroundBorderless">?android:selectableItemBackground</item>
+
+		<item name="android:textColorLink">@color/theme_accent_2</item>
+
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowBackground">@android:color/white</item>
 
 	</style>
 </resources>
