@@ -2,15 +2,14 @@ package ua.com.sofon.workoutlogger.ui;
 
 import java.util.*;
 import java.sql.*;
-import android.support.v7.app.ActionBarActivity;
+
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
 import android.content.*;
 import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.parts.Workout;
@@ -38,6 +37,16 @@ public class WorkoutsActivity extends BaseActivity {
 		mListView = (ListView) findViewById(R.id.list);
 		listAdapter = new WorkoutListAdapter(this, workoutDataSource.getAllWorkouts());
 		mListView.setAdapter(listAdapter);
+
+		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
+				intent.setAction(EditWorkoutActivity.ACTION_ADD);
+				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
+			}
+		});
 	}
 
 	@Override
@@ -48,7 +57,7 @@ public class WorkoutsActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_add_item, menu);
+//		getMenuInflater().inflate(R.menu.menu_add_item, menu);
 		return true;
 	}
 
@@ -59,9 +68,9 @@ public class WorkoutsActivity extends BaseActivity {
 				finish();
 				return true;
 			case R.id.action_add:
-				Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
-				intent.setAction(EditWorkoutActivity.ACTION_ADD);
-				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
+//				Intent intent = new Intent(WorkoutsActivity.this, EditWorkoutActivity.class);
+//				intent.setAction(EditWorkoutActivity.ACTION_ADD);
+//				startActivityForResult(intent, REQUEST_ADD_WORKOUT);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
