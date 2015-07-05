@@ -10,14 +10,26 @@ public class Exercise implements Serializable {
 
 	public Exercise() {
 		this.id = NO_ID;
-		this.name = null;
-		this.description = null;
+		this.name = "";
+		this.description = "";
 	}
 
 	public Exercise(long id, String name, String description) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
+		if (id >= 0) {
+			this.id = id;
+		} else {
+			this.id = NO_ID;
+		}
+		if (name != null) {
+			this.name = name;
+		} else {
+			this.name = "";
+		}
+		if (description != null) {
+			this.description = description;
+		} else {
+			this.description = "";
+		}
 	}
 
 	/**
@@ -33,7 +45,11 @@ public class Exercise implements Serializable {
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		if (id >= 0) {
+			this.id = id;
+		} else {
+			this.id = NO_ID;
+		}
 	}
 
 	public String getName() {
@@ -41,7 +57,11 @@ public class Exercise implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if (name != null) {
+			this.name = name;
+		} else {
+			this.name = "";
+		}
 	}
 
 	public String getDescription() {
@@ -49,7 +69,11 @@ public class Exercise implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		if (description != null) {
+			this.description = description;
+		} else {
+			this.description = "";
+		}
 	}
 
 	public int getType() {
@@ -57,7 +81,11 @@ public class Exercise implements Serializable {
 	}
 
 	public void setType(int type) {
-		this.type = type;
+		if (type >= EXERCISE_TYPE_OTHER && type <= EXERCISE_TYPE_SHIN) {
+			this.type = type;
+		} else {
+			this.type = EXERCISE_TYPE_OTHER;
+		}
 	}
 
 	@Override

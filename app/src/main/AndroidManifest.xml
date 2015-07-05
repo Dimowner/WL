@@ -27,11 +27,15 @@
 		</activity>
 		<activity
 			android:name=".ui.StatisticsActivity"
-			android:label="@string/title_weight">
+			android:label="@string/title_statistics">
 		</activity>
 		<activity
 			android:name=".ui.WorkoutsActivity"
 			android:label="@string/title_workouts">
+		</activity>
+		<activity
+			android:name=".ui.TrainingActivity"
+			android:label="@string/title_training">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

@@ -3,6 +3,7 @@ package ua.com.sofon.workoutlogger.ui;
 import java.sql.SQLException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.R;
+import  static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
 
 /**
  * Activity shows all exercises.
@@ -24,9 +26,9 @@ public class ExercisesActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_exercises_list);
+		setContentView(R.layout.activity_list);
 
-		String action = getIntent().getAction();
+		action = getIntent().getAction();
 		if (action == null) {
 			action = ACTION_VIEW;
 		}
@@ -35,7 +37,7 @@ public class ExercisesActivity extends BaseActivity {
 		try {
 			workoutDataSource.open();
 		} catch (SQLException e) {
-			Log.e(LOG_TAG, "", e);
+			LOGE(LOG_TAG, "", e);
 		}
 
 		RecyclerView exeListView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -51,16 +53,14 @@ public class ExercisesActivity extends BaseActivity {
 		exeAdapter.setOnItemClickListener(new ExercisesListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
+				Log.v(LOG_TAG, "onItemClick pos = " + position);
 				Intent intent = new Intent(ExercisesActivity.this, EditExerciseActivity.class);
 				intent.setAction(EditExerciseActivity.ACTION_VIEW);
 				intent.putExtra(EXTRAS_KEY_EXERCISE, exeAdapter.getItem(position));
-				startActivityForResult(intent, REQUEST_EDIT_EXERCISE);
+				startActivityForResult(intent, REQUEST_VIEW_EXERCISE);
 			}
 		});
 		exeListView.setAdapter(exeAdapter);
-
-//		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//		fab.attachToRecyclerView(exeListView);
 	}
 
 	@Override
@@ -69,8 +69,34 @@ public class ExercisesActivity extends BaseActivity {
 	}
 
 	@Override
+	protected void setupNavDrawer() {
+		if (action.equals(ACTION_SELECT)) {
+			//If action select don't init navigation drawer and lock it.
+			mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+			if (getSupportActionBar() != null) {
+				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			}
+		} else {
+			super.setupNavDrawer();
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_add_item, menu);
+		MenuItem addItem = menu.findItem(R.id.action_add);
+		if (addItem != null) {
+			addItem.setTitle(R.string.menu_item_exer_add);
+		}
+		MenuItem acceptItem = menu.findItem(R.id.action_accept);
+		if (acceptItem != null ) {
+			if (action.equals(ACTION_SELECT)) {
+				acceptItem.setVisible(true);
+			} else {
+				acceptItem.setVisible(false);
+			}
+		}
 		return true;
 	}
 
@@ -94,12 +120,14 @@ public class ExercisesActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			Log.v(LOG_TAG, "Action = " + data.getAction());
 			switch (requestCode) {
 				case REQUEST_ADD_EXERCISE:
 				case REQUEST_EDIT_EXERCISE:
 					exeAdapter.clear();
-					exeAdapter.addExercises(workoutDataSource.getAllExercises());
+					exeAdapter.addItems(workoutDataSource.getAllExercises());
+					break;
+				case REQUEST_VIEW_EXERCISE:
+					Log.v(LOG_TAG, "View result");
 					break;
 			}
 		}
@@ -118,6 +146,7 @@ public class ExercisesActivity extends BaseActivity {
 	private final int REQUEST_ADD_EXERCISE = 101;
 	private final int REQUEST_VIEW_EXERCISE = 102;
 	private final int REQUEST_EDIT_EXERCISE = 103;
+	private String action;
 	private ExercisesListAdapter exeAdapter;
 	private WorkoutDataSource workoutDataSource;
 

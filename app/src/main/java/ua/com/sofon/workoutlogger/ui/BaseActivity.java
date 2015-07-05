@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,11 @@ import ua.com.sofon.workoutlogger.R;
  * @author Dimowner
  */
 public class BaseActivity extends AppCompatActivity {
+
+	//TODO: 1. Add search by exercises in toolbar.
+	//TODO: 2. Add accept dialog on delete exercise and workout.
+	//TODO: 3. Add into settings licence item.
+	//TODO: 4. Completely rework workout dic.
 
 	/**
 	 * When using the ActionBarDrawerToggle, you must call it during
@@ -49,7 +55,8 @@ public class BaseActivity extends AppCompatActivity {
 	 * different depending on whether the attendee indicated that they are attending the
 	 * event on-site vs. attending remotely.
 	 */
-	private void setupNavDrawer() {
+	protected void setupNavDrawer() {
+		Log.v("Base", "setupNavDrawer");
 		// What nav drawer item should be selected?
 		int selfItem = getSelfNavDrawerItem();
 
@@ -57,7 +64,7 @@ public class BaseActivity extends AppCompatActivity {
 		if (mDrawerLayout == null) {
 			return;
 		}
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		if (navigationView != null) {
 			navigationView.setNavigationItemSelectedListener(
 					new NavigationView.OnNavigationItemSelectedListener() {
@@ -71,7 +78,7 @@ public class BaseActivity extends AppCompatActivity {
 							return true;
 						}
 					});
-			if (selfItem >= 0) {
+			if (selfItem > NAVDRAWER_ITEM_INVALID) {
 				navigationView.getMenu().findItem(selfItem).setChecked(true);
 			}
 		}
@@ -123,6 +130,14 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (navigationView != null && getSelfNavDrawerItem() > NAVDRAWER_ITEM_INVALID) {
+			navigationView.getMenu().findItem(getSelfNavDrawerItem()).setChecked(true);
+		}
+	}
+
+	@Override
 	public void onBackPressed() {
 		if (isNavDrawerOpen()) {
 			closeNavDrawer();
@@ -132,31 +147,30 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	private void goToNavDrawerItem(int itemID) {
-		Intent intent;
+
 		switch (itemID) {
+			case NAVDRAWER_ITEM_TRAINING:
+				startActivity(new Intent(this, TrainingActivity.class));
+				finish();
+				break;
 			case NAVDRAWER_ITEM_WORKOUTS:
-				intent = new Intent(this, WorkoutsActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(this, WorkoutsActivity.class));
 				finish();
 				break;
 			case NAVDRAWER_ITEM_EXERCISES:
-				intent = new Intent(this, ExercisesActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(this, ExercisesActivity.class));
 				finish();
 				break;
 			case NAVDRAWER_ITEM_WEIGHT:
-				intent = new Intent(this, WeightActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(this, WeightActivity.class));
 				finish();
 				break;
 			case NAVDRAWER_ITEM_STATISTICS:
-				intent = new Intent(this, StatisticsActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(this, StatisticsActivity.class));
 				finish();
 				break;
 			case NAVDRAWER_ITEM_SETTINGS:
-				intent = new Intent(this, SettingsActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(this, SettingsActivity.class));
 				break;
 		}
 	}
@@ -185,6 +199,7 @@ public class BaseActivity extends AppCompatActivity {
 	// symbols for navdrawer items (indices must correspond to array below). This is
 	// not a list of items that are necessarily *present* in the Nav Drawer; rather,
 	// it's a list of all possible items.
+	protected static final int NAVDRAWER_ITEM_TRAINING		= R.id.nav_training;
 	protected static final int NAVDRAWER_ITEM_WORKOUTS		= R.id.nav_workouts;
 	protected static final int NAVDRAWER_ITEM_EXERCISES	= R.id.nav_exercises;
 	protected static final int NAVDRAWER_ITEM_WEIGHT		= R.id.nav_weight;
@@ -197,5 +212,6 @@ public class BaseActivity extends AppCompatActivity {
 
 	// Navigation drawer:
 	protected DrawerLayout mDrawerLayout;
+	protected NavigationView navigationView;
 	protected ActionBarDrawerToggle mDrawerToggle;
 }

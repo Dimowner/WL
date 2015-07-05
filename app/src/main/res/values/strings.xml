@@ -1,11 +1,13 @@
 <resources>
 
 	<string name="app_name">Workout Logger</string>
+	<string name="title_training">Training</string>
 	<string name="title_exercise">Exercise</string>
 	<string name="title_exercises">Exercises</string>
 	<string name="title_workouts">Workouts</string>
 	<string name="title_workout">Workout</string>
 	<string name="title_weight">Weight</string>
+	<string name="title_statistics">Statistics</string>
 	<string name="title_settings">Settings</string>
 	<string name="title_warning">Warning</string>
 
@@ -37,6 +39,9 @@
 	<string name="list_item_cont_desc">Item menu</string>
 
 	<string name="menu_item_exer_add">Add exercise</string>
+	<string name="menu_item_workout_add">Add workout</string>
+	<string name="menu_item_add">Add</string>
+	<string name="menu_item_accept">Accept</string>
 	<string name="menu_item_replace">Replace</string>
 	<string name="menu_item_edit">Edit</string>
 	<string name="menu_item_delete">Delete</string>
@@ -44,6 +49,8 @@
 	<string name="drawer_open">Main menu opened</string>
 	<string name="drawer_closed">Main menu closed</string>
 
+	<!-- Menu item to open the History screen [CHAR_LIMIT=20] -->
+	<string name="navdrawer_item_training">Training</string>
 	<!-- Menu item to open the Workouts screen [CHAR_LIMIT=20] -->
 	<string name="navdrawer_item_workouts">Workouts</string>
 	<!-- Menu item to open the Exercises screen [CHAR_LIMIT=20] -->
