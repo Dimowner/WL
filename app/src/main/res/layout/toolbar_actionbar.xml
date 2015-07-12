@@ -24,4 +24,5 @@
 	app:theme="@style/ActionBarThemeOverlay"
 	app:popupTheme="@style/ActionBarPopupThemeOverlay"
 	app:titleTextAppearance="@style/ActionBar.TitleText"
-	app:contentInsetStart="?actionBarInsetStart" />
+	app:contentInsetStart="?actionBarInsetStart"
+   app:layout_scrollFlags="scroll|enterAlways" />

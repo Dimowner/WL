@@ -1,11 +1,14 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ua.com.sofon.workoutlogger.R;
@@ -17,23 +20,28 @@ import ua.com.sofon.workoutlogger.parts.Exercise;
  */
 public class ExercisesListAdapter
 		extends RecyclerView.Adapter<ExercisesListAdapter.ViewHolder> {
-	// Provide a reference to the views for each data item
-	// Complex data items may need more than one view per item, and
-	// you provide access to all the views for a data item in a view holder
-	public static class ViewHolder extends RecyclerView.ViewHolder {
 
+	public static class ViewHolder extends RecyclerView.ViewHolder {
 		public ViewHolder(View v) {
 			super(v);
 			mView = v;
 		}
 
-		// each data item is just a string in this case
 		public View mView;
 	}
 
 	public ExercisesListAdapter(String action, List<Exercise> exercises) {
-		this.action = action;
-		this.data = exercises;
+		if (action != null && !action.isEmpty()) {
+			this.action = action;
+		} else {
+			this.action = "";
+		}
+		if (exercises != null) {
+			this.data = exercises;
+		} else {
+			this.data = new ArrayList<>();
+		}
+		this.checkedItems = new ArrayList<>();
 	}
 
 	@Override
@@ -66,9 +74,20 @@ public class ExercisesListAdapter
 			}
 		});
 
-		if (!action.equals(ExercisesActivity.ACTION_SELECT)) {
+		if (!action.equals(ExercisesActivity.ACTION_SELECT_MULTI)) {
 			holder.mView.findViewById(R.id.exe_list_item_check).setVisibility(View.GONE);
 		}
+
+		//Save checked items position into the list
+		((CheckBox) holder.mView.findViewById(R.id.exe_list_item_check))
+				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if (isChecked) {
+							checkedItems.add(data.get(position).getId());
+						}
+					}
+				});
 	}
 
 	@Override
@@ -86,13 +105,43 @@ public class ExercisesListAdapter
 		notifyDataSetChanged();
 	}
 
+	public void addItem(int pos, Exercise exe) {
+		data.add(pos, exe);
+		notifyDataSetChanged();
+	}
+
 	public Exercise getItem(int position) {
 		return data.get(position);
+	}
+
+	public List<Exercise> getAllItems() {
+		return new ArrayList<>(data);
 	}
 
 	public void removeItem(int position) {
 		data.remove(position);
 		notifyDataSetChanged();
+	}
+
+	public long[] getCheckedItemsIDs() {
+		long[] items = new long[checkedItems.size()];
+		for (int i = 0; i < checkedItems.size(); i++) {
+			items[i] = checkedItems.get(i);
+		}
+		return items;
+	}
+
+	public Exercise[] getCheckedItems() {
+		Exercise[] exes = new Exercise[checkedItems.size()];
+		for (int i = 0; i < checkedItems.size(); i++) {
+			for (int j = 0; j < data.size(); j++) {
+				if (checkedItems.get(i) == data.get(j).getId()) {
+					exes[i] = data.get(j);
+					break;
+				}
+			}
+		}
+		return exes;
 	}
 
 	public void clear() {
@@ -109,6 +158,7 @@ public class ExercisesListAdapter
 	}
 
 	private List<Exercise> data;
+	private List<Long> checkedItems;
 	private String action;
 
 	private OnItemClickListener itemClickListener;

@@ -1,6 +1,8 @@
 package ua.com.sofon.workoutlogger.parts;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +13,7 @@ import java.util.Locale;
  * Created on 22.02.2015.
  * @author Dimowner
  */
-public class Workout implements Serializable {
+public class Workout implements Parcelable {
 
 	public Workout() {
 		this.id = NO_ID;
@@ -35,6 +37,46 @@ public class Workout implements Serializable {
 		this.comment = comment;
 		this.exerciseList = exerciseList;
 	}
+
+	public Workout(Parcel in) {
+		id = in.readLong();
+		String[] strData = new String[2];
+		in.readStringArray(strData);
+		name = strData[0];
+		comment = strData[1];
+		int[] intData = new int[2];
+		in.readIntArray(intData);
+		duration = intData[0];
+		state = intData[1];
+		weight = in.readFloat();
+		date = (Date) in.readSerializable();
+		this.exerciseList = new ArrayList<>();
+		in.readList(exerciseList, Exercise.class.getClassLoader());
+	}
+
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeLong(id);
+		out.writeStringArray(new String[]{name, comment});
+		out.writeIntArray(new int[]{duration, state});
+		out.writeFloat(weight);
+		out.writeSerializable(date);
+		out.writeList(exerciseList);
+	}
+
+	public static final Parcelable.Creator<Workout> CREATOR
+			= new Parcelable.Creator<Workout>() {
+		public Workout createFromParcel(Parcel in) {
+			return new Workout(in);
+		}
+
+		public Workout[] newArray(int size) {
+			return new Workout[size];
+		}
+	};
 
 	/**
 	 * Check that Workout has ID.
@@ -130,14 +172,13 @@ public class Workout implements Serializable {
 		sb.append("duration: '").append(duration).append("', ");
 		sb.append("comment: '").append(comment).append("', ");
 		sb.append("state: '").append(state).append("' \n");
-		for (Exercise e : exerciseList) {
-			sb.append(e.toString()).append(", ");
+		for (int i = 0; i < exerciseList.size(); i++) {
+			sb.append(exerciseList.get(i).toString()).append(", ");
 		}
 		sb.append("];");
 		return sb.toString();
 	}
 
-	private static final long serialVersionUID = 5085350331476735410L;
 
 	public static final int NO_ID = -1;
 
@@ -156,6 +197,5 @@ public class Workout implements Serializable {
 	private int duration;
 	private String comment;
 	private int state = STATE_DEFAULT;
-//	private List<Long> performedExeIDs;
 	private List<Exercise> exerciseList;
 }

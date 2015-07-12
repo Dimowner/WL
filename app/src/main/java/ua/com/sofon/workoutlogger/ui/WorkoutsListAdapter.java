@@ -1,14 +1,12 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import java.util.List;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
-
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
@@ -24,9 +22,6 @@ public class WorkoutsListAdapter	extends RecyclerView.Adapter<WorkoutsListAdapte
 		this.data = workouts;
 	}
 
-	// Provide a reference to the views for each data item
-	// Complex data items may need more than one view per item, and
-	// you provide access to all the views for a data item in a view holder
 	public static class ViewHolder extends RecyclerView.ViewHolder {
 
 		public ViewHolder(View v) {
@@ -46,8 +41,8 @@ public class WorkoutsListAdapter	extends RecyclerView.Adapter<WorkoutsListAdapte
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, final int position) {
-		((ImageView) holder.mView.findViewById(R.id.workout_list_item_image))
-				.setImageResource(R.drawable.ic_android_grey600_24dp);
+//		((ImageView) holder.mView.findViewById(R.id.workout_list_item_image))
+//				.setImageResource(R.drawable.ic_android_grey600_24dp);
 		((TextView)holder.mView.findViewById(R.id.workout_list_item_header))
 				.setText(data.get(position).getName());
 		StringBuilder content = new StringBuilder();
@@ -92,13 +87,34 @@ public class WorkoutsListAdapter	extends RecyclerView.Adapter<WorkoutsListAdapte
 		notifyDataSetChanged();
 	}
 
+	public void addItem(int pos, Workout workout) {
+		data.add(pos, workout);
+		notifyDataSetChanged();
+	}
+
 	public Workout getItem(int position) {
 		return data.get(position);
 	}
 
-	public void removeItem(int position) {
-		data.remove(position);
-		notifyDataSetChanged();
+	public boolean removeItem(int position) {
+		if (position >=0 && position < data.size()) {
+			data.remove(position);
+			notifyDataSetChanged();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean removeItem(long id) {
+		for (int i = 0; i < data.size(); i++) {
+			if (data.get(i).getId() == id) {
+				data.remove(i);
+				notifyDataSetChanged();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void clear() {

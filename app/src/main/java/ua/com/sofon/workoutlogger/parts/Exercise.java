@@ -1,17 +1,19 @@
 package ua.com.sofon.workoutlogger.parts;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created on 21.02.2015.
  * @author Dimowner
  */
-public class Exercise implements Serializable {
+public class Exercise implements Parcelable {
 
 	public Exercise() {
 		this.id = NO_ID;
 		this.name = "";
 		this.description = "";
+		this.type = EXERCISE_TYPE_OTHER;
 	}
 
 	public Exercise(long id, String name, String description) {
@@ -31,6 +33,59 @@ public class Exercise implements Serializable {
 			this.description = "";
 		}
 	}
+
+	public Exercise(long id, int type, String name, String description) {
+		if (id >= 0) {
+			this.id = id;
+		} else {
+			this.id = NO_ID;
+		}
+		if (type >= EXERCISE_TYPE_OTHER && type <= EXERCISE_TYPE_SHIN) {
+			this.type = type;
+		} else {
+			this.type = EXERCISE_TYPE_OTHER;
+		}
+		if (name != null) {
+			this.name = name;
+		} else {
+			this.name = "";
+		}
+		if (description != null) {
+			this.description = description;
+		} else {
+			this.description = "";
+		}
+	}
+
+	public Exercise(Parcel in) {
+		id = in.readLong();
+		type = in.readInt();
+		String[] data = new String[2];
+		in.readStringArray(data);
+		name = data[0];
+		description = data[1];
+	}
+
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeLong(id);
+		out.writeInt(type);
+		out.writeStringArray(new String[]{name, description});
+	}
+
+	public static final Parcelable.Creator<Exercise> CREATOR
+			= new Parcelable.Creator<Exercise>() {
+		public Exercise createFromParcel(Parcel in) {
+			return new Exercise(in);
+		}
+
+		public Exercise[] newArray(int size) {
+			return new Exercise[size];
+		}
+	};
 
 	/**
 	 * Check that Exercise has ID.
@@ -95,7 +150,6 @@ public class Exercise implements Serializable {
 				+ "description = '" + description + "']";
 	}
 
-	private static final long serialVersionUID = 4018750221300108624L;
 
 	public static final int EXERCISE_TYPE_OTHER		= 0;
 	public static final int EXERCISE_TYPE_BACK		= 1;

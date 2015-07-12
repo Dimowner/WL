@@ -26,8 +26,9 @@
 	<string name="btn_ok">OK</string>
 	<string name="btn_cancel">Cancel</string>
 
-	<string name="exer_pos_name">Name</string>
-	<string name="exer_pos_description">Description</string>
+	<string name="exer_name">Name</string>
+	<string name="exer_description">Description</string>
+	<string name="exer_delete_this_exe">Delete this exercise?</string>
 
 	<string name="workoutpos_name">Name</string>
 	<string name="workoutpos_date">Date</string>

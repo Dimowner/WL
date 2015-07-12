@@ -29,7 +29,7 @@
 		<item name="android:textColorLink">@color/theme_accent_2</item>
 
 		<!--<item name="android:windowContentOverlay">@null</item>-->
-		<item name="android:windowBackground">@android:color/white</item>
+		<item name="android:windowBackground">@color/md_grey_100</item>
 
 	</style>
 </resources>

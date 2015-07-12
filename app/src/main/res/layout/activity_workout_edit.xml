@@ -1,68 +1,51 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-					 xmlns:tools="http://schemas.android.com/tools"
-					 android:layout_width="match_parent"
-					 android:layout_height="match_parent"
-					 tools:context="ua.com.sofon.workoutlogger.ui.EditWorkoutActivity">
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	<android.support.v7.widget.Toolbar
-		android:id="@+id/toolbar"
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appbar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:background="?attr/colorPrimary"
-		android:minHeight="?attr/actionBarSize">
+		android:layout_height="wrap_content">
 
-		<LinearLayout
-			android:id="@+id/workout_pos_pnl"
+		<include layout="@layout/toolbar_actionbar"/>
+
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/workout_edit_name_input"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:orientation="vertical">
-
+			android:layout_marginLeft="?actionBarInsetStart"
+			android:layout_marginStart="?actionBarInsetStart"
+			android:layout_marginRight="@dimen/keyline_1"
+			android:layout_marginEnd="@dimen/keyline_1"
+			android:layout_marginBottom="4dp"
+			android:layout_marginTop="4dp">
 			<EditText
-				android:id="@+id/workout_pos_txt_name"
+				android:id="@+id/workout_edit_txt_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:inputType="text"
 				android:hint="@string/workoutpos_name"/>
+		</android.support.design.widget.TextInputLayout>
 
-			<LinearLayout
-				android:id="@+id/workout_pos_pnl_info"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:baselineAligned="false"
-				android:layout_marginTop="8dp"
-				android:layout_marginBottom="8dp"
-				android:orientation="horizontal">
+	</android.support.design.widget.AppBarLayout>
 
-				<ua.com.sofon.workoutlogger.ui.widget.DatePickerView
-					android:id="@+id/workout_pos_txt_date"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:hint="@string/workoutpos_date"/>
-
-				<EditText
-					android:id="@+id/workout_pos_txt_weight"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:hint="@string/workoutpos_weight"
-					android:inputType="numberDecimal"/>
-			</LinearLayout>
-		</LinearLayout>
-	</android.support.v7.widget.Toolbar>
-
-	<ListView
-		android:id="@+id/workout_pos_exe_list"
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/toolbar"/>
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-	<Button
-		android:id="@+id/workout_pos_btn_add_exe"
-		android:layout_width="match_parent"
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/fab"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/workoutpos_add_exercise"
-		android:layout_below="@+id/workout_pos_exe_list"/>
-</RelativeLayout>
+		android:src="@drawable/ic_plus_white_24dp"
+		app:elevation="4dp"
+		app:borderWidth="0dp"
+		android:layout_margin="16dp"
+		android:layout_gravity="end|bottom"/>
+
+</android.support.design.widget.CoordinatorLayout>

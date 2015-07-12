@@ -14,7 +14,7 @@
 
 		</activity>
 		<activity
-			android:name=".ui.EditExerciseActivity"
+			android:name=".ui.ExerciseEditActivity"
 			android:label="@string/title_exercise">
 		</activity>
 		<activity
@@ -43,7 +43,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ui.EditWorkoutActivity"
+			android:name=".ui.WorkoutEditActivity"
 			android:label="@string/title_workout">
 		</activity>
 		<activity

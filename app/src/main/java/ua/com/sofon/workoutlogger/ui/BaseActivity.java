@@ -20,10 +20,14 @@ import ua.com.sofon.workoutlogger.R;
  */
 public class BaseActivity extends AppCompatActivity {
 
-	//TODO: 1. Add search by exercises in toolbar.
-	//TODO: 2. Add accept dialog on delete exercise and workout.
-	//TODO: 3. Add into settings licence item.
-	//TODO: 4. Completely rework workout dic.
+	//TODO:  Add search by exercises in toolbar.
+	//TODO:  Add into settings licence item.
+	//TODO:  Completely rework workout dic.
+	//TODO:  Convert all my Serializable classes into Parcelable.
+	//TODO:  Add sort to exercises and workouts.
+	//TODO:  Исправить возможность дублирования одного упражнения в тренеровке.
+	//TODO:  ExerciseList when item unchecked remove it from checked items.
+	//TODO:  Add EditBaseActivity and BaseListActivity and BaseListAdapter classes.
 
 	/**
 	 * When using the ActionBarDrawerToggle, you must call it during
@@ -56,7 +60,6 @@ public class BaseActivity extends AppCompatActivity {
 	 * event on-site vs. attending remotely.
 	 */
 	protected void setupNavDrawer() {
-		Log.v("Base", "setupNavDrawer");
 		// What nav drawer item should be selected?
 		int selfItem = getSelfNavDrawerItem();
 

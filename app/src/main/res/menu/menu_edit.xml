@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		tools:context="ua.com.sofon.workoutlogger.ui.EditExerciseActivity">
+		tools:context="ua.com.sofon.workoutlogger.ui.ExerciseEditActivity">
 
 	<item
 		android:id="@+id/action_accept"
@@ -11,14 +11,14 @@
 		app:showAsAction="ifRoom"/>
 
 	<item
-		android:id="@+id/action_exer_edit"
+		android:id="@+id/action_edit"
 		android:orderInCategory="100"
-		android:title="Edit"
+		android:title="@string/menu_item_edit"
 		app:showAsAction="never"/>
 
 	<item
-		android:id="@+id/action_exer_delete"
+		android:id="@+id/action_delete"
 		android:orderInCategory="100"
-		android:title="Delete"
+		android:title="@string/menu_item_delete"
 		app:showAsAction="never"/>
 </menu>

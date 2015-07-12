@@ -44,10 +44,10 @@ public class WorkoutDataSource {
 
 	/**
 	 * Write {@link ua.com.sofon.workoutlogger.parts.Exercise Exercise} to database.
-	 * @param name Exercisce name.
+	 * @param name Exercise name.
 	 * @param description Exercise description.
 	 */
-	public Exercise createExersice(String name, String description) {
+	public Exercise createExercise(String name, String description) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_EXE_NAME, name);
 		values.put(SQLiteHelper.COLUMN_DESCRIPTION, description);
@@ -61,9 +61,9 @@ public class WorkoutDataSource {
 //				exercisesAllColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
 //				null, null, null);
 		cursor.moveToFirst();
-		Exercise newExersice = cursorToExercise(cursor);
+		Exercise newExercise = cursorToExercise(cursor);
 		cursor.close();
-		return newExersice;
+		return newExercise;
 	}
 
 	/**
@@ -143,6 +143,10 @@ public class WorkoutDataSource {
 		Log.v(LOG_TAG, "Insert workout id = " + insertId);
 	}
 
+	/**
+	 * Update {@link ua.com.sofon.workoutlogger.parts.Workout Workout} in databese.
+	 * @param workout Workout to update.
+	 */
 	public void updateWorkout(Workout workout) {
 		if (workout.hasID()) {
 			ContentValues values = new ContentValues();
