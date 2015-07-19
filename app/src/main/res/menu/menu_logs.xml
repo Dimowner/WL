@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		tools:context="ua.com.sofon.workoutlogger.ui.LogsActivity">
+
+	<item
+		android:id="@+id/action_send_email"
+		android:icon="@drawable/ic_android_grey600_24dp"
+		android:orderInCategory="100"
+		android:title="Send"
+		app:showAsAction="ifRoom"/>
+
+	<item
+		android:id="@+id/action_open_file_location"
+		android:icon="@drawable/ic_android_grey600_24dp"
+		android:orderInCategory="100"
+		android:title="Open logs folder"
+		app:showAsAction="ifRoom"/>
+</menu>

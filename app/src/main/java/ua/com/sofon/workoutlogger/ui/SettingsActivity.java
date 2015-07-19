@@ -20,6 +20,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -74,7 +75,7 @@ public class SettingsActivity extends BaseActivity {
 			super.onCreate(savedInstanceState);
 			setupSimplePreferencesScreen();
             PrefUtils.registerOnSharedPreferenceChangeListener(getActivity(), this);
-			prefAbout = findPreference("about");
+			Preference prefAbout = findPreference("about");
 			prefAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
@@ -86,6 +87,15 @@ public class SettingsActivity extends BaseActivity {
 					}
 					ft.addToBackStack(null);
 					new AboutDialog().show(ft, "dialog_about");
+					return false;
+				}
+			});
+			Preference prefLogs = findPreference("logs");
+			prefLogs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					LOGV("SettingFragment", "startLogsActivity");
+					startActivity(new Intent(getActivity(), LogsActivity.class));
 					return false;
 				}
 			});
@@ -107,6 +117,6 @@ public class SettingsActivity extends BaseActivity {
 			LOGV("SettingsActivity", "onPreferenceChanged");
 		}
 
-		Preference prefAbout;
+//		Preference prefAbout;
 	}
 }

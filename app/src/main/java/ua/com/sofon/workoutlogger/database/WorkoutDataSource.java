@@ -12,6 +12,11 @@ import android.util.Log;
 
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
+import ua.com.sofon.workoutlogger.util.LogUtils;
+
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGD;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
+import static ua.com.sofon.workoutlogger.util.LogUtils.LOGV;
 
 /**
  * Class to communicate with database.
@@ -52,7 +57,7 @@ public class WorkoutDataSource {
 		values.put(SQLiteHelper.COLUMN_EXE_NAME, name);
 		values.put(SQLiteHelper.COLUMN_DESCRIPTION, description);
 		long insertId = db.insert(SQLiteHelper.TABLE_EXERCISES, null, values);
-		Log.v(LOG_TAG, "Insert exercise id = " + insertId);
+		LOGV(LOG_TAG, "Insert exercise id = " + insertId);
 		Cursor cursor = queryLocal(db,
 				"SELECT * FROM " + SQLiteHelper.TABLE_EXERCISES
 				+ " WHERE " + SQLiteHelper.COLUMN_ID + " = " + insertId
@@ -81,7 +86,7 @@ public class WorkoutDataSource {
 		values.put(SQLiteHelper.COLUMN_WORKOUT_STATE, state);
 		values.put(SQLiteHelper.COLUMN_WORKOUT_COMMENT, comment);
 		long workoutId = db.insert(SQLiteHelper.TABLE_WORKOUTS, null, values);
-		Log.v(LOG_TAG, "Insert workout id = " + workoutId);
+		LOGV(LOG_TAG, "Insert workout id = " + workoutId);
 //		Cursor cursor = db.query(SQLiteHelper.TABLE_WORKOUTS,
 //				workoutsAllColumns, SQLiteHelper.COLUMN_ID + " = " + workoutId, null,
 //				null, null, null);
@@ -131,7 +136,7 @@ public class WorkoutDataSource {
 				exeList.add(cursorToExercise(cursor));
 			} while (cursor.moveToNext());
 		}
-		Log.v(LOG_TAG, "exeList size = " + exeList.size());
+		LOGV(LOG_TAG, "exeList size = " + exeList.size());
 		return  exeList;
 	}
 
@@ -140,7 +145,7 @@ public class WorkoutDataSource {
 		values.put(SQLiteHelper.COLUMN_WORKOUT_ID, workoutID);
 		values.put(SQLiteHelper.COLUMN_EXERCISE_ID, exerciseID);
 		long insertId = db.insert(SQLiteHelper.TABLE_PERFORMED_EXERCISES, null, values);
-		Log.v(LOG_TAG, "Insert workout id = " + insertId);
+		LOGV(LOG_TAG, "Insert workout id = " + insertId);
 	}
 
 	/**
@@ -159,9 +164,9 @@ public class WorkoutDataSource {
 
 			String where = SQLiteHelper.COLUMN_ID + " = " + workout.getId();
 			int n = db.update(SQLiteHelper.TABLE_WORKOUTS, values, where, null);
-			Log.v(LOG_TAG, "Updated records count = " + n);
+			LOGV(LOG_TAG, "Updated records count = " + n);
 		} else {
-			Log.e(LOG_TAG, "Workout has no ID");
+			LOGE(LOG_TAG, "Workout has no ID");
 		}
 	}
 
@@ -180,9 +185,9 @@ public class WorkoutDataSource {
 			values.put(SQLiteHelper.COLUMN_DESCRIPTION, exercise.getDescription());
 			String where = SQLiteHelper.COLUMN_ID + " = " + exercise.getId();
 			int n = db.update(SQLiteHelper.TABLE_EXERCISES, values, where, null);
-			Log.v(LOG_TAG, "Updated records count = " + n);
+			LOGV(LOG_TAG, "Updated records count = " + n);
 		} else {
-			Log.e(LOG_TAG, "Exercice has no ID");
+			LOGE(LOG_TAG, "Exercice has no ID");
 		}
 	}
 
@@ -199,9 +204,9 @@ public class WorkoutDataSource {
 			values.put(SQLiteHelper.COLUMN_DESCRIPTION, description);
 			String where = SQLiteHelper.COLUMN_ID + " = " + id;
 			int n = db.update(SQLiteHelper.TABLE_EXERCISES, values, where, null);
-			Log.v(LOG_TAG, "Updated records count = " + n);
+			LOGV(LOG_TAG, "Updated records count = " + n);
 		} else {
-			Log.e(LOG_TAG, "ID not correct");
+			LOGE(LOG_TAG, "ID not correct");
 		}
 	}
 
@@ -306,7 +311,7 @@ public class WorkoutDataSource {
 	 * @return Cursor that contains query result.
 	 */
 	private Cursor queryLocal(SQLiteDatabase db, String query) {
-		Log.d(LOG_TAG, "queryLocal: " + query);
+		LOGD(LOG_TAG, "queryLocal: " + query);
 		Cursor c = db.rawQuery(query, null);
 		StringBuilder data = new StringBuilder("Cursor[");
 		if (c.moveToFirst()) {
@@ -341,7 +346,7 @@ public class WorkoutDataSource {
 			} while (c.moveToNext());
 		}
 		data.append("]");
-		Log.d(LOG_TAG, data.toString());
+		LOGD(LOG_TAG, data.toString());
 		return c;
 	}
 
@@ -369,5 +374,5 @@ public class WorkoutDataSource {
 //		};
 
 	/** Tag for logging mesages. */
-	private final String LOG_TAG = getClass().getSimpleName();
+	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 }

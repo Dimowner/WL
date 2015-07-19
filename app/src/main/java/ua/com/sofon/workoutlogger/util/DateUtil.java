@@ -66,6 +66,12 @@ public class DateUtil {
 	public static final DateFormat middleEndianDateFormat =
 			new SimpleDateFormat("MM.dd.yyyy");
 
+	public static final DateFormat littleEndianDateTimeFormat =
+			new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+	public static final DateFormat littleEndianDateTimeMilsFormat =
+			new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
+
 	/** Time format. */
 	public static final DateFormat timeFormat =
 			new SimpleDateFormat("HH:mm");
@@ -77,6 +83,9 @@ public class DateUtil {
 //	TODO: Add date format selection into the application settings.
 	/** Active date format. */
 	private static DateFormat activeDateFormat = littleEndianDateFormat;
+
+	/** Active date and time format. */
+	private static DateFormat activeDateTimeFormat = littleEndianDateFormat;
 
 	/** Tag for logging messages. */
 	private static final String LOG_TAG = LogUtils.makeLogTag("DateUtil");

@@ -5,7 +5,8 @@ package ua.com.sofon.workoutlogger;
  */
 public class Config {
     // General configuration
-    public static final boolean IS_DEBUG_BUILD = false;
+    public static final boolean IS_DEBUG_BUILD = true;
+    public static final boolean IS_LOGS_RECORDING_ENABLED = true;
 
     // shorthand for some units of time
     public static final long SECOND_MILLIS = 1000;
@@ -19,4 +20,7 @@ public class Config {
     // Play store URL prefix
     public static final String PLAY_STORE_URL_PREFIX
             = "https://play.google.com/store/apps/details?id=";
+
+    public static final String APP_DIRECTORY = "WorkoutLogger";
+    public static final String LOG_FILE_NAME = "Log.txt";
 }
