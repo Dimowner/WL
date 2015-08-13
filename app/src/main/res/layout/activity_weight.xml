@@ -14,35 +14,41 @@
 
 		<include layout="@layout/toolbar_actionbar_with_headerbar"/>
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="150dp"
-			android:textSize="18sp"
-			android:textColor="@color/md_blue_grey_800"
-			android:text="Your weight"/>
+		<!--<TextView-->
+			<!--android:layout_width="wrap_content"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:layout_marginTop="16dp"-->
+			<!--android:textSize="18sp"-->
+			<!--android:textColor="@color/md_blue_grey_800"-->
+			<!--android:text="Your weight"/>-->
 
-		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-			<EditText
-				android:id="@+id/weight"
-				android:layout_width="50dp"
-				android:layout_height="wrap_content"
-				android:inputType="number"/>
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textColor="@color/md_blue_grey_800"
-				android:text="kg"/>
-		</LinearLayout>
+		<!--<LinearLayout-->
+			<!--android:layout_width="wrap_content"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:orientation="horizontal">-->
+			<!--<EditText-->
+				<!--android:id="@+id/weight"-->
+				<!--android:layout_width="50dp"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:inputType="number"/>-->
+			<!--<TextView-->
+				<!--android:layout_width="wrap_content"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:textColor="@color/md_blue_grey_800"-->
+				<!--android:text="kg"/>-->
+		<!--</LinearLayout>-->
 		<!-- As the main content view, the view below consumes the entire
 		space available using match_parent in both dimensions. -->
 		<!--<FrameLayout-->
 			<!--android:id="@+id/content_frame"-->
 			<!--android:layout_width="match_parent"-->
 			<!--android:layout_height="match_parent"/>-->
+
+		<com.github.mikephil.charting.charts.LineChart
+			android:id="@+id/chart"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
 	</LinearLayout>
 
 	<include layout="@layout/navdrawer" />

@@ -1,5 +1,8 @@
 package ua.com.sofon.workoutlogger.ui.widget;
 
+import java.util.Date;
+import java.util.Calendar;
+import java.text.ParseException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.util.DateUtil;
 
@@ -52,6 +52,9 @@ public class TimePickerView extends EditText {
 		timePicker = new TimePicker(context);
 		timePicker.setIs24HourView(true);
 
+		setText(getContext().getString(R.string.time_picker_time) + " "
+				+ DateUtil.timeFormat.format(new Date()));
+
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(timePicker)
 			.setPositiveButton(
@@ -65,7 +68,8 @@ public class TimePickerView extends EditText {
 									timePicker.getCurrentHour(),
 									timePicker.getCurrentMinute()
 							);
-							setText(DateUtil.timeFormat.format(calendar.getTime()));
+							setText(getContext().getString(R.string.time_picker_time) +
+									" " + DateUtil.timeFormat.format(calendar.getTime()));
 						}
 					})
 			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
@@ -74,7 +78,7 @@ public class TimePickerView extends EditText {
 			})
 			.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					setText("");
+					setText(R.string.time_picker_time);
 				}
 			}).create();
 	}
@@ -82,7 +86,8 @@ public class TimePickerView extends EditText {
 	@Override
 	public boolean onTouchEvent(@NonNull MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
-			Calendar calendar = DateUtil.parseCalendar(DateUtil.timeFormat, getText().toString());
+			Calendar calendar = getCalendar();
+
 			timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
 			timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
 			alertDialog.show();
@@ -98,24 +103,39 @@ public class TimePickerView extends EditText {
 	    return true; 
 	}
 
-//	/**
-//	 * Parse time from string.
-//	 * @param timeStr string whith time to parse.
-//	 * @return Calendar that contains parsed time or current time if failed to parse.
-//	 */
-//	private Calendar parseTimeStr(String timeStr) {
-//		Date date = null;
-//		try {
-//			date = DateUtil.timeFormat.parse(timeStr);
-//		} catch (ParseException e) {
-//			LOGE(VIEW_LOG_TAG, "", e);
-//		}
-//		Calendar calendar = Calendar.getInstance();
-//		if (date != null) {
-//			calendar.setTime(date);
-//		}
-//		return calendar;
-//	}
+	public Calendar getCalendar() {
+		String str = getText().toString();
+		int pos = str.indexOf(":");
+		String timeStr = "";
+		if (pos != -1) {
+			timeStr = str.substring(pos + 1);
+		}
+
+		try {
+			return DateUtil.parseCalendar(
+					DateUtil.timeFormat, timeStr.trim());
+		} catch (ParseException e) {
+			LOGE(VIEW_LOG_TAG, "", e);
+			return null;
+		}
+	}
+
+	public Date getDate() {
+		String str = getText().toString();
+		int pos = str.indexOf(":");
+		String timeStr = "";
+		if (pos != -1) {
+			timeStr = str.substring(pos + 1);
+		}
+
+		try {
+			return DateUtil.parseDate(
+					DateUtil.timeFormat, timeStr.trim());
+		} catch (ParseException e) {
+			LOGE(VIEW_LOG_TAG, "", e);
+			return null;
+		}
+	}
 
 	/**
 	 * Set button "Clear" visible.

@@ -25,12 +25,17 @@ public class DateUtil {
 		return activeDateFormat;
 	}
 
+	public static DateFormat getActiveDateTimeFormat() {
+		return activeDateTimeFormat;
+	}
+
 	/**
 	 * Parse time from string.
 	 * @param dateStr string with date to parse.
-	 * @return Calendar that contains parsed time or current time if failed to parse.
+	 * @return Calendar that contains parsed time or throws ParseException if failed to parse.
+	 * @throws ParseException
 	 */
-	public static Calendar parseCalendar(DateFormat format, String dateStr) {
+	public static Calendar parseCalendar(DateFormat format, String dateStr) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(parseDate(format, dateStr));
 		return calendar;
@@ -39,16 +44,13 @@ public class DateUtil {
 	/**
 	 * Parse date from string.
 	 * @param dateStr string with date to parse.
-	 * @return Parsed date or current date if failed to parse.
+	 * @return Parsed date or throws ParseException  if failed to parse.
+	 * @throws ParseException
 	 */
-	public static Date parseDate(DateFormat format, String dateStr) {
-		Date date = new Date();
+	public static Date parseDate(DateFormat format, String dateStr) throws ParseException {
+		Date date = null;
 		if (dateStr != null && !dateStr.isEmpty()) {
-			try {
-				date = format.parse(dateStr);
-			} catch (ParseException e) {
-				LOGE(LOG_TAG, "", e);
-			}
+			date = format.parse(dateStr);
 		}
 		return date;
 	}
@@ -85,7 +87,7 @@ public class DateUtil {
 	private static DateFormat activeDateFormat = littleEndianDateFormat;
 
 	/** Active date and time format. */
-	private static DateFormat activeDateTimeFormat = littleEndianDateFormat;
+	private static DateFormat activeDateTimeFormat = littleEndianDateTimeFormat;
 
 	/** Tag for logging messages. */
 	private static final String LOG_TAG = LogUtils.makeLogTag("DateUtil");

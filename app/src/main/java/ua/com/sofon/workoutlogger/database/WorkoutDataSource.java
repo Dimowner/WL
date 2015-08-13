@@ -19,6 +19,7 @@ import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
 import static ua.com.sofon.workoutlogger.util.LogUtils.LOGV;
 
 /**
+ * @deprecated
  * Class to communicate with database.
  * @author Dimowner
  */
@@ -79,12 +80,12 @@ public class WorkoutDataSource {
 					int duration, String comment, int state, List<Exercise> exerciseList) {
 //		TODO: ADD Join of exercises
 		ContentValues values = new ContentValues();
-		values.put(SQLiteHelper.COLUMN_WORKOUT_NAME, name);
-		values.put(SQLiteHelper.COLUMN_DATE, date.getTime());
-		values.put(SQLiteHelper.COLUMN_WEIGHT, weight);
-		values.put(SQLiteHelper.COLUMN_DURATION, duration);
-		values.put(SQLiteHelper.COLUMN_WORKOUT_STATE, state);
-		values.put(SQLiteHelper.COLUMN_WORKOUT_COMMENT, comment);
+		values.put(SQLiteHelper.COLUMN_W_NAME, name);
+//		values.put(SQLiteHelper.COLUMN_DATE, date.getTime());
+//		values.put(SQLiteHelper.COLUMN_WEIGHT, weight);
+//		values.put(SQLiteHelper.COLUMN_DURATION, duration);
+//		values.put(SQLiteHelper.COLUMN_WORKOUT_STATE, state);
+		values.put(SQLiteHelper.COLUMN_W_COMMENT, comment);
 		long workoutId = db.insert(SQLiteHelper.TABLE_WORKOUTS, null, values);
 		LOGV(LOG_TAG, "Insert workout id = " + workoutId);
 //		Cursor cursor = db.query(SQLiteHelper.TABLE_WORKOUTS,
@@ -155,12 +156,12 @@ public class WorkoutDataSource {
 	public void updateWorkout(Workout workout) {
 		if (workout.hasID()) {
 			ContentValues values = new ContentValues();
-			values.put(SQLiteHelper.COLUMN_WORKOUT_NAME, workout.getName());
-			values.put(SQLiteHelper.COLUMN_DATE, workout.getDate().getTime());
-			values.put(SQLiteHelper.COLUMN_WEIGHT, workout.getWeight());
-			values.put(SQLiteHelper.COLUMN_DURATION, workout.getDuration());
-			values.put(SQLiteHelper.COLUMN_WORKOUT_COMMENT, workout.getComment());
-			values.put(SQLiteHelper.COLUMN_WORKOUT_STATE, workout.getState());
+			values.put(SQLiteHelper.COLUMN_W_NAME, workout.getName());
+//			values.put(SQLiteHelper.COLUMN_DATE, workout.getDate().getTime());
+//			values.put(SQLiteHelper.COLUMN_WEIGHT, workout.getWeight());
+//			values.put(SQLiteHelper.COLUMN_DURATION, workout.getDuration());
+			values.put(SQLiteHelper.COLUMN_W_COMMENT, workout.getComment());
+//			values.put(SQLiteHelper.COLUMN_WORKOUT_STATE, workout.getState());
 
 			String where = SQLiteHelper.COLUMN_ID + " = " + workout.getId();
 			int n = db.update(SQLiteHelper.TABLE_WORKOUTS, values, where, null);
@@ -366,11 +367,11 @@ public class WorkoutDataSource {
 //	/** Array contains all names of columns Exercises table. */
 //	private String[] workoutsAllColumns = {
 //			SQLiteHelper.COLUMN_ID,
-//			SQLiteHelper.COLUMN_WORKOUT_NAME,
+//			SQLiteHelper.COLUMN_W_NAME,
 //			SQLiteHelper.COLUMN_DATE,
 //			SQLiteHelper.COLUMN_WEIGHT,
 //			SQLiteHelper.COLUMN_DURATION,
-//			SQLiteHelper.COLUMN_WORKOUT_COMMENT
+//			SQLiteHelper.COLUMN_W_COMMENT
 //		};
 
 	/** Tag for logging mesages. */

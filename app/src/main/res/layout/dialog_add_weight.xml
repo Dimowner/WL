@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				  android:orientation="vertical"
+				  android:layout_width="match_parent"
+				  android:layout_height="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/keyline_1"
+		android:layout_marginStart="@dimen/keyline_1"
+		android:layout_marginRight="@dimen/keyline_1"
+		android:layout_marginEnd="@dimen/keyline_1"
+		android:layout_marginTop="@dimen/keyline_1"
+		android:orientation="horizontal">
+
+		<ua.com.sofon.workoutlogger.ui.widget.DatePickerView
+			android:id="@+id/add_weight_date"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"/>
+
+		<ua.com.sofon.workoutlogger.ui.widget.TimePickerView
+			android:id="@+id/add_weight_time"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"/>
+	</LinearLayout>
+
+	<android.support.design.widget.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/keyline_1"
+		android:layout_marginStart="@dimen/keyline_1"
+		android:layout_marginRight="@dimen/keyline_1"
+		android:layout_marginEnd="@dimen/keyline_1"
+		android:layout_marginTop="@dimen/keyline_1_minus_8dp">
+		<EditText
+			android:id="@+id/add_weight_weight_txt"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="numberDecimal"
+			android:hint="Weight"/>
+	</android.support.design.widget.TextInputLayout>
+
+	<android.support.design.widget.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/keyline_1"
+		android:layout_marginStart="@dimen/keyline_1"
+		android:layout_marginRight="@dimen/keyline_1"
+		android:layout_marginEnd="@dimen/keyline_1"
+		android:layout_marginTop="@dimen/keyline_1_minus_8dp">
+		<EditText
+			android:id="@+id/add_weight_fat_index_txt"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="numberDecimal"
+			android:hint="Body fat"/>
+	</android.support.design.widget.TextInputLayout>
+
+	<android.support.design.widget.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/keyline_1"
+		android:layout_marginStart="@dimen/keyline_1"
+		android:layout_marginRight="@dimen/keyline_1"
+		android:layout_marginEnd="@dimen/keyline_1"
+		android:layout_marginTop="@dimen/keyline_1_minus_8dp">
+		<EditText
+			android:id="@+id/add_weight_comment_txt"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="textMultiLine"
+			android:hint="Comment"/>
+	</android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

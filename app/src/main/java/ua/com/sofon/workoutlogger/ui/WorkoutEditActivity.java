@@ -21,6 +21,7 @@ import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
+import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.util.UIUtil;
 import ua.com.sofon.workoutlogger.R;
 
@@ -88,7 +89,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 //					DateFormat df = DateFormat.getDateInstance();
 //					df.setTimeZone(TimeZone.);
 //					String curDateStr = sdf.format(new Date());
-//					String curDateStr = Workout.dateFormat.format(new Date());
+//					String curDateStr = Workout.defaultDateFormat.format(new Date());
 //					txtDate.setText(curDateStr);
 //					txtName.setText("Workout");
 		}
@@ -248,7 +249,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 	private ExercisesListAdapter listAdapter;
 	private WorkoutDataSource workoutDataSource;
 
-	/** Tag for logging messages. */
-	private final String LOG_TAG = getClass().getSimpleName();
+	/** Tag for logging mesages. */
+	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 
 }

@@ -2,18 +2,20 @@ package ua.com.sofon.workoutlogger.parts;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import ua.com.sofon.workoutlogger.util.DateUtil;
+
 /**
  * Created on 22.02.2015.
  * @author Dimowner
  */
-public class Workout implements Parcelable {
+public class Workout extends BaseParticle implements Parcelable {
 
 	public Workout() {
 		this.id = NO_ID;
@@ -26,7 +28,7 @@ public class Workout implements Parcelable {
 		this.exerciseList = new ArrayList<>();
 	}
 
-	public Workout(long id, String name, Date date, int weight, int duration,
+	public Workout(long id, String name, Date date, float weight, int duration,
 						String comment, int state, List<Exercise> exerciseList) {
 		this.id = id;
 		this.name = name;
@@ -38,6 +40,7 @@ public class Workout implements Parcelable {
 		this.exerciseList = exerciseList;
 	}
 
+	//----- START Parcelable implementation ----------
 	public Workout(Parcel in) {
 		id = in.readLong();
 		String[] strData = new String[2];
@@ -77,22 +80,7 @@ public class Workout implements Parcelable {
 			return new Workout[size];
 		}
 	};
-
-	/**
-	 * Check that Workout has ID.
-	 * @return Return true if ID not equals NO_ID;
-	 */
-	public boolean hasID() {
-		return  (id != NO_ID);
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	//----- END Parcelable implementation ----------
 
 	public String getName() {
 		return name;
@@ -107,7 +95,11 @@ public class Workout implements Parcelable {
 	}
 
 	public String getDateStr() {
-		return dateFormat.format(date);
+		return DateUtil.getActiveDateFormat().format(date);
+	}
+
+	public String getDateStr(SimpleDateFormat format) {
+		return format.format(date);
 	}
 
 	public void setDate(Date date) {
@@ -179,18 +171,10 @@ public class Workout implements Parcelable {
 		return sb.toString();
 	}
 
-
-	public static final int NO_ID = -1;
-
-	/** Date format to show in date field. */
-	public static final SimpleDateFormat dateFormat =
-			new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-
 	public static final int STATE_DEFAULT = 0;
 	public static final int STATE_ACTIVE = 1;
 	public static final int STATE_DONE = 2;
 
-	private long id = NO_ID;
 	private String name;
 	private Date date;
 	private float weight;

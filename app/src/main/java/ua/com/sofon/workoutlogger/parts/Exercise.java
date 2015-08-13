@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created on 21.02.2015.
  * @author Dimowner
  */
-public class Exercise implements Parcelable {
+public class Exercise extends BaseParticle implements Parcelable {
 
 	public Exercise() {
 		this.id = NO_ID;
@@ -57,6 +57,7 @@ public class Exercise implements Parcelable {
 		}
 	}
 
+	//----- START Parcelable implementation ----------
 	public Exercise(Parcel in) {
 		id = in.readLong();
 		type = in.readInt();
@@ -86,26 +87,7 @@ public class Exercise implements Parcelable {
 			return new Exercise[size];
 		}
 	};
-
-	/**
-	 * Check that Exercise has ID.
-	 * @return Return true if ID not equals NO_ID;
-	 */
-	public boolean hasID() {
-		return  (id != NO_ID);
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		if (id >= 0) {
-			this.id = id;
-		} else {
-			this.id = NO_ID;
-		}
-	}
+	//----- END Parcelable implementation ----------
 
 	public String getName() {
 		return name;
@@ -162,9 +144,6 @@ public class Exercise implements Parcelable {
 	public static final int EXERCISE_TYPE_FEET		= 8;
 	public static final int EXERCISE_TYPE_SHIN		= 9;
 
-	public static final long NO_ID = -1;
-
-	private long id;
 	private int type;
 	private String name;
 	private String description;

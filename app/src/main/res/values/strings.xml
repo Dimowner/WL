@@ -95,4 +95,7 @@
 		<item>Feet</item>
 		<item>Shin</item>
 	</string-array>
+
+	<string name="date_picker_date">Date:</string>
+	<string name="time_picker_time">Time:</string>
 </resources>
