@@ -12,7 +12,7 @@
 	<string name="title_app_logs">Application Logs</string>
 	<string name="title_warning">Warning</string>
 
-	<string name="datepicker_set_date">Set date</string>
+	<string name="datepicker_set_date">Set planDate</string>
 	<string name="datepicker_select">Select</string>
 	<string name="datepicker_clear">Clear</string>
 

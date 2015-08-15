@@ -6,7 +6,7 @@ package ua.com.sofon.workoutlogger;
 public class Config {
     // General configuration
     public static final boolean IS_DEBUG_BUILD = true;
-    public static final boolean IS_LOGS_RECORDING_ENABLED = true;
+    public static final boolean IS_LOGS_RECORDING_ENABLED = false;
 
     // shorthand for some units of time
     public static final long SECOND_MILLIS = 1000;

@@ -155,7 +155,7 @@ public class BaseActivity extends AppCompatActivity {
 
 		switch (itemID) {
 			case NAVDRAWER_ITEM_TRAINING:
-				startActivity(new Intent(this, TrainingActivity.class));
+				startActivity(new Intent(this, TrainingsActivity.class));
 				finish();
 				break;
 			case NAVDRAWER_ITEM_WORKOUTS:

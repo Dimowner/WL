@@ -12,7 +12,7 @@ import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
+import ua.com.sofon.workoutlogger.database.WorkoutsDS;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.R;
@@ -35,9 +35,9 @@ public class WorkoutsActivity extends BaseActivity {
 			action = ACTION_VIEW;
 		}
 
-		workoutDataSource = new WorkoutDataSource(this);
+		dataSource = new WorkoutsDS(this);
 		try {
-			workoutDataSource.open();
+			dataSource.open();
 		} catch (SQLException e) {
 			LOGE(LOG_TAG, "", e);
 		}
@@ -50,13 +50,18 @@ public class WorkoutsActivity extends BaseActivity {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(mLayoutManager);
 
-		listAdapter = new WorkoutsListAdapter(action, workoutDataSource.getAllWorkouts());
+		listAdapter = new WorkoutsListAdapter(action, dataSource.getAll());
 		listAdapter.setOnItemClickListener(new WorkoutsListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
 				if (action.equals(ACTION_SELECT)) {
 					//TODO: send back selected workout.
+					Log.v(LOG_TAG, "onItemSelected");
+					Intent intent = new Intent();
+					intent.putExtra(TrainingsActivity.EXTRAS_KEY_WORKOUT, listAdapter.getItem(position));
+					setResult(RESULT_OK, intent);
 					Log.v(LOG_TAG, "onItemClick action select");
+					finish();
 				} else {
 					Intent intent = new Intent(WorkoutsActivity.this, WorkoutEditActivity.class);
 					intent.setAction(WorkoutEditActivity.ACTION_VIEW);
@@ -86,6 +91,12 @@ public class WorkoutsActivity extends BaseActivity {
 		} else {
 			super.setupNavDrawer();
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		dataSource.close();
 	}
 
 	@Override
@@ -126,17 +137,7 @@ public class WorkoutsActivity extends BaseActivity {
 			Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
 			switch (requestCode) {
 				case REQUEST_ADD_WORKOUT:
-					listAdapter.addItem(
-							workoutDataSource.createWorkout(
-									w.getName(),
-									w.getDate(),
-									w.getWeight(),
-									w.getDuration(),
-									w.getComment(),
-									w.getState(),
-									w.getExerciseList()
-							)
-					);
+					listAdapter.addItem(dataSource.insertItem(w));
 					break;
 //					case REQUEST_EDIT_WORKOUT:
 //						//Update item in DB and in listAdaptper.);
@@ -152,7 +153,7 @@ public class WorkoutsActivity extends BaseActivity {
 					}
 					if (returnedAction != null) {
 						if (returnedAction.equals(WorkoutEditActivity.ACTION_EDIT)) {
-							workoutDataSource.updateWorkout(w);
+							dataSource.updateItem(w);
 							listAdapter.removeItem(itemPosition);
 							listAdapter.addItem(itemPosition, w);
 
@@ -168,7 +169,7 @@ public class WorkoutsActivity extends BaseActivity {
 									}).show();
 						} else if (returnedAction.equals(WorkoutEditActivity.ACTION_DELETE)) {
 							if (listAdapter.removeItem(w.getId())) {
-								workoutDataSource.deleteWorkout(w);
+								dataSource.deleteItem(w.getId());
 								Snackbar.make(findViewById(R.id.coordinator_layout),
 										"Workout was deleted successfully.", Snackbar.LENGTH_LONG)
 										.setAction("undo", new View.OnClickListener() {
@@ -208,7 +209,8 @@ public class WorkoutsActivity extends BaseActivity {
 
 	private String action;
 	private WorkoutsListAdapter listAdapter;
-	private WorkoutDataSource workoutDataSource;
+//	private WorkoutDataSource workoutDataSource;
+	private WorkoutsDS dataSource;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag("WorkoutsActivity");

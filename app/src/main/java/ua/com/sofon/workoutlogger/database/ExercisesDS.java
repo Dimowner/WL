@@ -15,9 +15,9 @@ import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
  * {@link ua.com.sofon.workoutlogger.database.SQLiteHelper#TABLE_EXERCISES exercises} in database.
  * @author Dimowner
  */
-public class ExerciseDS extends DataSource<Exercise> {
+public class ExercisesDS extends DataSource<Exercise> {
 
-	public ExerciseDS(Context context) {
+	public ExercisesDS(Context context) {
 		super(context);
 	}
 
@@ -41,7 +41,7 @@ public class ExerciseDS extends DataSource<Exercise> {
 
 	@Override
 	public void deleteItem(long id) {
-		LOGD(LOG_TAG, "Exercise deleted ID = " + id);
+		LOGD(LOG_TAG, SQLiteHelper.TABLE_EXERCISES + " deleted ID = " + id);
 		db.delete(SQLiteHelper.TABLE_EXERCISES, SQLiteHelper.COLUMN_ID + " = " + id, null);
 	}
 
@@ -86,6 +86,14 @@ public class ExerciseDS extends DataSource<Exercise> {
 		}
 		cursor.close();
 		return exercises;
+	}
+
+	@Override
+	public Exercise getItem(long id) {
+		Cursor cursor = queryLocal(db, "SELECT * FROM " + SQLiteHelper.TABLE_EXERCISES
+				+ " WHERE " + SQLiteHelper.COLUMN_ID + " = " + id);
+		cursor.moveToFirst();
+		return convertCursor(cursor);
 	}
 
 	@Override

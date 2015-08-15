@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
@@ -55,13 +54,6 @@ public class WorkoutEditActivity extends AppCompatActivity {
 				startActivityForResult(intent, REQUEST_CODE_ADD);
 			}
 		});
-
-		workoutDataSource = new WorkoutDataSource(this);
-		try {
-			workoutDataSource.open();
-		} catch (SQLException e) {
-			LOGE(LOG_TAG, "", e);
-		}
 
 		if (getIntent().getAction() != null) {
 			action = getIntent().getAction();
@@ -247,7 +239,6 @@ public class WorkoutEditActivity extends AppCompatActivity {
 	private int itemPosition;
 
 	private ExercisesListAdapter listAdapter;
-	private WorkoutDataSource workoutDataSource;
 
 	/** Tag for logging mesages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());

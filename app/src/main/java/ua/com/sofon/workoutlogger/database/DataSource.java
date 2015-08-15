@@ -20,6 +20,7 @@ public abstract class DataSource<T> {
 	 */
 	public DataSource (Context context) {
 		dbHelper = new SQLiteHelper(context);
+		this.context = context;
 	}
 
 	/**
@@ -67,6 +68,13 @@ public abstract class DataSource<T> {
 	 * @return List of some records from table T.
 	 */
 	public abstract List<T> getItems(String where);
+
+	/**
+	 * Get item from table T.
+	 * @param id Item id to select.
+	 * @return Selected item from table.
+	 */
+	public abstract T getItem(long id);
 
 	/**
 	 * Convert {@link android.database.Cursor Cursor} into item T
@@ -120,6 +128,9 @@ public abstract class DataSource<T> {
 		LOGD(LOG_TAG, data.toString());
 		return c;
 	}
+
+	/** Application context. */
+	protected Context context;
 
 	/** SQLite database manager. */
 	protected SQLiteHelper dbHelper;

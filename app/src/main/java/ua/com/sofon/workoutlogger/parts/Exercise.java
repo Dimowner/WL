@@ -13,7 +13,6 @@ public class Exercise extends BaseParticle implements Parcelable {
 		this.id = NO_ID;
 		this.name = "";
 		this.description = "";
-		this.type = EXERCISE_TYPE_OTHER;
 	}
 
 	public Exercise(long id, String name, String description) {
@@ -144,7 +143,7 @@ public class Exercise extends BaseParticle implements Parcelable {
 	public static final int EXERCISE_TYPE_FEET		= 8;
 	public static final int EXERCISE_TYPE_SHIN		= 9;
 
-	private int type;
+	private int type = EXERCISE_TYPE_OTHER;
 	private String name;
 	private String description;
 }

@@ -1,19 +1,19 @@
 package ua.com.sofon.workoutlogger.ui;
 
 import java.sql.SQLException;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.MenuItem;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import ua.com.sofon.workoutlogger.database.WorkoutDataSource;
 import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.database.ExercisesDS;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.R;
@@ -35,9 +35,9 @@ public class ExercisesActivity extends BaseActivity {
 			action = ACTION_VIEW;
 		}
 
-		workoutDataSource = new WorkoutDataSource(this);
+		dataSource = new ExercisesDS(this);
 		try {
-			workoutDataSource.open();
+			dataSource.open();
 		} catch (SQLException e) {
 			LOGE(LOG_TAG, "", e);
 		}
@@ -51,7 +51,7 @@ public class ExercisesActivity extends BaseActivity {
 		exeListView.setLayoutManager(mLayoutManager);
 		exeListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-		listAdapter = new ExercisesListAdapter(action, workoutDataSource.getAllExercises());
+		listAdapter = new ExercisesListAdapter(action, dataSource.getAll());
 		listAdapter.setOnItemClickListener(new ExercisesListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
@@ -139,7 +139,7 @@ public class ExercisesActivity extends BaseActivity {
 			Exercise exercise = data.getParcelableExtra(EXTRAS_KEY_EXERCISE);
 			switch (requestCode) {
 				case REQUEST_ADD_EXERCISE:
-					workoutDataSource.createExercise(exercise.getName(), exercise.getDescription());
+					dataSource.insertItem(exercise);
 					listAdapter.addItem(exercise);
 					//					}
 					break;
@@ -153,7 +153,7 @@ public class ExercisesActivity extends BaseActivity {
 					}
 					if (returnedAction != null && itemPosition != -1) {
 						if (returnedAction.equals(ExerciseEditActivity.ACTION_EDIT)) {
-							workoutDataSource.updateExercise(exercise);
+							dataSource.updateItem(exercise);
 							listAdapter.removeItem(itemPosition);
 							listAdapter.addItem(itemPosition, exercise);
 //									(Exercise) data.getParcelableExtra(EXTRAS_KEY_EXERCISE));
@@ -168,7 +168,7 @@ public class ExercisesActivity extends BaseActivity {
 										}
 									}).show();
 						} else if (returnedAction.equals(ExerciseEditActivity.ACTION_DELETE)) {
-							workoutDataSource.deleteExersice(exercise);
+							dataSource.deleteItem(exercise.getId());
 							String text = "Exercise " + listAdapter.getItem(itemPosition).getName() + " was deleted.";
 							Snackbar.make(findViewById(R.id.coordinator_layout),
 									text, Snackbar.LENGTH_LONG)
@@ -190,7 +190,7 @@ public class ExercisesActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		workoutDataSource.close();
+		dataSource.close();
 	}
 
 
@@ -204,7 +204,8 @@ public class ExercisesActivity extends BaseActivity {
 	private final int REQUEST_EDIT_EXERCISE = 103;
 	private String action;
 	private ExercisesListAdapter listAdapter;
-	private WorkoutDataSource workoutDataSource;
+
+	private ExercisesDS dataSource;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());

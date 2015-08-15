@@ -15,7 +15,7 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 	public BodyWeight() {
 		dateTime = new Date();
 		weight = WEIGHT_NOT_SPECIFIED;
-		fatIndex = FAT_INDEX_NOT_USED;
+		fatIndex = FAT_INDEX_NOT_SPECIFIED;
 		comment = "";
 	}
 
@@ -23,7 +23,12 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 		if (id >= 0) {
 			this.id = id;
 		}
-		this.dateTime = dateTime;
+		if (dateTime != null) {
+			this.dateTime = dateTime;
+		} else {
+			this.dateTime = new Date();
+			this.dateTime.setTime(0);
+		}
 		if (weight > 0) {
 			this.weight = weight;
 		}
@@ -74,7 +79,9 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 	}
 
 	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
+		if (dateTime != null) {
+			this.dateTime = dateTime;
+		}
 	}
 
 	public float getWeight() {
@@ -128,11 +135,11 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 	}
 
 
-	public static final float FAT_INDEX_NOT_USED = -1;
+	public static final float FAT_INDEX_NOT_SPECIFIED = -1;
 	public static final float WEIGHT_NOT_SPECIFIED = -1;
 
 	private Date dateTime;
 	private float weight = WEIGHT_NOT_SPECIFIED;
-	private float fatIndex = FAT_INDEX_NOT_USED;
+	private float fatIndex = FAT_INDEX_NOT_SPECIFIED;
 	private String comment = "";
 }
