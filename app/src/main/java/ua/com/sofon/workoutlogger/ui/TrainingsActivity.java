@@ -28,6 +28,7 @@ public class TrainingsActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.WorkoutTheme);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_training);
 
