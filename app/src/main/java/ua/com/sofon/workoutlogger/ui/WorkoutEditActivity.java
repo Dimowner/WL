@@ -100,7 +100,8 @@ public class WorkoutEditActivity extends AppCompatActivity {
 		exeListView.addItemDecoration(new DividerItemDecoration(this,
 				DividerItemDecoration.VERTICAL_LIST));
 
-		listAdapter = new ExercisesListAdapter(action, mWorkout.getExerciseList());
+		//TODO: Create TrainedExercisesListAdapter or BaseListAdapter and fix this
+		listAdapter = new ExercisesListAdapter(action, null);//mWorkout.getExerciseList());
 		listAdapter.setOnItemClickListener(new ExercisesListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
@@ -182,7 +183,8 @@ public class WorkoutEditActivity extends AppCompatActivity {
 	 */
 	private Workout updateWorkout(Workout w) {
 		w.setName(txtName.getText().toString());
-		w.setExerciseList(listAdapter.getAllItems());
+		//TODO: fix this
+//		w.setExerciseList(listAdapter.getAllItems());
 		return w;
 	}
 
@@ -240,7 +242,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 
 	private ExercisesListAdapter listAdapter;
 
-	/** Tag for logging mesages. */
+	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 
 }

@@ -185,7 +185,7 @@ public class DatePickerView extends EditText {
 	}
 
 	/**
-	 * Set the resource id of the {@link android.graphics.drawable.Drawable Drawable} 
+	 * Set the resource id of the {@link android.graphics.drawable.Drawable Drawable}
 	 * to be used in the title.
 	 * @param resId Resource of icon to display in dialog's title.
 	 */

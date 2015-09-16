@@ -1,5 +1,8 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,14 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
 import ua.com.sofon.workoutlogger.R;
-import ua.com.sofon.workoutlogger.database.PlannedWorkoutsDS;
-import ua.com.sofon.workoutlogger.parts.PlannedWorkout;
+import ua.com.sofon.workoutlogger.database.TrainedWorkoutsDS;
+import ua.com.sofon.workoutlogger.parts.TrainedWorkout;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 
@@ -37,7 +35,7 @@ public class TrainingsActivity extends BaseActivity {
 			action = ACTION_VIEW;
 		}
 
-		dataSource = new PlannedWorkoutsDS(this);
+		dataSource = new TrainedWorkoutsDS(this);
 		try {
 			dataSource.open();
 		} catch (SQLException e) {
@@ -103,13 +101,15 @@ public class TrainingsActivity extends BaseActivity {
 				case REQUEST_SELECT_WORKOUT:
 					listAdapter.addItem(
 							dataSource.insertItem(
-									new PlannedWorkout(
-										PlannedWorkout.NO_ID,
+									new TrainedWorkout(
+										TrainedWorkout.NO_ID,
+										w.getName(),
+										w.getDescription(),
 										new Date(),
 										null,
-										PlannedWorkout.DURATION_NOT_SPECIFIED,
-										PlannedWorkout.STATE_DEFAULT,
-										w
+										TrainedWorkout.DURATION_NOT_SPECIFIED,
+										TrainedWorkout.STATE_DEFAULT,
+										w.getExerciseList()
 									)
 							)
 					);
@@ -139,7 +139,7 @@ public class TrainingsActivity extends BaseActivity {
 	 * Update graph and weights data stored in activity.
 	 */
 	public void updateShowingData() {
-		if (plannedWorkouts.size() > 0) {
+		if (plannedWorkouts != null && plannedWorkouts.size() > 0) {
 			//TODO: DO SOMETHING
 		}
 	}
@@ -155,8 +155,8 @@ public class TrainingsActivity extends BaseActivity {
 
 	private String action;
 	private TrainingsListAdapter listAdapter;
-	private PlannedWorkoutsDS dataSource;
-	private List<PlannedWorkout> plannedWorkouts;
+	private TrainedWorkoutsDS dataSource;
+	private List<TrainedWorkout> plannedWorkouts;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());

@@ -1,14 +1,14 @@
 package ua.com.sofon.workoutlogger.ui;
 
 import java.util.List;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import java.util.ArrayList;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
 import ua.com.sofon.workoutlogger.R;
-import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.parts.TrainedExercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
 
 /**
@@ -18,8 +18,16 @@ import ua.com.sofon.workoutlogger.parts.Workout;
 public class WorkoutsListAdapter	extends RecyclerView.Adapter<WorkoutsListAdapter.ViewHolder> {
 
 	public WorkoutsListAdapter(String action, List<Workout> workouts) {
-		this.action = action;
-		this.data = workouts;
+		if (action != null && !action.isEmpty()) {
+			this.action = action;
+		} else {
+			this.action = "";
+		}
+		if (workouts != null) {
+			this.data = workouts;
+		} else {
+			this.data = new ArrayList<>();
+		}
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,7 +54,7 @@ public class WorkoutsListAdapter	extends RecyclerView.Adapter<WorkoutsListAdapte
 		((TextView)holder.mView.findViewById(R.id.workout_list_item_header))
 				.setText(data.get(position).getName());
 		StringBuilder content = new StringBuilder();
-		List<Exercise> exes = data.get(position).getExerciseList();
+		List<TrainedExercise> exes = data.get(position).getExerciseList();
 		for (int i = 0; i < exes.size(); i++) {
 			content.append(i+1).append("). ").append(exes.get(i).getName());
 			if (i+1 < exes.size()) {

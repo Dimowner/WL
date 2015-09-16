@@ -131,7 +131,7 @@ public class WeightAddDialog extends DialogFragment {
 
 	OnDialogButtonClickListener onDialogButtonClickListener;
 
-	/** Tag for logging mesages. */
+	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 
 

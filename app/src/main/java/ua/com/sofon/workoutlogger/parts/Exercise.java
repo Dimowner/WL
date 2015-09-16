@@ -2,6 +2,7 @@ package ua.com.sofon.workoutlogger.parts;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import ua.com.sofon.workoutlogger.database.SQLiteHelper;
 
 /**
  * Created on 21.02.2015.
@@ -10,16 +11,13 @@ import android.os.Parcelable;
 public class Exercise extends BaseParticle implements Parcelable {
 
 	public Exercise() {
-		this.id = NO_ID;
 		this.name = "";
 		this.description = "";
 	}
 
-	public Exercise(long id, String name, String description) {
+	public Exercise(int id, String name, String description) {
 		if (id >= 0) {
 			this.id = id;
-		} else {
-			this.id = NO_ID;
 		}
 		if (name != null) {
 			this.name = name;
@@ -33,16 +31,12 @@ public class Exercise extends BaseParticle implements Parcelable {
 		}
 	}
 
-	public Exercise(long id, int type, String name, String description) {
+	public Exercise(int id, String name, String description, int type) {
 		if (id >= 0) {
 			this.id = id;
-		} else {
-			this.id = NO_ID;
 		}
 		if (type >= EXERCISE_TYPE_OTHER && type <= EXERCISE_TYPE_SHIN) {
 			this.type = type;
-		} else {
-			this.type = EXERCISE_TYPE_OTHER;
 		}
 		if (name != null) {
 			this.name = name;
@@ -58,8 +52,10 @@ public class Exercise extends BaseParticle implements Parcelable {
 
 	//----- START Parcelable implementation ----------
 	public Exercise(Parcel in) {
-		id = in.readLong();
-		type = in.readInt();
+		int[] intData = new int[2];
+		in.readIntArray(intData);
+		id = intData[0];
+		type = intData[1];
 		String[] data = new String[2];
 		in.readStringArray(data);
 		name = data[0];
@@ -71,8 +67,7 @@ public class Exercise extends BaseParticle implements Parcelable {
 	}
 
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(id);
-		out.writeInt(type);
+		out.writeIntArray(new int[] {id, type});
 		out.writeStringArray(new String[]{name, description});
 	}
 
@@ -126,9 +121,12 @@ public class Exercise extends BaseParticle implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "Exercise:[ id = '" + id + "', "
-				+ "name = '" + name + "', "
-				+ "description = '" + description + "']";
+		return "Exercise:["
+				+ SQLiteHelper.COLUMN_ID + " = '" + id + "', "
+				+ SQLiteHelper.COLUMN_EXE_NAME + " = '" + name + "', "
+				+ SQLiteHelper.COLUMN_EXE_DESCRIPTION + " = '" + description + "', "
+				+ SQLiteHelper.COLUMN_EXE_TYPE + " = '" + type
+				+ "']";
 	}
 
 
@@ -143,7 +141,7 @@ public class Exercise extends BaseParticle implements Parcelable {
 	public static final int EXERCISE_TYPE_FEET		= 8;
 	public static final int EXERCISE_TYPE_SHIN		= 9;
 
-	private int type = EXERCISE_TYPE_OTHER;
-	private String name;
-	private String description;
+	protected int type = EXERCISE_TYPE_OTHER;
+	protected String name;
+	protected String description;
 }

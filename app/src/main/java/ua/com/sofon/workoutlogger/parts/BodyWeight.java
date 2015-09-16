@@ -19,7 +19,7 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 		comment = "";
 	}
 
-	public BodyWeight(long id, Date dateTime, float weight, float fatIndex, String comment) {
+	public BodyWeight(int id, Date dateTime, float weight, float fatIndex, String comment) {
 		if (id >= 0) {
 			this.id = id;
 		}
@@ -42,7 +42,7 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 
 	//----- START Parcelable implementation ----------
 	public BodyWeight(Parcel in) {
-		id = in.readLong();
+		id = in.readInt();
 		dateTime = (Date) in.readSerializable();
 		float[] floatData = new float[2];
 		in.readFloatArray(floatData);
@@ -56,7 +56,7 @@ public class BodyWeight extends BaseParticle implements Parcelable {
 	}
 
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(id);
+		out.writeInt(id);
 		out.writeSerializable(dateTime);
 		out.writeString(comment);
 		out.writeFloatArray(new float[] {weight, fatIndex});

@@ -7,7 +7,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.github.mikephil.charting.charts.LineChart;
@@ -123,6 +122,9 @@ public class WeightActivity extends BaseActivity {
 				LOGE(LOG_TAG, "", e);
 			}
 			weights = dataSource.getAll();
+			if (weights == null) {
+				weights = new ArrayList<>();
+			}
 			dataSource.close();
 		} else {
 			LOGE(LOG_TAG, "dataSource is null");

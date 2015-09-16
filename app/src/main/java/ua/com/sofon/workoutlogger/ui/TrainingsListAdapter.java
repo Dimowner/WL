@@ -1,5 +1,6 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ua.com.sofon.workoutlogger.R;
-import ua.com.sofon.workoutlogger.parts.Exercise;
-import ua.com.sofon.workoutlogger.parts.PlannedWorkout;
-import ua.com.sofon.workoutlogger.parts.Workout;
+import ua.com.sofon.workoutlogger.parts.TrainedExercise;
+import ua.com.sofon.workoutlogger.parts.TrainedWorkout;
 
 /**
  * Data adapter for training list.
@@ -17,9 +17,17 @@ import ua.com.sofon.workoutlogger.parts.Workout;
  */
 public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdapter.ViewHolder> {
 
-	public TrainingsListAdapter(String action, List<PlannedWorkout> plannedWorkouts) {
-		this.action = action;
-		this.data = plannedWorkouts;
+	public TrainingsListAdapter(String action, List<TrainedWorkout> plannedWorkouts) {
+		if (action != null && !action.isEmpty()) {
+			this.action = action;
+		} else {
+			this.action = "";
+		}
+		if (plannedWorkouts != null) {
+			this.data = plannedWorkouts;
+		} else {
+			this.data = new ArrayList<>();
+		}
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,9 +48,9 @@ public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdap
 	@Override
 	public void onBindViewHolder(ViewHolder holder, final int position) {
 		((TextView)holder.mView.findViewById(R.id.planned_workout_list_item_header))
-				.setText(data.get(position).getWorkout().getName());
+				.setText(data.get(position).getName());
 		StringBuilder content = new StringBuilder();
-		List<Exercise> exes = data.get(position).getWorkout().getExerciseList();
+		List<TrainedExercise> exes = data.get(position).getExerciseList();
 		for (int i = 0; i < exes.size(); i++) {
 			content.append(i+1).append("). ").append(exes.get(i).getName());
 			if (i+1 < exes.size()) {
@@ -81,22 +89,22 @@ public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdap
 		return data.size();
 	}
 
-	public void addItem(PlannedWorkout w) {
+	public void addItem(TrainedWorkout w) {
 		data.add(w);
 		notifyDataSetChanged();
 	}
 
-	public void addItems(List<PlannedWorkout> w) {
+	public void addItems(List<TrainedWorkout> w) {
 		data.addAll(w);
 		notifyDataSetChanged();
 	}
 
-	public void addItem(int pos, PlannedWorkout w) {
+	public void addItem(int pos, TrainedWorkout w) {
 		data.add(pos, w);
 		notifyDataSetChanged();
 	}
 
-	public PlannedWorkout getItem(int position) {
+	public TrainedWorkout getItem(int position) {
 		return data.get(position);
 	}
 
@@ -134,7 +142,7 @@ public class TrainingsListAdapter extends RecyclerView.Adapter<TrainingsListAdap
 	}
 
 
-	private List<PlannedWorkout> data;
+	private List<TrainedWorkout> data;
 	private String action;
 
 	private OnItemClickListener itemClickListener;
