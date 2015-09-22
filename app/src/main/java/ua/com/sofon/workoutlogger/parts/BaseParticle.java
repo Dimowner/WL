@@ -6,7 +6,7 @@ package ua.com.sofon.workoutlogger.parts;
  */
 public abstract class BaseParticle {
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 

@@ -48,7 +48,7 @@ public class Workout extends BaseParticle implements Parcelable {
 		name = strData[0];
 		description = strData[1];
 		this.exerciseList = new ArrayList<>();
-		in.readList(exerciseList, Exercise.class.getClassLoader());
+		in.readList(exerciseList, TrainedExercise.class.getClassLoader());
 	}
 
 	public int describeContents() {

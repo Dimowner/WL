@@ -61,9 +61,8 @@ public class TrainedExercise extends Exercise {
 
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(id);
-		out.writeIntArray(new int[]{id, type, number, workoutID, trainedWorkoutID, parentExeID});
 		out.writeStringArray(new String[] {name, description});
+		out.writeIntArray(new int[]{id, type, number, workoutID, trainedWorkoutID, parentExeID});
 	}
 
 	public static final Parcelable.Creator<TrainedExercise> CREATOR

@@ -1,6 +1,5 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import java.sql.SQLException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,13 +17,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.parts.TrainedExercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import ua.com.sofon.workoutlogger.util.UIUtil;
 import ua.com.sofon.workoutlogger.R;
-
-import static ua.com.sofon.workoutlogger.util.LogUtils.LOGE;
 
 /**
  * Activity for view, add and edit workouts.
@@ -100,8 +98,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 		exeListView.addItemDecoration(new DividerItemDecoration(this,
 				DividerItemDecoration.VERTICAL_LIST));
 
-		//TODO: Create TrainedExercisesListAdapter or BaseListAdapter and fix this
-		listAdapter = new ExercisesListAdapter(action, null);//mWorkout.getExerciseList());
+		listAdapter = new TrainedExercisesListAdapter(action, mWorkout.getExerciseList());
 		listAdapter.setOnItemClickListener(new ExercisesListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
@@ -183,8 +180,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 	 */
 	private Workout updateWorkout(Workout w) {
 		w.setName(txtName.getText().toString());
-		//TODO: fix this
-//		w.setExerciseList(listAdapter.getAllItems());
+		w.setExerciseList(listAdapter.getAllItems());
 		return w;
 	}
 
@@ -199,7 +195,15 @@ public class WorkoutEditActivity extends AppCompatActivity {
 						Exercise[] exes = new Exercise[ps.length];
 						System.arraycopy(ps, 0, exes, 0, ps.length);
 						for (int i = 0; i < exes.length; i++) {
-							listAdapter.addItem(exes[i]);
+							listAdapter.addItem(
+									new TrainedExercise(
+											exes[i].getId(),
+											exes[i].getName(),
+											exes[i].getDescription()
+									)
+							);
+
+							//exes[i]);
 						}
 						listAdapter.notifyDataSetChanged();
 					}
@@ -240,7 +244,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 	/** Item position in the list */
 	private int itemPosition;
 
-	private ExercisesListAdapter listAdapter;
+	private TrainedExercisesListAdapter listAdapter;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
