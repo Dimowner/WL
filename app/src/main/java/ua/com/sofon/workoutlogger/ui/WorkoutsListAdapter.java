@@ -1,6 +1,6 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import java.util.List;
+import java.util.ArrayList;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import ua.com.sofon.workoutlogger.parts.Workout;
 public class WorkoutsListAdapter
 		extends BaseListAdapter<Workout> {
 
-	public WorkoutsListAdapter(String action, List<Workout> workouts) {
+	public WorkoutsListAdapter(String action, ArrayList<Workout> workouts) {
 		super(workouts);
 		if (action != null && !action.isEmpty()) {
 			this.action = action;
@@ -39,7 +39,7 @@ public class WorkoutsListAdapter
 		((TextView)holder.mView.findViewById(R.id.workout_list_item_header))
 				.setText(data.get(position).getName());
 		StringBuilder content = new StringBuilder();
-		List<TrainedExercise> exes = data.get(position).getExerciseList();
+		ArrayList<TrainedExercise> exes = data.get(position).getExerciseList();
 		for (int i = 0; i < exes.size(); i++) {
 			content.append(i+1).append("). ").append(exes.get(i).getName());
 			if (i+1 < exes.size()) {

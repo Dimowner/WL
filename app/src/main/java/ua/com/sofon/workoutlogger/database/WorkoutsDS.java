@@ -1,6 +1,6 @@
 package ua.com.sofon.workoutlogger.database;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.sql.SQLException;
 import android.content.Context;
 import android.content.ContentValues;
@@ -65,7 +65,8 @@ public class WorkoutsDS extends DataSource<Workout> {
 		if (item.hasID()) {
 			super.updateItem(item);
 			for (int i = 0; i < item.getExercisesCount(); i++) {
-				exeData.updateItem(item.getExercise(i));
+//				if (item.getExercise(i).hasID()) {
+//				exeData.updateItem(item.getExercise(i));
 			}
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");
@@ -73,8 +74,8 @@ public class WorkoutsDS extends DataSource<Workout> {
 	}
 
 	@Override
-	public List<Workout> getAll() {
-		List<Workout> w = super.getAll();
+	public ArrayList<Workout> getAll() {
+		ArrayList<Workout> w = super.getAll();
 		for (int i = 0; i < w.size(); i++) {
 			loadExercisesForWorkout(w.get(i));
 		}
@@ -82,8 +83,8 @@ public class WorkoutsDS extends DataSource<Workout> {
 	}
 
 	@Override
-	public List<Workout> getItems(String where) {
-		List<Workout> w = super.getItems(where);
+	public ArrayList<Workout> getItems(String where) {
+		ArrayList<Workout> w = super.getItems(where);
 		for (int i = 0; i < w.size(); i++) {
 			loadExercisesForWorkout(w.get(i));
 		}

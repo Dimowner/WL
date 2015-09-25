@@ -1,6 +1,5 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import java.util.List;
 import java.util.ArrayList;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ public abstract class BaseListAdapter<T extends BaseParticle>
 		public View mView;
 	}
 
-	public BaseListAdapter(List<T> items) {
+	public BaseListAdapter(ArrayList<T> items) {
 		if (items != null) {
 			this.data = items;
 		} else {
@@ -73,7 +72,7 @@ public abstract class BaseListAdapter<T extends BaseParticle>
 		notifyDataSetChanged();
 	}
 
-	public void addItems(List<T> items) {
+	public void addItems(ArrayList<T> items) {
 		data.addAll(items);
 		notifyDataSetChanged();
 	}
@@ -89,7 +88,7 @@ public abstract class BaseListAdapter<T extends BaseParticle>
 		return data.get(position);
 	}
 
-	public List<T> getAllItems() {
+	public ArrayList<T> getAllItems() {
 		return new ArrayList<>(data);
 	}
 
@@ -124,7 +123,7 @@ public abstract class BaseListAdapter<T extends BaseParticle>
 		itemLongClickListener = listener;
 	}
 
-	protected List<T> data;
+	protected ArrayList<T> data;
 
 	protected OnItemClickListener itemClickListener;
 	protected OnItemLongClickListener itemLongClickListener;

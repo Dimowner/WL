@@ -1,6 +1,7 @@
 package ua.com.sofon.workoutlogger.ui;
 
 import java.sql.SQLException;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -57,14 +58,14 @@ public class ExercisesActivity extends BaseActivity {
 			public void onItemClick(View view, int position) {
 				if (action.equals(ACTION_SELECT)) {
 					Intent intent = new Intent();
-					intent.putExtra(EXTRAS_KEY_EXERCISE, listAdapter.getItem(position));
+					intent.putExtra(EXTRAS_KEY_EXERCISES, listAdapter.getItem(position));
 					setResult(RESULT_OK, intent);
 					finish();
 				} else {
 					Intent intent = new Intent(ExercisesActivity.this, ExerciseEditActivity.class);
 					intent.setAction(ExerciseEditActivity.ACTION_VIEW);
 					intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
-					intent.putExtra(EXTRAS_KEY_EXERCISE, listAdapter.getItem(position));
+					intent.putExtra(EXTRAS_KEY_EXERCISES, listAdapter.getItem(position));
 					startActivityForResult(intent, REQUEST_VIEW_EXERCISE);
 				}
 			}
@@ -85,6 +86,11 @@ public class ExercisesActivity extends BaseActivity {
 			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 			if (getSupportActionBar() != null) {
 				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			}
+			if (getIntent().hasExtra(EXTRAS_KEY_EXE_IDS)) {
+				listAdapter.setCheckedItemIDs(
+						getIntent().getIntArrayExtra(EXTRAS_KEY_EXE_IDS));
+//								getIntegerArrayListExtra(EXTRAS_KEY_EXE_IDS));
 			}
 		} else {
 			super.setupNavDrawer();
@@ -123,7 +129,7 @@ public class ExercisesActivity extends BaseActivity {
 				return true;
 			case R.id.action_accept:
 				intent = new Intent();
-				intent.putExtra(EXTRAS_KEY_EXERCISE, listAdapter.getCheckedItems());
+				intent.putExtra(EXTRAS_KEY_EXERCISES, listAdapter.getCheckedItems());
 				setResult(RESULT_OK, intent);
 				finish();
 				return true;
@@ -135,8 +141,8 @@ public class ExercisesActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK && data.hasExtra(EXTRAS_KEY_EXERCISE)) {
-			Exercise exercise = data.getParcelableExtra(EXTRAS_KEY_EXERCISE);
+		if (resultCode == RESULT_OK && data.hasExtra(EXTRAS_KEY_EXERCISES)) {
+			Exercise exercise = data.getParcelableExtra(EXTRAS_KEY_EXERCISES);
 			switch (requestCode) {
 				case REQUEST_ADD_EXERCISE:
 					dataSource.insertItem(exercise);
@@ -156,7 +162,7 @@ public class ExercisesActivity extends BaseActivity {
 							dataSource.updateItem(exercise);
 							listAdapter.removeItem(itemPosition);
 							listAdapter.addItem(itemPosition, exercise);
-//									(Exercise) data.getParcelableExtra(EXTRAS_KEY_EXERCISE));
+//									(Exercise) data.getParcelableExtra(EXTRAS_KEY_EXERCISES));
 							String text = "Exercise " + listAdapter.getItem(itemPosition).getName() + " was updated.";
 							Snackbar.make(findViewById(R.id.coordinator_layout),
 									text, Snackbar.LENGTH_LONG)
@@ -197,8 +203,9 @@ public class ExercisesActivity extends BaseActivity {
 	public static final String ACTION_SELECT = "action_select";
 	public static final String ACTION_SELECT_MULTI = "action_select_multi";
 	public static final String ACTION_VIEW = "action_view";
-	public static final String EXTRAS_KEY_EXERCISE = "exercise";
+	public static final String EXTRAS_KEY_EXERCISES = "exercises";
 	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
+	public static final String EXTRAS_KEY_EXE_IDS = "exe_ids";
 	private final int REQUEST_ADD_EXERCISE = 101;
 	private final int REQUEST_VIEW_EXERCISE = 102;
 	private final int REQUEST_EDIT_EXERCISE = 103;

@@ -1,7 +1,6 @@
 package ua.com.sofon.workoutlogger.database;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.sql.SQLException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -118,7 +117,7 @@ public abstract class DataSource<T> {
 	 * Get all records from database for table T.
 	 * @return List that contains all records of table T.
 	 */
-	public List<T> getAll() {
+	public ArrayList<T> getAll() {
 		Cursor cursor = queryLocal(db, "SELECT * FROM " + tableName);
 		return convertCursor(cursor);
 	}
@@ -128,7 +127,7 @@ public abstract class DataSource<T> {
 	 * @param where Conditions to select some items.
 	 * @return List of some records from table T.
 	 */
-	public List<T> getItems(String where) {
+	public ArrayList<T> getItems(String where) {
 		Cursor cursor = queryLocal(db, "SELECT * FROM "
 				+ tableName + " WHERE " + where);
 		return convertCursor(cursor);
@@ -150,7 +149,7 @@ public abstract class DataSource<T> {
 	 * @param cursor Cursor.
 	 * @return T item which corresponds some table in database.
 	 */
-	public List<T> convertCursor(Cursor cursor) {
+	public ArrayList<T> convertCursor(Cursor cursor) {
 		ArrayList<T> items = new ArrayList<>();
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

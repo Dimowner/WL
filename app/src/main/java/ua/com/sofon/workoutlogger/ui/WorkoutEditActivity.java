@@ -49,6 +49,13 @@ public class WorkoutEditActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(WorkoutEditActivity.this, ExercisesActivity.class);
 				intent.setAction(ExercisesActivity.ACTION_SELECT_MULTI);
+				int[] exeIds = new int[mWorkout.getExercisesCount()];
+				for (int i = 0; i < mWorkout.getExercisesCount(); i++) {
+					exeIds[i] = mWorkout.getExercise(i).getId();
+				}
+				if (exeIds.length > 0) {
+					intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXE_IDS, exeIds);
+				}
 				startActivityForResult(intent, REQUEST_CODE_ADD);
 			}
 		});
@@ -190,19 +197,34 @@ public class WorkoutEditActivity extends AppCompatActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case REQUEST_CODE_ADD:
-					if (data.hasExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE)) {
-						Parcelable[] ps =  data.getParcelableArrayExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE);
+					if (data.hasExtra(ExercisesActivity.EXTRAS_KEY_EXERCISES)) {
+						Parcelable[] ps =  data.getParcelableArrayExtra(ExercisesActivity.EXTRAS_KEY_EXERCISES);
 						Exercise[] exes = new Exercise[ps.length];
 						System.arraycopy(ps, 0, exes, 0, ps.length);
-						for (int i = 0; i < exes.length; i++) {
-							listAdapter.addItem(
-									new TrainedExercise(
-											exes[i].getId(),
-											exes[i].getName(),
-											exes[i].getDescription()
-									)
-							);
 
+						for (int i = listAdapter.getItemCount() - 1; i >= 0; i--) {
+							boolean isDeleted = true;
+							for (int j = 0; j < exes.length; j++) {
+								if (listAdapter.getItem(i).getId() == exes[j].getId()) {
+									exes[j] = null;
+									isDeleted = false;
+								}
+							}
+							if (isDeleted) {
+								listAdapter.removeItem(i);
+							}
+						}
+
+						for (int i = 0; i < exes.length; i++) {
+							if (exes[i] != null) {
+								listAdapter.addItem(
+										new TrainedExercise(
+												exes[i].getId(),
+												exes[i].getName(),
+												exes[i].getDescription()
+										)
+								);
+							}
 							//exes[i]);
 						}
 						listAdapter.notifyDataSetChanged();

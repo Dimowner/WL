@@ -1,8 +1,8 @@
 package ua.com.sofon.workoutlogger.parts;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,7 +22,7 @@ public class TrainedWorkout extends Workout {
 
 	public TrainedWorkout(int id, String name, String description,
 								 Date planDate, Date performDate, int duration,
-								 int state, List<TrainedExercise> exerciseList) {
+								 int state, ArrayList<TrainedExercise> exerciseList) {
 		super(id, name, description, exerciseList);
 
 		if (planDate != null) {
@@ -156,7 +156,7 @@ public class TrainedWorkout extends Workout {
 	}
 
 	@Override
-	public void setExerciseList(List<TrainedExercise> exerciseList) {
+	public void setExerciseList(ArrayList<TrainedExercise> exerciseList) {
 		if (exerciseList != null) {
 			this.exerciseList = exerciseList;
 			for (int i = 0; i < exerciseList.size(); i++) {

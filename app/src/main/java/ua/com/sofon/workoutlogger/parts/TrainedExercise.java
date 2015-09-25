@@ -147,7 +147,7 @@ public class TrainedExercise extends Exercise {
 				+ SQLiteHelper.COLUMN_TE_DESCRIPTION + " = '" + description + "', "
 				+ SQLiteHelper.COLUMN_TE_TYPE + " = '" + type + "', "
 				+ SQLiteHelper.COLUMN_TE_NUMBER + " = '" + number + "', "
-				+ SQLiteHelper.COLUMN_TW_ID + " = '" + trainedWorkoutID
+				+ SQLiteHelper.COLUMN_TW_ID + " = '" + trainedWorkoutID + "', "
 				+ SQLiteHelper.COLUMN_WORKOUT_ID + " = '" + workoutID
 				+ "']";
 	}

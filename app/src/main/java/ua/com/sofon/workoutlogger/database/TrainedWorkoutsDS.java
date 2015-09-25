@@ -1,7 +1,7 @@
 package ua.com.sofon.workoutlogger.database;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.sql.SQLException;
 import android.content.Context;
 import android.content.ContentValues;
@@ -86,8 +86,8 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	}
 
 	@Override
-	public List<TrainedWorkout> getAll() {
-		List<TrainedWorkout> w = super.getAll();
+	public ArrayList<TrainedWorkout> getAll() {
+		ArrayList<TrainedWorkout> w = super.getAll();
 		for (int i = 0; i < w.size(); i++) {
 			loadExercisesForWorkout(w.get(i));
 		}
@@ -95,8 +95,8 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	}
 
 	@Override
-	public List<TrainedWorkout> getItems(String where) {
-		List<TrainedWorkout> w = super.getItems(where);
+	public ArrayList<TrainedWorkout> getItems(String where) {
+		ArrayList<TrainedWorkout> w = super.getItems(where);
 		for (int i = 0; i < w.size(); i++) {
 			loadExercisesForWorkout(w.get(i));
 		}

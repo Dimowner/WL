@@ -19,7 +19,7 @@ public class Workout extends BaseParticle implements Parcelable {
 	}
 
 	public Workout(int id, String name, String description,
-						List<TrainedExercise> exerciseList) {
+						ArrayList<TrainedExercise> exerciseList) {
 		if (id >= 0) {
 			this.id = id;
 		}
@@ -97,7 +97,7 @@ public class Workout extends BaseParticle implements Parcelable {
 		}
 	}
 
-	public List<TrainedExercise> getExerciseList() {
+	public ArrayList<TrainedExercise> getExerciseList() {
 		return exerciseList;
 	}
 
@@ -108,7 +108,7 @@ public class Workout extends BaseParticle implements Parcelable {
 		return 0;
 	}
 
-	public void setExerciseList(List<TrainedExercise> exerciseList) {
+	public void setExerciseList(ArrayList<TrainedExercise> exerciseList) {
 		if (exerciseList != null) {
 			this.exerciseList = exerciseList;
 			for (int i = 0; i < exerciseList.size(); i++) {
@@ -153,5 +153,5 @@ public class Workout extends BaseParticle implements Parcelable {
 
 	protected String name;
 	protected String description;
-	protected List<TrainedExercise> exerciseList;
+	protected ArrayList<TrainedExercise> exerciseList;
 }

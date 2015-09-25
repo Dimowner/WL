@@ -1,6 +1,6 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import java.util.List;
+import java.util.ArrayList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import ua.com.sofon.workoutlogger.parts.TrainedExercise;
  */
 public class TrainedExercisesListAdapter extends BaseListAdapter<TrainedExercise> {
 
-	public TrainedExercisesListAdapter(String action, List<TrainedExercise> items) {
+	public TrainedExercisesListAdapter(String action, ArrayList<TrainedExercise> items) {
 		super(items);
 		if (action != null && !action.isEmpty()) {
 			this.action = action;

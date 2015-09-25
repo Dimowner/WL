@@ -1,7 +1,9 @@
 package ua.com.sofon.workoutlogger.ui;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.CompoundButton;
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.parts.Exercise;
+import ua.com.sofon.workoutlogger.util.LogUtils;
 
 /**
  * Data adapter for exercises list.
@@ -18,14 +21,14 @@ import ua.com.sofon.workoutlogger.parts.Exercise;
  */
 public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 
-	public ExercisesListAdapter(String action, List<Exercise> exercises) {
+	public ExercisesListAdapter(String action, ArrayList<Exercise> exercises) {
 		super(exercises);
 		if (action != null && !action.isEmpty()) {
 			this.action = action;
 		} else {
 			this.action = "";
 		}
-		this.checkedItems = new ArrayList<>();
+		this.checkedItems = new HashSet<>();
 	}
 
 	@Override
@@ -42,44 +45,68 @@ public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 		((TextView)holder.mView.findViewById(R.id.exe_list_item_text))
 				.setText(data.get(position).getName());
 
+		CheckBox checkBox = (CheckBox) holder.mView.findViewById(R.id.exe_list_item_check);
 		if (!action.equals(ExercisesActivity.ACTION_SELECT_MULTI)) {
-			holder.mView.findViewById(R.id.exe_list_item_check).setVisibility(View.GONE);
+			checkBox.setVisibility(View.GONE);
 		}
 
+		if (checkedItems.contains(data.get(position).getId())) {
+			checkBox.setChecked(true);
+		}
 		//Save checked items position into the list
-		((CheckBox) holder.mView.findViewById(R.id.exe_list_item_check))
-				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						if (isChecked) {
+		checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						if (!checkedItems.contains(data.get(position).getId())) {
 							checkedItems.add(data.get(position).getId());
 						}
+					} else {
+						checkedItems.remove(Integer.valueOf(data.get(position).getId()));
 					}
-				});
+				}
+			});
 	}
 
 	public int[] getCheckedItemsIDs() {
 		int[] items = new int[checkedItems.size()];
-		for (int i = 0; i < checkedItems.size(); i++) {
-			items[i] = checkedItems.get(i);
+		int i = 0;
+		for (int item : checkedItems) {
+			items[i] = item;
+			i++;
 		}
 		return items;
 	}
 
 	public Exercise[] getCheckedItems() {
 		Exercise[] exes = new Exercise[checkedItems.size()];
-		for (int i = 0; i < checkedItems.size(); i++) {
+		int i = 0;
+		for (int item : checkedItems) {
 			for (int j = 0; j < data.size(); j++) {
-				if (checkedItems.get(i) == data.get(j).getId()) {
+				if (item == data.get(j).getId()) {
 					exes[i] = data.get(j);
 					break;
 				}
 			}
+			i++;
 		}
+		Log.v(LOG_TAG, "exes = " + exes.length);
 		return exes;
 	}
 
+	public void setCheckedItemIDs(int[] items) {
+		Log.v(LOG_TAG, "setCheckedItemIDs = " + checkedItems.size());
+		for (int i = 0; i < items.length; i++) {
+			checkedItems.add(items[i]);
+		}
+		notifyDataSetChanged();
+	}
 
-	private List<Integer> checkedItems;
+	/** List contains ids of checked items */
+	private HashSet<Integer> checkedItems;
+
 	private String action;
+
+	/** Tag for logging messages. */
+	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 }

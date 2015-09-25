@@ -47,8 +47,8 @@ public class ExerciseEditActivity extends AppCompatActivity {
 				txtName.setEnabled(false);
 				txtDescription.setEnabled(false);
 			case ACTION_EDIT:
-				if (extras.containsKey(ExercisesActivity.EXTRAS_KEY_EXERCISE)) {
-					mExercise = extras.getParcelable(ExercisesActivity.EXTRAS_KEY_EXERCISE);
+				if (extras.containsKey(ExercisesActivity.EXTRAS_KEY_EXERCISES)) {
+					mExercise = extras.getParcelable(ExercisesActivity.EXTRAS_KEY_EXERCISES);
 					if (mExercise != null) {
 						txtName.setText(mExercise.getName());
 						txtDescription.setText(mExercise.getDescription());
@@ -92,7 +92,7 @@ public class ExerciseEditActivity extends AppCompatActivity {
 			case R.id.action_accept:
 				if (txtName.getText().length() > 0) {
 					intent.setAction(action);
-					intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE, updateExercise(mExercise));
+					intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISES, updateExercise(mExercise));
 					setResult(RESULT_OK, intent);
 					finish();
 				} else {
@@ -112,7 +112,7 @@ public class ExerciseEditActivity extends AppCompatActivity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								intent.setAction(ACTION_DELETE);
-								intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISE, mExercise);
+								intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXERCISES, mExercise);
 								setResult(RESULT_OK, intent);
 								finish();
 							}

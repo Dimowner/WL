@@ -1,8 +1,8 @@
 package ua.com.sofon.workoutlogger.ui;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -156,7 +156,7 @@ public class TrainingsActivity extends BaseActivity {
 	private String action;
 	private TrainingsListAdapter listAdapter;
 	private TrainedWorkoutsDS dataSource;
-	private List<TrainedWorkout> plannedWorkouts;
+	private ArrayList<TrainedWorkout> plannedWorkouts;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
