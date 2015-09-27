@@ -137,6 +137,7 @@ public class WorkoutsActivity extends BaseActivity {
 			Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
 			switch (requestCode) {
 				case REQUEST_ADD_WORKOUT:
+					Log.v(LOG_TAG, "exe count = " + w.getExercisesCount());
 					listAdapter.addItem(dataSource.insertItem(w));
 					break;
 //					case REQUEST_EDIT_WORKOUT:
@@ -168,7 +169,7 @@ public class WorkoutsActivity extends BaseActivity {
 										}
 									}).show();
 						} else if (returnedAction.equals(WorkoutEditActivity.ACTION_DELETE)) {
-							if (listAdapter.removeItem(w.getId())) {
+							if (itemPosition != -1 && listAdapter.removeItem(itemPosition)) {
 								dataSource.deleteItem(w.getId());
 								Snackbar.make(findViewById(R.id.coordinator_layout),
 										"Workout was deleted successfully.", Snackbar.LENGTH_LONG)

@@ -166,7 +166,7 @@ public class TrainedWorkout extends Workout {
 	}
 
 	@Override
-	public void addExercise(TrainedExercise e) {
+	public void addTrainedExercise(TrainedExercise e) {
 		if (e != null) {
 			e.setTrainedWorkoutID(id);
 			exerciseList.add(e);

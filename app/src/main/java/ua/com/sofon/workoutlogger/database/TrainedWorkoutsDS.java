@@ -37,7 +37,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	public TrainedWorkout insertItem(TrainedWorkout item) {
 		TrainedWorkout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
-			w.addExercise(exeData.insertItem(item.getExercise(i)));
+			w.addTrainedExercise(exeData.insertItem(item.getTrainedExercise(i)));
 		}
 		return w;
 	}
@@ -78,7 +78,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 		if (item.hasID()) {
 			super.updateItem(item);
 			for (int i = 0; i < item.getExercisesCount(); i++) {
-				exeData.updateItem(item.getExercise(i));
+				exeData.updateItem(item.getTrainedExercise(i));
 			}
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");

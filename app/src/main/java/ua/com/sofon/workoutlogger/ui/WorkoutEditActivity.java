@@ -51,7 +51,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 				intent.setAction(ExercisesActivity.ACTION_SELECT_MULTI);
 				int[] exeIds = new int[mWorkout.getExercisesCount()];
 				for (int i = 0; i < mWorkout.getExercisesCount(); i++) {
-					exeIds[i] = mWorkout.getExercise(i).getId();
+					exeIds[i] = mWorkout.getTrainedExercise(i).getParentExeID();
 				}
 				if (exeIds.length > 0) {
 					intent.putExtra(ExercisesActivity.EXTRAS_KEY_EXE_IDS, exeIds);
@@ -201,11 +201,10 @@ public class WorkoutEditActivity extends AppCompatActivity {
 						Parcelable[] ps =  data.getParcelableArrayExtra(ExercisesActivity.EXTRAS_KEY_EXERCISES);
 						Exercise[] exes = new Exercise[ps.length];
 						System.arraycopy(ps, 0, exes, 0, ps.length);
-
 						for (int i = listAdapter.getItemCount() - 1; i >= 0; i--) {
 							boolean isDeleted = true;
 							for (int j = 0; j < exes.length; j++) {
-								if (listAdapter.getItem(i).getId() == exes[j].getId()) {
+								if (exes[j] != null && listAdapter.getItem(i).getParentExeID() == exes[j].getId()) {
 									exes[j] = null;
 									isDeleted = false;
 								}
@@ -219,9 +218,9 @@ public class WorkoutEditActivity extends AppCompatActivity {
 							if (exes[i] != null) {
 								listAdapter.addItem(
 										new TrainedExercise(
-												exes[i].getId(),
 												exes[i].getName(),
-												exes[i].getDescription()
+												exes[i].getDescription(),
+												exes[i].getId()
 										)
 								);
 							}

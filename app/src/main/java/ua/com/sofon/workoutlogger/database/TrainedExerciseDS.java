@@ -32,7 +32,8 @@ public class TrainedExerciseDS extends DataSource<TrainedExercise> {
 			}
 			values.put(SQLiteHelper.COLUMN_TE_TYPE, item.getType());
 			values.put(SQLiteHelper.COLUMN_TE_NUMBER, item.getNumber());
-			values.put(SQLiteHelper.COLUMN_TW_ID, item.getWorkoutID());
+			values.put(SQLiteHelper.COLUMN_WORKOUT_ID, item.getWorkoutID());
+			values.put(SQLiteHelper.COLUMN_TW_ID, item.getTrainedWorkoutID());
 			return values;
 		} else {
 			LOGE(LOG_TAG, "Can't convert TrainedExercise with empty Name or Workout ID!");

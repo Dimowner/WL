@@ -122,7 +122,7 @@ public class Workout extends BaseParticle implements Parcelable {
 	 * @param position Position in exercise list.
 	 * @return Selected exercise.
 	 */
-	public TrainedExercise getExercise(int position) {
+	public TrainedExercise getTrainedExercise(int position) {
 		return exerciseList.get(position);
 	}
 
@@ -130,10 +130,30 @@ public class Workout extends BaseParticle implements Parcelable {
 	 * Add one exercise to workout.
 	 * @param e Exercise that want to add.
 	 */
-	public void addExercise(TrainedExercise e) {
+	public void addTrainedExercise(TrainedExercise e) {
 		if (e != null) {
 			e.setWorkoutID(id);
 			exerciseList.add(e);
+		}
+	}
+
+//	/**
+//	 * Check that workout contains exercise in exercise list.
+//	 * @param id Exercise id
+//	 * @return true if contains, else returns false.
+//	 */
+//	public boolean hasExercise(int id) {
+//		for (int i = 0; i < exerciseList.size(); i++) {
+//			if (exerciseList.get(i).getParentExeID() == id) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+	public void removeItem(int position) {
+		if (position >= 0 && position < exerciseList.size()) {
+			exerciseList.remove(position);
 		}
 	}
 
@@ -143,7 +163,7 @@ public class Workout extends BaseParticle implements Parcelable {
 		for (int i = 0; i < exerciseList.size(); i++) {
 			exes.append(exerciseList.get(i).toString()).append(", ");
 		}
-		return "TrainedWorkout["
+		return "Workout["
 				+ SQLiteHelper.COLUMN_ID + " = '" + id + "', "
 				+ SQLiteHelper.COLUMN_W_NAME + " = '" + name + "', "
 				+ SQLiteHelper.COLUMN_W_DESCRIPTION + " = '" + description + "', ["
