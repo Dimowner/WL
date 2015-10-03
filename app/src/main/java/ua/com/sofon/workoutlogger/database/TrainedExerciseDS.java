@@ -25,14 +25,18 @@ public class TrainedExerciseDS extends DataSource<TrainedExercise> {
 	public ContentValues itemToContentValues(TrainedExercise item) {
 		if (item.getName() != null && item.getWorkoutID() > 0) {
 			ContentValues values = new ContentValues();
-			values.put(SQLiteHelper.COLUMN_PARENT_EXE_ID, item.getParentExeID());
+			if (item.getId() != TrainedExercise.NO_ID) {
+				values.put(SQLiteHelper.COLUMN_ID, item.getId());
+			}
 			values.put(SQLiteHelper.COLUMN_TE_NAME, item.getName());
 			if (item.getDescription() != null && !item.getDescription().isEmpty()) {
 				values.put(SQLiteHelper.COLUMN_TE_DESCRIPTION, item.getDescription());
 			}
 			values.put(SQLiteHelper.COLUMN_TE_TYPE, item.getType());
 			values.put(SQLiteHelper.COLUMN_TE_NUMBER, item.getNumber());
-			values.put(SQLiteHelper.COLUMN_TW_ID, item.getWorkoutID());
+			values.put(SQLiteHelper.COLUMN_TW_ID, item.getTrainedWorkoutID());
+			values.put(SQLiteHelper.COLUMN_WORKOUT_ID, item.getWorkoutID());
+			values.put(SQLiteHelper.COLUMN_PARENT_EXE_ID, item.getParentExeID());
 			return values;
 		} else {
 			LOGE(LOG_TAG, "Can't convert TrainedExercise with empty Name or Workout ID!");
@@ -42,16 +46,16 @@ public class TrainedExerciseDS extends DataSource<TrainedExercise> {
 
 	@Override
 	public TrainedExercise recordToItem(Cursor cursor) {
-		return new TrainedExercise(
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)),
-				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NAME)),
-				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_DESCRIPTION)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_TYPE)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NUMBER)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TW_ID)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_PARENT_EXE_ID))
-		);
+		return new TrainedExercise.Builder()
+					.setId(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)))
+					.setName(cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NAME)))
+					.setDescription(cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_DESCRIPTION)))
+					.setType(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_TYPE)))
+					.setNumber(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NUMBER)))
+					.setTrainedWorkoutID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)))
+					.setWorkoutID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)))
+					.setParentExeID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_PARENT_EXE_ID)))
+					.build();
 	}
 
 

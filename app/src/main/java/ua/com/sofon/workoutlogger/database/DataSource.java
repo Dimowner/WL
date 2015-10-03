@@ -72,7 +72,7 @@ public abstract class DataSource<T> {
 	public T insertItem(T item) {
 		ContentValues values = itemToContentValues(item);
 		if (values != null) {
-			long insertId = db.insert(tableName, null, values);
+			int insertId = (int) db.insert(tableName, null, values);
 			LOGD(LOG_TAG, "Insert into " + tableName + " id = " + insertId);
 			return getItem(insertId);
 		} else {
@@ -92,7 +92,7 @@ public abstract class DataSource<T> {
 	 * Delete item from database for table T.
 	 * @param id Item id of element that will be deleted from table T.
 	 */
-	public void deleteItem(long id) {
+	public void deleteItem(int id) {
 		LOGD(LOG_TAG, tableName + " deleted ID = " + id);
 		db.delete(tableName, SQLiteHelper.COLUMN_ID + " = " + id, null);
 	}
@@ -138,7 +138,7 @@ public abstract class DataSource<T> {
 	 * @param id Item id to select.
 	 * @return Selected item from table.
 	 */
-	public T getItem(long id) {
+	public T getItem(int id) {
 		Cursor cursor = queryLocal(db, "SELECT * FROM " + tableName
 				+ " WHERE " + SQLiteHelper.COLUMN_ID + " = " + id);
 		return convertCursor(cursor).get(0);

@@ -12,13 +12,13 @@
 	card_view:cardCornerRadius="2dp">
 
 	<RelativeLayout
-		android:id="@+id/planned_workout_list_item_content_pnl"
+		android:id="@+id/training_list_item_content_pnl"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center_vertical">
 
 		<TextView
-			android:id="@+id/planned_workout_list_item_header"
+			android:id="@+id/training_list_item_header"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
@@ -29,39 +29,39 @@
 			android:layout_marginRight="@dimen/keyline_1"/>
 
 		<TextView
-			android:id="@+id/planned_workout_plan_date"
+			android:id="@+id/training_list_item_plan_date"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/planned_workout_list_item_header"
+			android:layout_below="@+id/training_list_item_header"
 			android:layout_margin="@dimen/keyline_1_minus_8dp"
 			android:text="test"/>
 		<TextView
-			android:id="@+id/planned_workout_perform_date"
+			android:id="@+id/training_list_item_perform_date"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/planned_workout_plan_date"
+			android:layout_below="@+id/training_list_item_plan_date"
 			android:layout_margin="@dimen/keyline_1_minus_8dp"
 			android:text="test"/>
 		<TextView
-			android:id="@+id/planned_workout_state"
+			android:id="@+id/training_list_item_state"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/planned_workout_perform_date"
+			android:layout_below="@+id/training_list_item_perform_date"
 			android:layout_margin="@dimen/keyline_1_minus_8dp"
 			android:text="test"/>
 		<TextView
-			android:id="@+id/planned_workout_duration"
+			android:id="@+id/training_list_item_duration"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/planned_workout_state"
+			android:layout_below="@+id/training_list_item_state"
 			android:layout_margin="@dimen/keyline_1_minus_8dp"
 			android:text="test"/>
 
 		<TextView
-			android:id="@+id/planned_workout_list_item_content"
+			android:id="@+id/training_list_item_content"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/planned_workout_duration"
+			android:layout_below="@+id/training_list_item_duration"
 			android:layout_margin="@dimen/keyline_1"/>
 
 	</RelativeLayout>

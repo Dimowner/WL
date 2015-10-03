@@ -49,7 +49,7 @@ public class TrainingsActivity extends BaseActivity {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setLayoutManager(mLayoutManager);
 
-		loadPlannedWrokouts();
+		loadTrainings();
 		updateShowingData();
 
 		listAdapter = new TrainingsListAdapter(action, plannedWorkouts);
@@ -99,37 +99,18 @@ public class TrainingsActivity extends BaseActivity {
 			Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
 			switch (requestCode) {
 				case REQUEST_SELECT_WORKOUT:
-					listAdapter.addItem(
-							dataSource.insertItem(
-									new TrainedWorkout(
-										TrainedWorkout.NO_ID,
-										w.getName(),
-										w.getDescription(),
-										new Date(),
-										null,
-										TrainedWorkout.DURATION_NOT_SPECIFIED,
-										TrainedWorkout.STATE_DEFAULT,
-										w.getExerciseList()
-									)
-							)
-					);
+					listAdapter.addItem(dataSource.insertItem(new TrainedWorkout(w)));
 					break;
 			}
 		}
 	}
 
 	/**
-	 * Load all planned workouts data from database.
+	 * Load all trainings data from database.
 	 */
-	public void loadPlannedWrokouts() {
+	public void loadTrainings() {
 		if (dataSource != null) {
-//			try {
-//				dataSource.open();
-//			} catch (SQLException e) {
-//				LOGE(LOG_TAG, "", e);
-//			}
 			plannedWorkouts = dataSource.getAll();
-//			dataSource.close();
 		} else {
 			LOGE(LOG_TAG, "dataSource is null");
 		}

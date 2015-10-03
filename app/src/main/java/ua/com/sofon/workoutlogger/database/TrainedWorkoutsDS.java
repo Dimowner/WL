@@ -37,7 +37,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	public TrainedWorkout insertItem(TrainedWorkout item) {
 		TrainedWorkout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
-			w.addExercise(exeData.insertItem(item.getExercise(i)));
+			w.addTrainedExe(exeData.insertItem(item.getTrainedExe(i)));
 		}
 		return w;
 	}
@@ -46,6 +46,9 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	public ContentValues itemToContentValues(TrainedWorkout item) {
 		if (item.getName() != null && item.getPlanDate() != null) {
 			ContentValues values = new ContentValues();
+			if (item.getId() != TrainedWorkout.NO_ID) {
+				values.put(SQLiteHelper.COLUMN_ID, item.getId());
+			}
 			values.put(SQLiteHelper.COLUMN_TW_NAME, item.getName());
 			if (item.getDescription() != null) {
 				values.put(SQLiteHelper.COLUMN_TW_DESCRIPTION, item.getDescription());
@@ -66,7 +69,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	}
 
 	@Override
-	public void deleteItem(long id) {
+	public void deleteItem(int id) {
 		super.deleteItem(id);
 		int c = db.delete(SQLiteHelper.TABLE_TRAINED_EXERCISES,
 				SQLiteHelper.COLUMN_TW_ID + " = " + id, null);
@@ -78,7 +81,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 		if (item.hasID()) {
 			super.updateItem(item);
 			for (int i = 0; i < item.getExercisesCount(); i++) {
-				exeData.updateItem(item.getExercise(i));
+				exeData.updateItem(item.getTrainedExe(i));
 			}
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");
@@ -104,7 +107,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	}
 
 	@Override
-	public TrainedWorkout getItem(long id) {
+	public TrainedWorkout getItem(int id) {
 		return loadExercisesForWorkout(super.getItem(id));
 	}
 

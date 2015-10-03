@@ -25,6 +25,9 @@ public class TrainedSetDS extends DataSource<TrainedSet> {
 	public ContentValues itemToContentValues(TrainedSet item) {
 		if (item.hasID() && item.getNumber() != 0) {
 			ContentValues values = new ContentValues();
+			if (item.getId() != TrainedSet.NO_ID) {
+				values.put(SQLiteHelper.COLUMN_ID, item.getId());
+			}
 			values.put(SQLiteHelper.COLUMN_TE_ID, item.getTrainedExeID());
 			values.put(SQLiteHelper.COLUMN_SET_NUMBER, item.getNumber());
 			if (item.getWeight() > 0) {

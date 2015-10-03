@@ -28,12 +28,12 @@ public class TrainingsListAdapter
 	@Override
 	protected View getListItemView(ViewGroup parent) {
 		return LayoutInflater.from(parent.getContext())
-						.inflate(R.layout.list_item_planned_workout, parent, false);
+						.inflate(R.layout.list_item_training, parent, false);
 	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, final int position) {
-		((TextView)holder.mView.findViewById(R.id.planned_workout_list_item_header))
+		((TextView)holder.mView.findViewById(R.id.training_list_item_header))
 				.setText(data.get(position).getName());
 		StringBuilder content = new StringBuilder();
 		ArrayList<TrainedExercise> exes = data.get(position).getExerciseList();
@@ -43,11 +43,11 @@ public class TrainingsListAdapter
 				content.append("\n");
 			}
 		}
-		((TextView)holder.mView.findViewById(R.id.planned_workout_list_item_content))
+		((TextView)holder.mView.findViewById(R.id.training_list_item_content))
 				.setText(content.toString());
-		((TextView)holder.mView.findViewById(R.id.planned_workout_plan_date))
+		((TextView)holder.mView.findViewById(R.id.training_list_item_plan_date))
 				.setText(data.get(position).getPlanDateStr());
-		((TextView)holder.mView.findViewById(R.id.planned_workout_perform_date))
+		((TextView)holder.mView.findViewById(R.id.training_list_item_perform_date))
 				.setText(data.get(position).getPerformDateStr());
 //		((TextView)holder.mView.findViewById(R.id.planned_workout_duration))
 //				.setText(data.get(position).getDuration());

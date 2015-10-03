@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
+import ua.com.sofon.workoutlogger.parts.TrainedExercise;
 import ua.com.sofon.workoutlogger.parts.Workout;
 import ua.com.sofon.workoutlogger.util.LogUtils;
 import static ua.com.sofon.workoutlogger.util.LogUtils.LOGD;
@@ -32,7 +33,7 @@ public class WorkoutsDS extends DataSource<Workout> {
 	public Workout insertItem(Workout item) {
 		Workout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
-			w.addExercise(exeData.insertItem(item.getExercise(i)));
+			w.addTrainedExe(exeData.insertItem(item.getTrainedExe(i)));
 		}
 		return w;
 	}
@@ -41,6 +42,9 @@ public class WorkoutsDS extends DataSource<Workout> {
 	public ContentValues itemToContentValues(Workout item) {
 		if (item.getName() != null) {
 			ContentValues values = new ContentValues();
+			if (item.getId() != Workout.NO_ID) {
+				values.put(SQLiteHelper.COLUMN_ID, item.getId());
+			}
 			values.put(SQLiteHelper.COLUMN_W_NAME, item.getName());
 			if (!item.getDescription().isEmpty()) {
 				values.put(SQLiteHelper.COLUMN_W_DESCRIPTION, item.getDescription());
@@ -53,7 +57,7 @@ public class WorkoutsDS extends DataSource<Workout> {
 	}
 
 	@Override
-	public void deleteItem(long id) {
+	public void deleteItem(int id) {
 		super.deleteItem(id);
 		int c = db.delete(SQLiteHelper.TABLE_TRAINED_EXERCISES,
 				SQLiteHelper.COLUMN_WORKOUT_ID + " = " + id, null);
@@ -64,9 +68,18 @@ public class WorkoutsDS extends DataSource<Workout> {
 	public void updateItem(Workout item) {
 		if (item.hasID()) {
 			super.updateItem(item);
+
+			ArrayList<TrainedExercise> exes =
+					exeData.getItems(SQLiteHelper.COLUMN_WORKOUT_ID + " = " + item.getId());
+			for (int i = 0; i < exes.size(); i++) {
+				if (item.containsTrainedExe(exes.get(i).getId())) {
+					item.removeTrainedExe(exes.get(i).getId());
+				} else {
+					exeData.deleteItem(exes.get(i).getId());
+				}
+			}
 			for (int i = 0; i < item.getExercisesCount(); i++) {
-//				if (item.getExercise(i).hasID()) {
-//				exeData.updateItem(item.getExercise(i));
+				exeData.insertItem(item.getTrainedExe(i));
 			}
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");
@@ -92,7 +105,7 @@ public class WorkoutsDS extends DataSource<Workout> {
 	}
 
 	@Override
-	public Workout getItem(long id) {
+	public Workout getItem(int id) {
 		return loadExercisesForWorkout(super.getItem(id));
 	}
 

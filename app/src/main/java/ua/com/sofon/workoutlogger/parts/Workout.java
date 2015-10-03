@@ -1,6 +1,5 @@
 package ua.com.sofon.workoutlogger.parts;
 
-import java.util.List;
 import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -122,7 +121,7 @@ public class Workout extends BaseParticle implements Parcelable {
 	 * @param position Position in exercise list.
 	 * @return Selected exercise.
 	 */
-	public TrainedExercise getExercise(int position) {
+	public TrainedExercise getTrainedExe(int position) {
 		return exerciseList.get(position);
 	}
 
@@ -130,11 +129,39 @@ public class Workout extends BaseParticle implements Parcelable {
 	 * Add one exercise to workout.
 	 * @param e Exercise that want to add.
 	 */
-	public void addExercise(TrainedExercise e) {
+	public void addTrainedExe(TrainedExercise e) {
 		if (e != null) {
 			e.setWorkoutID(id);
 			exerciseList.add(e);
 		}
+	}
+
+	/**
+	 * Remove {@link TrainedExercise} from exe list.
+	 * @param id ID of {@link TrainedExercise} to delete.
+	 */
+	public void removeTrainedExe(int id) {
+		for (int i = 0; i < exerciseList.size(); i++) {
+			if (id == exerciseList.get(i).getId()) {
+				exerciseList.remove(i);
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Check {@link Workout} contains {@link TrainedExercise} with
+	 * specified id.
+	 * @param id ID of {@link TrainedExercise} to check.
+	 * @return True if {@link Workout} contains {@link TrainedExercise}, else return false.
+	 */
+	public boolean containsTrainedExe(int id) {
+		for (int i = 0; i < exerciseList.size(); i++) {
+			if (id == exerciseList.get(i).getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

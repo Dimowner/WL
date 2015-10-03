@@ -18,6 +18,11 @@ public class TrainedExercise extends Exercise {
 		super(id, name, description);
 	}
 
+	public TrainedExercise(Exercise exe) {
+		super(NO_ID, exe.getName(), exe.getDescription());
+		parentExeID = exe.getId();
+	}
+
 	public TrainedExercise(int id, String name, String description, int type,
 							int number, int workoutID, int trainedWorkoutID, int parentExeID) {
 		super(id, name, description);
@@ -158,4 +163,63 @@ public class TrainedExercise extends Exercise {
 	private int number = NUMBER_DEFAULT;
 	private int workoutID = NO_ID;
 	private int trainedWorkoutID = NO_ID;
+
+	public static class Builder {
+
+		public TrainedExercise build() {
+			return new TrainedExercise(
+					id, name, description, type, number,
+					workoutID, trainedWorkoutID, parentExeID
+			);
+		}
+
+		public Builder setId(int id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder setType(int type) {
+			this.type = type;
+			return this;
+		}
+
+		public Builder setName(String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder setDescription(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder setParentExeID(int parentExeID) {
+			this.parentExeID = parentExeID;
+			return this;
+		}
+
+		public Builder setNumber(int number) {
+			this.number = number;
+			return this;
+		}
+
+		public Builder setWorkoutID(int workoutID) {
+			this.workoutID = workoutID;
+			return this;
+		}
+
+		public Builder setTrainedWorkoutID(int trainedWorkoutID) {
+			this.trainedWorkoutID = trainedWorkoutID;
+			return this;
+		}
+
+		private int id = NO_ID;
+		private int type = EXERCISE_TYPE_OTHER;
+		private String name;
+		private String description;
+		private int parentExeID = NO_ID;
+		private int number = NUMBER_DEFAULT;
+		private int workoutID = NO_ID;
+		private int trainedWorkoutID = NO_ID;
+	}
 }

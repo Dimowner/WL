@@ -22,13 +22,11 @@ public class BaseActivity extends AppCompatActivity {
 	//TODO:  Add search by exercises in toolbar.
 	//TODO:  Add into settings licence item.
 	//TODO:  Add sort to exercises and workouts.
-	//TODO:  Исправить возможность дублирования одного упражнения в тренеровке.
-	//TODO:  ExerciseList when item unchecked remove it from checked items.
-	//TODO:  Add EditBaseActivity and BaseListActivity and BaseListAdapter classes.
 	//TODO:  Add section "Training Programs".
 	//TODO:  Add to weight activity ability switch to view type List.
 	//TODO:  Add export/import weight DB to/from Libra app.
 	//TODO:  Use unit test in this project.
+	//TODO:  Fix error editing exercises (addition and deletion) of workout.
 
 	/**
 	 * When using the ActionBarDrawerToggle, you must call it during

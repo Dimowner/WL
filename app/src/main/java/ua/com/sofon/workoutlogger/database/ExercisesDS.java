@@ -22,6 +22,9 @@ public class ExercisesDS extends DataSource<Exercise> {
 	public ContentValues itemToContentValues(Exercise item) {
 		if (item.getName() != null) {
 			ContentValues values = new ContentValues();
+			if (item.getId() != Exercise.NO_ID) {
+				values.put(SQLiteHelper.COLUMN_ID, item.getId());
+			}
 			values.put(SQLiteHelper.COLUMN_EXE_NAME, item.getName());
 			values.put(SQLiteHelper.COLUMN_EXE_DESCRIPTION, item.getDescription());
 			values.put(SQLiteHelper.COLUMN_EXE_TYPE, item.getType());

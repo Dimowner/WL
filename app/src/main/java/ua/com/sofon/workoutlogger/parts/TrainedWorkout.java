@@ -20,6 +20,10 @@ public class TrainedWorkout extends Workout {
 		this.planDate = new Date();
 	}
 
+	public TrainedWorkout(Workout w) {
+		super(w.getId(), w.getName(), w.getDescription(), w.getExerciseList());
+		this.planDate = new Date();
+	}
 	public TrainedWorkout(int id, String name, String description,
 								 Date planDate, Date performDate, int duration,
 								 int state, ArrayList<TrainedExercise> exerciseList) {
@@ -166,7 +170,7 @@ public class TrainedWorkout extends Workout {
 	}
 
 	@Override
-	public void addExercise(TrainedExercise e) {
+	public void addTrainedExe(TrainedExercise e) {
 		if (e != null) {
 			e.setTrainedWorkoutID(id);
 			exerciseList.add(e);
@@ -204,4 +208,63 @@ public class TrainedWorkout extends Workout {
 	private Date performDate = null;
 	private int  duration = DURATION_NOT_SPECIFIED;
 	private int  state = STATE_DEFAULT;
+
+
+	public static class Builder {
+
+		public TrainedWorkout build() {
+			return new TrainedWorkout(
+					id, name, description, planDate, performDate,
+					duration, state, exerciseList);
+		}
+
+		public Builder setId(int id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder setName(String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder setDescription(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder setExerciseList(ArrayList<TrainedExercise> exerciseList) {
+			this.exerciseList = exerciseList;
+			return this;
+		}
+
+		public Builder setPlanDate(Date planDate) {
+			this.planDate = planDate;
+			return this;
+		}
+
+		public Builder setPerformDate(Date performDate) {
+			this.performDate = performDate;
+			return this;
+		}
+
+		public Builder setDuration(int duration) {
+			this.duration = duration;
+			return this;
+		}
+
+		public Builder setState(int state) {
+			this.state = state;
+			return this;
+		}
+
+		protected int id = NO_ID;
+		protected String name;
+		protected String description;
+		protected ArrayList<TrainedExercise> exerciseList;
+		private Date planDate;
+		private Date performDate = null;
+		private int  duration = DURATION_NOT_SPECIFIED;
+		private int  state = STATE_DEFAULT;
+	}
 }
