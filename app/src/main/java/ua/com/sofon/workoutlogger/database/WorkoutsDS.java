@@ -33,9 +33,8 @@ public class WorkoutsDS extends DataSource<Workout> {
 	public Workout insertItem(Workout item) {
 		Workout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
+			item.getTrainedExe(i).setWorkoutID(w.getId());
 			w.addTrainedExe(exeData.insertItem(item.getTrainedExe(i)));
-//			item.getTrainedExercise(i).setWorkoutID(w.getId());
-//			w.addTrainedExercise(exeData.insertItem(item.getTrainedExercise(i)));
 		}
 		return w;
 	}
@@ -71,8 +70,7 @@ public class WorkoutsDS extends DataSource<Workout> {
 		if (item.hasID()) {
 			super.updateItem(item);
 
-			ArrayList<TrainedExercise> exes =
-					exeData.getItems(SQLiteHelper.COLUMN_WORKOUT_ID + " = " + item.getId());
+			ArrayList<TrainedExercise> exes = getTrainedExercisesForWorkout(item.getId());
 			for (int i = 0; i < exes.size(); i++) {
 				if (item.containsTrainedExe(exes.get(i).getId())) {
 					item.removeTrainedExe(exes.get(i).getId());
@@ -86,25 +84,6 @@ public class WorkoutsDS extends DataSource<Workout> {
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");
 		}
-//		if (item.hasID()) {
-//			super.updateItem(item);
-//			ArrayList<TrainedExercise> exes = getTrainedExercisesForWorkout(item.getId());
-//			for (int i = 0; i < item.getExercisesCount(); i++) {
-////				TODO: fix items update algorithm
-//				boolean hasExe = false;
-//				for (int j = 0; j < exes.size(); j++) {
-//					if (item.getTrainedExercise(i).getParentExeID() == exes.get(j).getParentExeID()) {
-//						hasExe = true;
-//						exeData.updateItem(item.getTrainedExercise(i));
-//					}
-//				}
-//				if (!hasExe) {
-//					exeData.insertItem(item.getTrainedExercise(i));
-//				}
-//			}
-//		} else {
-//			LOGE(LOG_TAG, "Can't update Workout with no ID");
-//		}
 	}
 
 	@Override

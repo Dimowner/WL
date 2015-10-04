@@ -164,19 +164,19 @@ public class Workout extends BaseParticle implements Parcelable {
 		return false;
 	}
 
-//	/**
-//	 * Check that workout contains exercise in exercise list.
-//	 * @param id Exercise id
-//	 * @return true if contains, else returns false.
-//	 */
-//	public boolean hasExercise(int id) {
-//		for (int i = 0; i < exerciseList.size(); i++) {
-//			if (exerciseList.get(i).getParentExeID() == id) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	/**
+	 * Check that workout contains {@link Exercise} in {@link TrainedExercise} list.
+	 * @param id {@link Exercise} id
+	 * @return true if contains, else returns false.
+	 */
+	public boolean containsExercise(int id) {
+		for (int i = 0; i < exerciseList.size(); i++) {
+			if (exerciseList.get(i).getParentExeID() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void removeItem(int position) {
 		if (position >= 0 && position < exerciseList.size()) {

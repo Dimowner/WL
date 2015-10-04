@@ -23,13 +23,6 @@ public class TrainedExercise extends Exercise {
 		parentExeID = exe.getId();
 	}
 
-//	public TrainedExercise(String name, String description, int parentExeID) {
-//		super(NO_ID, name, description);
-//		if (parentExeID > 0) {
-//			this.parentExeID = parentExeID;
-//		}
-//	}
-
 	public TrainedExercise(int id, String name, String description, int type,
 							int number, int workoutID, int trainedWorkoutID, int parentExeID) {
 		super(id, name, description);

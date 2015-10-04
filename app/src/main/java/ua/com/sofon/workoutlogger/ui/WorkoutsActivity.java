@@ -137,7 +137,6 @@ public class WorkoutsActivity extends BaseActivity {
 			Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
 			switch (requestCode) {
 				case REQUEST_ADD_WORKOUT:
-					Log.v(LOG_TAG, "exe count = " + w.getExercisesCount());
 					listAdapter.addItem(dataSource.insertItem(w));
 					break;
 //					case REQUEST_EDIT_WORKOUT:
