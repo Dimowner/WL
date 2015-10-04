@@ -46,16 +46,16 @@ public class TrainedExerciseDS extends DataSource<TrainedExercise> {
 
 	@Override
 	public TrainedExercise recordToItem(Cursor cursor) {
-		return new TrainedExercise.Builder()
-					.setId(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)))
-					.setName(cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NAME)))
-					.setDescription(cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_DESCRIPTION)))
-					.setType(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_TYPE)))
-					.setNumber(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NUMBER)))
-					.setTrainedWorkoutID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)))
-					.setWorkoutID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)))
-					.setParentExeID(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_PARENT_EXE_ID)))
-					.build();
+		return new TrainedExercise(
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)),
+				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NAME)),
+				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_DESCRIPTION)),
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_TYPE)),
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TE_NUMBER)),
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_TW_ID)),
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WORKOUT_ID)),
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_PARENT_EXE_ID))
+		);
 	}
 
 

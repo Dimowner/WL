@@ -206,6 +206,7 @@ public class WorkoutEditActivity extends AppCompatActivity {
 							boolean isDeleted = true;
 							for (int j = 0; j < exes.length; j++) {
 								if (exes[j] != null && listAdapter.getItem(i).getId() == exes[j].getId()) {
+								//if (exes[j] != null && listAdapter.getItem(i).getParentExeID() == exes[j].getId()) {
 									exes[j] = null;
 									isDeleted = false;
 								}

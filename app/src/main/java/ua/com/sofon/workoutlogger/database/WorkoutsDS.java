@@ -34,6 +34,8 @@ public class WorkoutsDS extends DataSource<Workout> {
 		Workout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
 			w.addTrainedExe(exeData.insertItem(item.getTrainedExe(i)));
+//			item.getTrainedExercise(i).setWorkoutID(w.getId());
+//			w.addTrainedExercise(exeData.insertItem(item.getTrainedExercise(i)));
 		}
 		return w;
 	}
@@ -84,6 +86,25 @@ public class WorkoutsDS extends DataSource<Workout> {
 		} else {
 			LOGE(LOG_TAG, "Can't update Workout with no ID");
 		}
+//		if (item.hasID()) {
+//			super.updateItem(item);
+//			ArrayList<TrainedExercise> exes = getTrainedExercisesForWorkout(item.getId());
+//			for (int i = 0; i < item.getExercisesCount(); i++) {
+////				TODO: fix items update algorithm
+//				boolean hasExe = false;
+//				for (int j = 0; j < exes.size(); j++) {
+//					if (item.getTrainedExercise(i).getParentExeID() == exes.get(j).getParentExeID()) {
+//						hasExe = true;
+//						exeData.updateItem(item.getTrainedExercise(i));
+//					}
+//				}
+//				if (!hasExe) {
+//					exeData.insertItem(item.getTrainedExercise(i));
+//				}
+//			}
+//		} else {
+//			LOGE(LOG_TAG, "Can't update Workout with no ID");
+//		}
 	}
 
 	@Override
@@ -114,6 +135,10 @@ public class WorkoutsDS extends DataSource<Workout> {
 				SQLiteHelper.COLUMN_WORKOUT_ID + " = " + w.getId())
 		);
 		return w;
+	}
+
+	public ArrayList<TrainedExercise> getTrainedExercisesForWorkout(int workoutID) {
+		return exeData.getItems(SQLiteHelper.COLUMN_WORKOUT_ID + " = " + workoutID);
 	}
 
 	@Override

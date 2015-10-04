@@ -164,13 +164,33 @@ public class Workout extends BaseParticle implements Parcelable {
 		return false;
 	}
 
+//	/**
+//	 * Check that workout contains exercise in exercise list.
+//	 * @param id Exercise id
+//	 * @return true if contains, else returns false.
+//	 */
+//	public boolean hasExercise(int id) {
+//		for (int i = 0; i < exerciseList.size(); i++) {
+//			if (exerciseList.get(i).getParentExeID() == id) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+	public void removeItem(int position) {
+		if (position >= 0 && position < exerciseList.size()) {
+			exerciseList.remove(position);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder exes = new StringBuilder();
 		for (int i = 0; i < exerciseList.size(); i++) {
 			exes.append(exerciseList.get(i).toString()).append(", ");
 		}
-		return "TrainedWorkout["
+		return "Workout["
 				+ SQLiteHelper.COLUMN_ID + " = '" + id + "', "
 				+ SQLiteHelper.COLUMN_W_NAME + " = '" + name + "', "
 				+ SQLiteHelper.COLUMN_W_DESCRIPTION + " = '" + description + "', ["

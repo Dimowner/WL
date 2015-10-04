@@ -27,6 +27,8 @@ public class BaseActivity extends AppCompatActivity {
 	//TODO:  Add export/import weight DB to/from Libra app.
 	//TODO:  Use unit test in this project.
 	//TODO:  Fix error editing exercises (addition and deletion) of workout.
+	//TODO:  Add feature on long click show menu with item delete item from trained exes.
+	//TODO:  Replace all parts constructors by builders.
 
 	/**
 	 * When using the ActionBarDrawerToggle, you must call it during
