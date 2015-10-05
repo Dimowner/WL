@@ -2,7 +2,6 @@ package ua.com.sofon.workoutlogger.ui;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.database.SQLiteHelper;
 import ua.com.sofon.workoutlogger.database.TrainedWorkoutsDS;
 import ua.com.sofon.workoutlogger.parts.TrainedWorkout;
 import ua.com.sofon.workoutlogger.parts.Workout;
@@ -52,7 +52,7 @@ public class TrainingsActivity extends BaseActivity {
 		loadTrainings();
 		updateShowingData();
 
-		listAdapter = new TrainingsListAdapter(action, plannedWorkouts);
+		listAdapter = new TrainingsListAdapter(this, action, plannedWorkouts);
 //		listAdapter.setOnItemClickListener(new TrainingsListAdapter.OnItemClickListener() {
 //			@Override
 //			public void onItemClick(View view, int position) {
@@ -110,7 +110,8 @@ public class TrainingsActivity extends BaseActivity {
 	 */
 	public void loadTrainings() {
 		if (dataSource != null) {
-			plannedWorkouts = dataSource.getAll();
+			plannedWorkouts = dataSource.getItems(
+					" 1=1 ORDER BY " + SQLiteHelper.COLUMN_TW_PLAN_DATE + " DESC");
 		} else {
 			LOGE(LOG_TAG, "dataSource is null");
 		}

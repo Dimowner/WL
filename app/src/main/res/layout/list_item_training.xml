@@ -1,68 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:card_view="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/planned_workout_list_item_card"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:layout_gravity="center"
+	android:orientation="vertical"
 	android:layout_marginTop="10dp"
 	android:layout_marginLeft="10dp"
-	android:layout_marginRight="10dp"
-	card_view:cardCornerRadius="2dp">
+	android:layout_marginRight="10dp">
 
-	<RelativeLayout
-		android:id="@+id/training_list_item_content_pnl"
+	<TextView
+		android:id="@+id/training_list_item_date"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="15 SEPTEMBER"/>
+
+	<android.support.v7.widget.CardView
+		xmlns:card_view="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/planned_workout_list_item_card"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:gravity="center_vertical">
+		android:layout_gravity="center"
+		card_view:cardCornerRadius="2dp">
 
-		<TextView
-			android:id="@+id/training_list_item_header"
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			android:singleLine="true"
-			android:layout_marginLeft="@dimen/keyline_1"
-			android:layout_marginTop="@dimen/keyline_1"
-			android:layout_marginRight="@dimen/keyline_1"/>
+			android:paddingBottom="@dimen/keyline_1"
+			android:orientation="vertical">
 
-		<TextView
-			android:id="@+id/training_list_item_plan_date"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/training_list_item_header"
-			android:layout_margin="@dimen/keyline_1_minus_8dp"
-			android:text="test"/>
-		<TextView
-			android:id="@+id/training_list_item_perform_date"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/training_list_item_plan_date"
-			android:layout_margin="@dimen/keyline_1_minus_8dp"
-			android:text="test"/>
-		<TextView
-			android:id="@+id/training_list_item_state"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/training_list_item_perform_date"
-			android:layout_margin="@dimen/keyline_1_minus_8dp"
-			android:text="test"/>
-		<TextView
-			android:id="@+id/training_list_item_duration"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/training_list_item_state"
-			android:layout_margin="@dimen/keyline_1_minus_8dp"
-			android:text="test"/>
+			<TextView
+				android:id="@+id/training_list_item_header"
+				android:drawableLeft="@drawable/ic_android_grey600_24dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				android:singleLine="true"
+				android:drawablePadding="@dimen/keyline_1"
+				android:layout_marginLeft="@dimen/keyline_1"
+				android:layout_marginTop="@dimen/keyline_1"
+				android:layout_marginRight="@dimen/keyline_1"
+				android:layout_marginBottom="@dimen/keyline_1"
+				android:text="Test"/>
 
-		<TextView
-			android:id="@+id/training_list_item_content"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/training_list_item_duration"
-			android:layout_margin="@dimen/keyline_1"/>
+			<!--<ListView-->
+				<!--android:id="@+id/training_list_item_exes"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="match_parent"/>-->
 
-	</RelativeLayout>
-</android.support.v7.widget.CardView>
+			<ua.com.sofon.workoutlogger.ui.widget.NotScrollableListView
+				android:id="@+id/training_list_item_exes"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="@dimen/keyline_1"
+				android:layout_marginRight="@dimen/keyline_1"/>
+				<!--android:divider="#999999"-->
+				<!--android:dividerHeight="1px"/>-->
+
+			<Button
+				android:id="@+id/training_list_item_start_btn"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="@dimen/keyline_1_minus_8dp"
+				android:layout_marginStart="@dimen/keyline_1_minus_8dp"
+				android:layout_marginRight="@dimen/keyline_1_minus_8dp"
+				android:layout_marginEnd="@dimen/keyline_1_minus_8dp"
+				android:layout_marginBottom="@dimen/keyline_1_minus_8dp"/>
+
+		</LinearLayout>
+		<!--<RelativeLayout-->
+			<!--android:id="@+id/training_list_item_content_pnl"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="match_parent"-->
+			<!--android:gravity="center_vertical">-->
+
+			<!--<TextView-->
+				<!--android:id="@+id/training_list_item_header"-->
+				<!--android:drawableLeft="@drawable/ic_android_grey600_24dp"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:textSize="18sp"-->
+				<!--android:textStyle="bold"-->
+				<!--android:singleLine="true"-->
+				<!--android:drawablePadding="@dimen/keyline_1"-->
+				<!--android:layout_marginLeft="@dimen/keyline_1"-->
+				<!--android:layout_marginTop="@dimen/keyline_1"-->
+				<!--android:layout_marginRight="@dimen/keyline_1"-->
+				<!--android:layout_marginBottom="@dimen/keyline_1"-->
+				<!--android:text="Test"/>-->
+
+			<!--<ListView-->
+				<!--android:id="@+id/training_list_item_exes"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_below="@+id/training_list_item_header"-->
+				<!--android:layout_above="@+id/training_list_item_start_btn"/>-->
+
+			<!--<Button-->
+				<!--android:id="@+id/training_list_item_start_btn"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_alignParentBottom="true"-->
+				<!--android:layout_marginLeft="@dimen/keyline_1_minus_8dp"-->
+				<!--android:layout_marginStart="@dimen/keyline_1_minus_8dp"-->
+				<!--android:layout_marginRight="@dimen/keyline_1_minus_8dp"-->
+				<!--android:layout_marginEnd="@dimen/keyline_1_minus_8dp"-->
+				<!--android:layout_marginBottom="@dimen/keyline_1_minus_8dp"/>-->
+
+		<!--</RelativeLayout>-->
+	</android.support.v7.widget.CardView>
+</LinearLayout>

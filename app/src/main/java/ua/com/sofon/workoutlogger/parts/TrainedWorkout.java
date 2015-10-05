@@ -21,9 +21,14 @@ public class TrainedWorkout extends Workout {
 	}
 
 	public TrainedWorkout(Workout w) {
-		super(w.getId(), w.getName(), w.getDescription(), w.getExerciseList());
+		super(NO_ID, w.getName(), w.getDescription(), null);
+		exerciseList = new ArrayList<>();
+		for (int i = 0; i < w.getExercisesCount(); i++) {
+			exerciseList.add(new TrainedExercise(w.getTrainedExe(i)));
+		}
 		this.planDate = new Date();
 	}
+
 	public TrainedWorkout(int id, String name, String description,
 								 Date planDate, Date performDate, int duration,
 								 int state, ArrayList<TrainedExercise> exerciseList) {
@@ -266,5 +271,6 @@ public class TrainedWorkout extends Workout {
 		private Date performDate = null;
 		private int  duration = DURATION_NOT_SPECIFIED;
 		private int  state = STATE_DEFAULT;
+		//TODO: add parent workout id field.
 	}
 }

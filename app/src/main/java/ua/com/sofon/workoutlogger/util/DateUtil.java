@@ -55,6 +55,14 @@ public class DateUtil {
 		return date;
 	}
 
+	public static String formatDate(Date date) {
+		return activeDateFormat.format(date);
+	}
+
+	public static String formatDateTime(Date date) {
+		return activeDateTimeFormat.format(date);
+	}
+
 //	B – Big-endian (year, month, day), e.g. 1996-04-22
 //	L – Little-endian (day, month, year), e.g. 22.04.96 or 22/04/96 or 22 April 1996
 //	M – Middle-endian (month, day, year), e.g. 04/22/96 or April 22, 1996

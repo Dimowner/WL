@@ -56,7 +56,7 @@ public class WorkoutsActivity extends BaseActivity {
 			public void onItemClick(View view, int position) {
 				if (action.equals(ACTION_SELECT)) {
 					//TODO: send back selected workout.
-					Log.v(LOG_TAG, "onItemSelected");
+					Log.v(LOG_TAG, "onItemSelected item = " + listAdapter.getItem(position).toString());
 					Intent intent = new Intent();
 					intent.putExtra(TrainingsActivity.EXTRAS_KEY_WORKOUT, listAdapter.getItem(position));
 					setResult(RESULT_OK, intent);

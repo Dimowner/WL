@@ -23,7 +23,8 @@ public class TrainedExerciseDS extends DataSource<TrainedExercise> {
 
 	@Override
 	public ContentValues itemToContentValues(TrainedExercise item) {
-		if (item.getName() != null && item.getWorkoutID() > 0) {
+		if (item.getName() != null
+				&& (item.getWorkoutID() > 0 || item.getTrainedWorkoutID() > 0)) {
 			ContentValues values = new ContentValues();
 			if (item.getId() != TrainedExercise.NO_ID) {
 				values.put(SQLiteHelper.COLUMN_ID, item.getId());

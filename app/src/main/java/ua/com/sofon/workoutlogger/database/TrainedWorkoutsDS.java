@@ -37,6 +37,7 @@ public class TrainedWorkoutsDS extends DataSource<TrainedWorkout>  {
 	public TrainedWorkout insertItem(TrainedWorkout item) {
 		TrainedWorkout w = super.insertItem(item);
 		for (int i = 0; i < item.getExercisesCount(); i++) {
+			item.getTrainedExe(i).setTrainedWorkoutID(w.getId());
 			w.addTrainedExe(exeData.insertItem(item.getTrainedExe(i)));
 		}
 		return w;
