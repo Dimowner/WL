@@ -2,8 +2,6 @@ package ua.com.sofon.workoutlogger.ui;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -23,6 +21,11 @@ public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 
 	public ExercisesListAdapter(String action, ArrayList<Exercise> exercises) {
 		super(exercises);
+		if (exercises != null) {
+			baseData = new ArrayList<>(exercises);
+		} else {
+			baseData = new ArrayList<>();
+		}
 		if (action != null && !action.isEmpty()) {
 			this.action = action;
 		} else {
@@ -90,20 +93,33 @@ public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 			}
 			i++;
 		}
-		Log.v(LOG_TAG, "exes = " + exes.length);
 		return exes;
 	}
 
 	public void setCheckedItemIDs(int[] items) {
-		Log.v(LOG_TAG, "setCheckedItemIDs = " + checkedItems.size());
 		for (int i = 0; i < items.length; i++) {
 			checkedItems.add(items[i]);
 		}
 		notifyDataSetChanged();
 	}
 
+	public void applyDataByFilter(String search) {
+		data.clear();
+
+		for (int i = 0; i < baseData.size(); i++) {
+			if (baseData.get(i).getName().toLowerCase()
+					.contains(search.toLowerCase())) {
+				data.add(baseData.get(i));
+			}
+		}
+		notifyDataSetChanged();
+	}
+
+
 	/** List contains ids of checked items */
 	private HashSet<Integer> checkedItems;
+
+	protected ArrayList<Exercise> baseData;
 
 	private String action;
 

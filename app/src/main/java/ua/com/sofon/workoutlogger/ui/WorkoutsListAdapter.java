@@ -18,6 +18,11 @@ public class WorkoutsListAdapter
 
 	public WorkoutsListAdapter(String action, ArrayList<Workout> workouts) {
 		super(workouts);
+		if (workouts != null) {
+			baseData = new ArrayList<>(workouts);
+		} else {
+			baseData = new ArrayList<>();
+		}
 		if (action != null && !action.isEmpty()) {
 			this.action = action;
 		} else {
@@ -50,6 +55,20 @@ public class WorkoutsListAdapter
 				.setText(content.toString());
 	}
 
+	public void applyDataByFilter(String search) {
+		data.clear();
+
+		for (int i = 0; i < baseData.size(); i++) {
+			if (baseData.get(i).getName().toLowerCase()
+					.contains(search.toLowerCase())) {
+				data.add(baseData.get(i));
+			}
+		}
+		notifyDataSetChanged();
+	}
+
+
+	protected ArrayList<Workout> baseData;
 
 	private String action;
 }

@@ -16,16 +16,16 @@
 			android:title="@string/navdrawer_item_exercises"/>
 	</group>
 
-	<group android:id="@+id/nav_view_secondary">
-		<item
-			android:id="@+id/nav_weight"
-			android:icon="@drawable/ic_android_grey600_24dp"
-			android:title="@string/navdrawer_item_weight"/>
-		<item
-			android:id="@+id/nav_statistics"
-			android:icon="@drawable/ic_android_grey600_24dp"
-			android:title="@string/navdrawer_item_statistics"/>
-	</group>
+	<!--<group android:id="@+id/nav_view_secondary">-->
+		<!--<item-->
+			<!--android:id="@+id/nav_weight"-->
+			<!--android:icon="@drawable/ic_android_grey600_24dp"-->
+			<!--android:title="@string/navdrawer_item_weight"/>-->
+		<!--<item-->
+			<!--android:id="@+id/nav_statistics"-->
+			<!--android:icon="@drawable/ic_android_grey600_24dp"-->
+			<!--android:title="@string/navdrawer_item_statistics"/>-->
+	<!--</group>-->
 
 	<group android:id="@+id/nav_view_ternary">
 		<item

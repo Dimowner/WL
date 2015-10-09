@@ -90,15 +90,15 @@ public class SettingsActivity extends BaseActivity {
 					return false;
 				}
 			});
-			Preference prefLogs = findPreference("logs");
-			prefLogs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-				@Override
-				public boolean onPreferenceClick(Preference preference) {
-					LOGV("SettingFragment", "startLogsActivity");
-					startActivity(new Intent(getActivity(), LogsActivity.class));
-					return false;
-				}
-			});
+//			Preference prefLogs = findPreference("logs");
+//			prefLogs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//				@Override
+//				public boolean onPreferenceClick(Preference preference) {
+//					LOGV("SettingFragment", "startLogsActivity");
+//					startActivity(new Intent(getActivity(), LogsActivity.class));
+//					return false;
+//				}
+//			});
 		}
 
 		@Override

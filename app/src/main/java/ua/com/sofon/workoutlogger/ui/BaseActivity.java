@@ -205,8 +205,8 @@ public class BaseActivity extends AppCompatActivity {
 	protected static final int NAVDRAWER_ITEM_TRAINING		= R.id.nav_training;
 	protected static final int NAVDRAWER_ITEM_WORKOUTS		= R.id.nav_workouts;
 	protected static final int NAVDRAWER_ITEM_EXERCISES	= R.id.nav_exercises;
-	protected static final int NAVDRAWER_ITEM_WEIGHT		= R.id.nav_weight;
-	protected static final int NAVDRAWER_ITEM_STATISTICS	= R.id.nav_statistics;
+	protected static final int NAVDRAWER_ITEM_WEIGHT		= 0;//R.id.nav_weight;
+	protected static final int NAVDRAWER_ITEM_STATISTICS	= 1;//R.id.nav_statistics;
 	protected static final int NAVDRAWER_ITEM_SETTINGS		= R.id.nav_settings;
 	protected static final int NAVDRAWER_ITEM_INVALID		= -1;
 

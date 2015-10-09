@@ -47,6 +47,7 @@
 	<string name="menu_item_replace">Replace</string>
 	<string name="menu_item_edit">Edit</string>
 	<string name="menu_item_delete">Delete</string>
+	<string name="menu_item_search">Search</string>
 
 	<string name="drawer_open">Main menu opened</string>
 	<string name="drawer_closed">Main menu closed</string>

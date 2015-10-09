@@ -3,6 +3,7 @@ package ua.com.sofon.workoutlogger.ui;
 import java.sql.SQLException;
 
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -112,6 +113,22 @@ public class ExercisesActivity extends BaseActivity {
 				acceptItem.setVisible(false);
 			}
 		}
+
+		// Get the SearchView and set the searchable configuration
+		final SearchView searchView =
+				(SearchView) menu.findItem(R.id.action_search).getActionView();
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				listAdapter.applyDataByFilter(newText);
+				return false;
+			}
+		});
 		return true;
 	}
 

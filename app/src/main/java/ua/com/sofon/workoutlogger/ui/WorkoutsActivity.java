@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,6 +112,22 @@ public class WorkoutsActivity extends BaseActivity {
 		if (acceptItem != null ) {
 			acceptItem.setVisible(false);
 		}
+
+		// Get the SearchView and set the searchable configuration
+		final SearchView searchView =
+				(SearchView) menu.findItem(R.id.action_search).getActionView();
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				listAdapter.applyDataByFilter(newText);
+				return false;
+			}
+		});
 		return true;
 	}
 
