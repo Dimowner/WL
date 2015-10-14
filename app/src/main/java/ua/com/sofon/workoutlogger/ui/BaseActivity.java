@@ -19,7 +19,6 @@ import ua.com.sofon.workoutlogger.R;
  */
 public class BaseActivity extends AppCompatActivity {
 
-	//TODO:  Add search by exercises in toolbar.
 	//TODO:  Add into settings licence item.
 	//TODO:  Add sort to exercises and workouts.
 	//TODO:  Add section "Training Programs".
@@ -28,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
 	//TODO:  Use unit test in this project.
 	//TODO:  Add feature on long click show menu with item delete item from trained exes.
 	//TODO:  Replace all parts constructors by builders.
+	//TODO:  Add drag and drop to exercises in workout and training
 
 	/**
 	 * When using the ActionBarDrawerToggle, you must call it during

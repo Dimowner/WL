@@ -13,8 +13,7 @@ import ua.com.sofon.workoutlogger.parts.Workout;
  * Data adapter for workouts list.
  * @author Dimowner
  */
-public class WorkoutsListAdapter
-		extends BaseListAdapter<Workout> {
+public class WorkoutsListAdapter extends BaseListAdapter<Workout> {
 
 	public WorkoutsListAdapter(String action, ArrayList<Workout> workouts) {
 		super(workouts);
@@ -57,7 +56,6 @@ public class WorkoutsListAdapter
 
 	public void applyDataByFilter(String search) {
 		data.clear();
-
 		for (int i = 0; i < baseData.size(); i++) {
 			if (baseData.get(i).getName().toLowerCase()
 					.contains(search.toLowerCase())) {

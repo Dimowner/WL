@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.database.SQLiteHelper;
@@ -52,22 +54,24 @@ public class TrainingsActivity extends BaseActivity {
 		loadTrainings();
 		updateShowingData();
 
-		listAdapter = new TrainingsListAdapter(this, action, plannedWorkouts);
-//		listAdapter.setOnItemClickListener(new TrainingsListAdapter.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(View view, int position) {
-//				if (action.equals(ACTION_SELECT)) {
-//					//TODO: send back selected workout.
-//					Log.v(LOG_TAG, "onItemClick action select");
-//				} else {
-//					Intent intent = new Intent(WorkoutsActivity.this, WorkoutEditActivity.class);
-//					intent.setAction(WorkoutEditActivity.ACTION_VIEW);
-//					intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
-//					intent.putExtra(EXTRAS_KEY_WORKOUT, listAdapter.getItem(position));
-//					startActivityForResult(intent, REQUEST_VIEW_WORKOUT);
-//				}
-//			}
-//		});
+		listAdapter = new TrainingsListAdapter(this, action, trainedWorkouts);
+		listAdapter.setOnItemClickListener(new TrainingsListAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClick(View view, int position) {
+				Intent intent = new Intent(TrainingsActivity.this, TrainingEditActivity.class);
+				intent.setAction(TrainingEditActivity.ACTION_VIEW);
+				intent.putExtra(EXTRAS_KEY_ITEM_POSITION, position);
+				intent.putExtra(EXTRAS_KEY_WORKOUT, listAdapter.getItem(position));
+				startActivityForResult(intent, REQUEST_VIEW_WORKOUT);
+			}
+		});
+		listAdapter.setOnItemLongClickListener(new BaseListAdapter.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(View view, int position) {
+				Log.v(LOG_TAG, "onItemLongClick");
+				return false;
+			}
+		});
 		recyclerView.setAdapter(listAdapter);
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -96,12 +100,62 @@ public class TrainingsActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && data.hasExtra(EXTRAS_KEY_WORKOUT)) {
-			Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
 			switch (requestCode) {
 				case REQUEST_SELECT_WORKOUT:
-					listAdapter.addItem(dataSource.insertItem(new TrainedWorkout(w)));
+					Workout w = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
+					listAdapter.addItem(0, dataSource.insertItem(new TrainedWorkout(w)));
+					break;
+				case REQUEST_VIEW_WORKOUT:
+					TrainedWorkout tw = data.getParcelableExtra(EXTRAS_KEY_WORKOUT);
+					String returnedAction = data.getAction();
+					int itemPosition = -1;
+					if (data.hasExtra(EXTRAS_KEY_ITEM_POSITION)) {
+						itemPosition = data.getIntExtra(EXTRAS_KEY_ITEM_POSITION, -1);
+					}
+					if (returnedAction != null) {
+						if (returnedAction.equals(TrainingEditActivity.ACTION_EDIT)) {
+							dataSource.updateItem(tw);
+							listAdapter.removeItem(itemPosition);
+							listAdapter.addItem(itemPosition, tw);
+
+							String text = "TrainedWorkout " + listAdapter.getItem(itemPosition).getName() + " was updated.";
+							Snackbar.make(findViewById(R.id.coordinator_layout),
+									text, Snackbar.LENGTH_LONG)
+									.setAction("undo", new View.OnClickListener() {
+										@Override
+										public void onClick(View v) {
+											//TODO: Undo update workout.
+											Log.v(LOG_TAG, "Undo update workout");
+										}
+									}).show();
+						} else if (returnedAction.equals(TrainingEditActivity.ACTION_DELETE)) {
+							if (itemPosition != -1 && listAdapter.removeItem(itemPosition)) {
+								dataSource.deleteItem(tw.getId());
+								Snackbar.make(findViewById(R.id.coordinator_layout),
+										"TrainedWorkout was deleted successfully.", Snackbar.LENGTH_LONG)
+										.setAction("undo", new View.OnClickListener() {
+											@Override
+											public void onClick(View v) {
+												//TODO: UNDO WORKOUT.
+												Log.v(LOG_TAG, "Undo workout");
+											}
+										}).show();
+							} else {
+								final Snackbar snackBar = Snackbar.make(findViewById(R.id.coordinator_layout),
+										"Unsuccessful deletion", Snackbar.LENGTH_LONG);
+								snackBar.setAction("dismiss", new View.OnClickListener() {
+									@Override
+									public void onClick(View v) {
+										snackBar.dismiss();
+									}
+								}).show();
+							}
+							listAdapter.notifyDataSetChanged();
+						}
+					}
 					break;
 			}
+			listAdapter.notifyDataSetChanged();
 		}
 	}
 
@@ -110,7 +164,7 @@ public class TrainingsActivity extends BaseActivity {
 	 */
 	public void loadTrainings() {
 		if (dataSource != null) {
-			plannedWorkouts = dataSource.getItems(
+			trainedWorkouts = dataSource.getItems(
 					" 1=1 ORDER BY " + SQLiteHelper.COLUMN_TW_PLAN_DATE + " DESC");
 		} else {
 			LOGE(LOG_TAG, "dataSource is null");
@@ -121,7 +175,7 @@ public class TrainingsActivity extends BaseActivity {
 	 * Update graph and weights data stored in activity.
 	 */
 	public void updateShowingData() {
-		if (plannedWorkouts != null && plannedWorkouts.size() > 0) {
+		if (trainedWorkouts != null && trainedWorkouts.size() > 0) {
 			//TODO: DO SOMETHING
 		}
 	}
@@ -131,6 +185,7 @@ public class TrainingsActivity extends BaseActivity {
 	public static final String ACTION_VIEW = "action_view";
 
 	private final int REQUEST_SELECT_WORKOUT = 201;
+	private final int REQUEST_VIEW_WORKOUT = 202;
 
 	public static final String EXTRAS_KEY_WORKOUT = "workout";
 	public static final String EXTRAS_KEY_ITEM_POSITION = "item_position";
@@ -138,7 +193,7 @@ public class TrainingsActivity extends BaseActivity {
 	private String action;
 	private TrainingsListAdapter listAdapter;
 	private TrainedWorkoutsDS dataSource;
-	private ArrayList<TrainedWorkout> plannedWorkouts;
+	private ArrayList<TrainedWorkout> trainedWorkouts;
 
 	/** Tag for logging messages. */
 	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());

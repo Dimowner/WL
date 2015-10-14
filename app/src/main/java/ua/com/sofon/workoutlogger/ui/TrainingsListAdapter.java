@@ -16,8 +16,7 @@ import ua.com.sofon.workoutlogger.ui.widget.NotScrollableListView;
  * Data adapter for training list.
  * @author Dimowner
  */
-public class TrainingsListAdapter
-		extends BaseListAdapter<TrainedWorkout> {
+public class TrainingsListAdapter extends BaseListAdapter<TrainedWorkout> {
 
 	public TrainingsListAdapter(Context context,
 				String action, ArrayList<TrainedWorkout> plannedWorkouts) {
@@ -38,7 +37,7 @@ public class TrainingsListAdapter
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, final int position) {
-
+		super.onBindViewHolder(holder, position);
 		((TextView)holder.mView.findViewById(R.id.training_list_item_header))
 				.setText(data.get(position).getName());
 		((TextView)holder.mView.findViewById(R.id.training_list_item_date))

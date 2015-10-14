@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:card_view="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
@@ -15,7 +16,6 @@
 		android:text="15 SEPTEMBER"/>
 
 	<android.support.v7.widget.CardView
-		xmlns:card_view="http://schemas.android.com/apk/res-auto"
 		android:id="@+id/planned_workout_list_item_card"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

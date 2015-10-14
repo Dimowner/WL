@@ -8,6 +8,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import ua.com.sofon.workoutlogger.database.SQLiteHelper;
 import ua.com.sofon.workoutlogger.util.DateUtil;
+import ua.com.sofon.workoutlogger.util.LogUtils;
 
 /**
  * Created on 14.08.2015.
@@ -69,6 +70,8 @@ public class TrainedWorkout extends Workout {
 		id = intData[0];
 		duration = intData[1];
 		state = intData[2];
+		this.exerciseList = new ArrayList<>();
+		in.readList(exerciseList, TrainedExercise.class.getClassLoader());
 	}
 
 	@Override
@@ -78,13 +81,13 @@ public class TrainedWorkout extends Workout {
 
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(id);
 		out.writeStringArray(new String[]{name, description});
 		Bundle b = new Bundle();
 		b.putSerializable("plan_date", planDate);
 		b.putSerializable("perform_date", performDate);
 		out.writeBundle(b);
 		out.writeIntArray(new int[]{id, duration, state});
+		out.writeList(exerciseList);
 	}
 
 	public static final Parcelable.Creator<TrainedWorkout> CREATOR
@@ -213,6 +216,9 @@ public class TrainedWorkout extends Workout {
 	private Date performDate = null;
 	private int  duration = DURATION_NOT_SPECIFIED;
 	private int  state = STATE_DEFAULT;
+
+	/** Tag for logging messages. */
+	private final String LOG_TAG = LogUtils.makeLogTag(getClass().getSimpleName());
 
 
 	public static class Builder {

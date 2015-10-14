@@ -47,6 +47,10 @@
 			</intent-filter>
 		</activity>
 		<activity
+			android:name=".ui.TrainingEditActivity"
+			android:label="@string/title_training">
+		</activity>
+		<activity
 			android:name=".ui.WorkoutEditActivity"
 			android:label="@string/title_workout">
 		</activity>
