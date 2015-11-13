@@ -4,15 +4,15 @@
 	<group android:id="@+id/nav_view_primary">
 		<item
 			android:id="@+id/nav_training"
-			android:icon="@drawable/ic_android_grey600_24dp"
+			android:icon="@drawable/ic_dumbbell_grey600_24dp"
 			android:title="@string/navdrawer_item_training"/>
 		<item
 			android:id="@+id/nav_workouts"
-			android:icon="@drawable/ic_android_grey600_24dp"
+			android:icon="@drawable/ic_dumbbell_grey600_24dp"
 			android:title="@string/navdrawer_item_workouts"/>
 		<item
 			android:id="@+id/nav_exercises"
-			android:icon="@drawable/ic_android_grey600_24dp"
+			android:icon="@drawable/ic_dumbbell_grey600_24dp"
 			android:title="@string/navdrawer_item_exercises"/>
 	</group>
 
@@ -30,7 +30,7 @@
 	<group android:id="@+id/nav_view_ternary">
 		<item
 			android:id="@+id/nav_settings"
-			android:icon="@drawable/ic_android_grey600_24dp"
+			android:icon="@drawable/ic_settings_grey600_24dp"
 			android:title="@string/navdrawer_item_settings"/>
 	</group>
 </menu>

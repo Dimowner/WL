@@ -4,7 +4,7 @@
 	<Preference
 		android:key="about"
 		android:title="About"
-		android:icon="@drawable/ic_android_grey600_24dp" />
+		android:icon="@drawable/ic_information_outline_grey600_24dp" />
 	<!--<Preference-->
 		<!--android:key="logs"-->
 		<!--android:title="@string/title_app_logs"-->

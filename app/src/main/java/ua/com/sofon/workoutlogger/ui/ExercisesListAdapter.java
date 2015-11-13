@@ -44,7 +44,7 @@ public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 	public void onBindViewHolder(ViewHolder holder, final int position) {
 		super.onBindViewHolder(holder, position);
 		((ImageView) holder.mView.findViewById(R.id.exe_list_item_image))
-				.setImageResource(R.drawable.ic_android_grey600_24dp);
+				.setImageResource(R.drawable.ic_dumbbell_grey600_24dp);
 		((TextView)holder.mView.findViewById(R.id.exe_list_item_text))
 				.setText(data.get(position).getName());
 
