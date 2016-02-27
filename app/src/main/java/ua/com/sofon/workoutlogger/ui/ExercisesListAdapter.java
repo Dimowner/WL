@@ -43,6 +43,18 @@ public class ExercisesListAdapter extends BaseListAdapter<Exercise> {
 	@Override
 	public void onBindViewHolder(ViewHolder holder, final int position) {
 		super.onBindViewHolder(holder, position);
+
+		//Handle separator view code.
+		TextView separatorView = (TextView) holder.mView.findViewById(R.id.separator);
+		if (position > 0 &&
+				data.get(position).getName().substring(0, 1).toLowerCase().startsWith(
+				data.get(position - 1).getName().substring(0, 1).toLowerCase())) {
+			separatorView.setVisibility(View.GONE);
+		}
+		if (separatorView.getVisibility() == View.VISIBLE) {
+			separatorView.setText(data.get(position).getName().substring(0, 1).toUpperCase());
+		}
+
 		((ImageView) holder.mView.findViewById(R.id.exe_list_item_image))
 				.setImageResource(R.drawable.ic_dumbbell_grey600_24dp);
 		((TextView)holder.mView.findViewById(R.id.exe_list_item_text))

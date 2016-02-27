@@ -85,7 +85,7 @@
 	</string-array>
 
 	<string-array name="exercises_types_array">
-		<item>Exercise type</item>
+		<item>Other</item>
 		<item>Back</item>
 		<item>Breast</item>
 		<item>Shoulders</item>
@@ -96,7 +96,18 @@
 		<item>Feet</item>
 		<item>Shin</item>
 	</string-array>
-
+	<integer-array name="exercises_num_types_array">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+	</integer-array>
 	<string name="date_picker_date">Date:</string>
 	<string name="time_picker_time">Time:</string>
 </resources>

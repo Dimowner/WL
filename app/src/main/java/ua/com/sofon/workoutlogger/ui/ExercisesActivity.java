@@ -14,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import ua.com.sofon.workoutlogger.database.SQLiteHelper;
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.database.ExercisesDS;
 import ua.com.sofon.workoutlogger.ui.widget.DividerItemDecoration;
@@ -53,7 +55,8 @@ public class ExercisesActivity extends BaseActivity {
 		exeListView.setLayoutManager(mLayoutManager);
 		exeListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-		listAdapter = new ExercisesListAdapter(action, dataSource.getAll());
+		listAdapter = new ExercisesListAdapter(action,
+				dataSource.getItems("1=1 ORDER BY " + SQLiteHelper.COLUMN_EXE_NAME));
 		listAdapter.setOnItemClickListener(new ExercisesListAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, int position) {
