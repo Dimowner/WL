@@ -47,7 +47,7 @@ public class NumPickerView extends EditText {
 
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(numberPicker)
-			.setPositiveButton(R.string.numpicker_select, new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.btn_select, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setText(Integer.toString((numberPicker.getValue() * valueStep)));
 				}
@@ -56,7 +56,7 @@ public class NumPickerView extends EditText {
 				public void onClick(DialogInterface dialog, int whichButton) {
 				}
 			})
-			.setNeutralButton(R.string.numpicker_clear, new DialogInterface.OnClickListener() {
+			.setNeutralButton(R.string.btn_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setText("");
 				}

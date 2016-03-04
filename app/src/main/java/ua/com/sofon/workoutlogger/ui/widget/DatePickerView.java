@@ -56,7 +56,7 @@ public class DatePickerView extends EditText {
 
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(datePicker)
-			.setPositiveButton(R.string.datepicker_select, new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.btn_select, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					Calendar calendar = Calendar.getInstance();
 					calendar.set(
@@ -72,7 +72,7 @@ public class DatePickerView extends EditText {
 				public void onClick(DialogInterface dialog, int whichButton) {
 				}
 			})
-			.setNeutralButton(R.string.datepicker_clear, new DialogInterface.OnClickListener() {
+			.setNeutralButton(R.string.btn_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setText(R.string.date_picker_date);
 				}

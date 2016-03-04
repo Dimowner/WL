@@ -28,6 +28,7 @@ public class ExercisesDS extends DataSource<Exercise> {
 			values.put(SQLiteHelper.COLUMN_EXE_NAME, item.getName());
 			values.put(SQLiteHelper.COLUMN_EXE_DESCRIPTION, item.getDescription());
 			values.put(SQLiteHelper.COLUMN_EXE_TYPE, item.getType());
+			values.put(SQLiteHelper.COLUMN_MUSCLE_GROUPS, item.getGroupsIdsStr());
 			return values;
 		} else {
 			LOGE(LOG_TAG, "Can't convert Exercise with empty Name!");
@@ -41,7 +42,9 @@ public class ExercisesDS extends DataSource<Exercise> {
 				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)),
 				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_EXE_NAME)),
 				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_EXE_DESCRIPTION)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_EXE_TYPE))
+				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_EXE_TYPE)),
+				Exercise.groupsStrToArray(
+						cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_MUSCLE_GROUPS)))
 		);
 	}
 

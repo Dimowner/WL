@@ -42,7 +42,7 @@ public class DatePickerPreference extends DialogPreference {
 		View contentView = onCreateDialogView();
 		AlertDialog alertDialog = new AlertDialog.Builder(context)
 				.setView(contentView)
-				.setPositiveButton(R.string.datepicker_select, new DialogInterface.OnClickListener() {
+				.setPositiveButton(R.string.btn_select, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Calendar calendar = Calendar.getInstance();
 						calendar.set(
@@ -60,7 +60,7 @@ public class DatePickerPreference extends DialogPreference {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
 				})
-				.setNeutralButton(R.string.datepicker_clear, new DialogInterface.OnClickListener() {
+				.setNeutralButton(R.string.btn_clear, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Calendar calendar = Calendar.getInstance();
 						selectedDate = calendar.getTimeInMillis();

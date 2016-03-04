@@ -58,7 +58,7 @@ public class TimePickerView extends EditText {
 		alertDialog = new AlertDialog.Builder(context)
 			.setView(timePicker)
 			.setPositiveButton(
-					R.string.timepicker_select, new DialogInterface.OnClickListener() {
+					R.string.btn_select, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							Calendar calendar = Calendar.getInstance();
 							calendar.set(
@@ -76,7 +76,7 @@ public class TimePickerView extends EditText {
 				public void onClick(DialogInterface dialog, int whichButton) {
 				}
 			})
-			.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
+			.setNeutralButton(R.string.btn_clear, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setText(R.string.time_picker_time);
 				}

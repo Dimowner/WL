@@ -42,7 +42,7 @@ public class TimePickerPreference extends DialogPreference {
 		View contentView = onCreateDialogView();
 		AlertDialog alertDialog = new AlertDialog.Builder(context)
 				.setView(contentView)
-				.setPositiveButton(R.string.timepicker_select, new DialogInterface.OnClickListener() {
+				.setPositiveButton(R.string.btn_select, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Calendar calendar = Calendar.getInstance();
 						calendar.set(
@@ -62,7 +62,7 @@ public class TimePickerPreference extends DialogPreference {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
 				})
-				.setNeutralButton(R.string.timepicker_clear, new DialogInterface.OnClickListener() {
+				.setNeutralButton(R.string.btn_clear, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Calendar calendar = Calendar.getInstance();
 						selectedTime = calendar.getTimeInMillis();

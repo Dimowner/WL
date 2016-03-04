@@ -27,7 +27,7 @@ public class TrainedExercise extends Exercise {
 							int number, int workoutID, int trainedWorkoutID, int parentExeID) {
 		super(id, name, description);
 
-		if (type >= Exercise.EXERCISE_TYPE_OTHER && type <= Exercise.EXERCISE_TYPE_SHIN) {
+		if (type >= Exercise.MUSCLE_GROUP_OTHER && type <= Exercise.MUSCLE_GROUP_SHIN) {
 			this.type = type;
 		}
 		if (number != NUMBER_DEFAULT) {
@@ -87,11 +87,11 @@ public class TrainedExercise extends Exercise {
 	}
 
 	public void setType(int type) {
-		if (type >= Exercise.EXERCISE_TYPE_OTHER
-				&& type <= Exercise.EXERCISE_TYPE_SHIN) {
+		if (type >= Exercise.MUSCLE_GROUP_OTHER
+				&& type <= Exercise.MUSCLE_GROUP_SHIN) {
 			this.type = type;
 		} else {
-			this.type = Exercise.EXERCISE_TYPE_OTHER;
+			this.type = Exercise.MUSCLE_GROUP_OTHER;
 		}
 	}
 
@@ -214,7 +214,7 @@ public class TrainedExercise extends Exercise {
 		}
 
 		private int id = NO_ID;
-		private int type = EXERCISE_TYPE_OTHER;
+		private int type = MUSCLE_GROUP_OTHER;
 		private String name;
 		private String description;
 		private int parentExeID = NO_ID;

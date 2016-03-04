@@ -13,23 +13,18 @@
 	<string name="title_warning">Warning</string>
 
 	<string name="datepicker_set_date">Set planDate</string>
-	<string name="datepicker_select">Select</string>
-	<string name="datepicker_clear">Clear</string>
-
 	<string name="timepicker_set_time">Set time</string>
-	<string name="timepicker_select">Select</string>
-	<string name="timepicker_clear">Clear</string>
-
 	<string name="numpicker_set_number">Set number</string>
-	<string name="numpicker_select">Select</string>
-	<string name="numpicker_clear">Clear</string>
 
+	<string name="btn_select">Select</string>
+	<string name="btn_clear">Clear</string>
 	<string name="btn_ok">OK</string>
 	<string name="btn_cancel">Cancel</string>
 
 	<string name="exer_name">Name</string>
 	<string name="exer_description">Description</string>
 	<string name="exer_delete_this_exe">Delete this exercise?</string>
+	<string name="exer_groups_not_specified">Groups not specified</string>
 
 	<string name="workoutpos_name">Name</string>
 	<string name="workoutpos_date">Date</string>
@@ -110,4 +105,6 @@
 	</integer-array>
 	<string name="date_picker_date">Date:</string>
 	<string name="time_picker_time">Time:</string>
+	<string name="title_muscle_groups">Muscle groups</string>
+
 </resources>

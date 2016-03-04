@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import ua.com.sofon.workoutlogger.parts.Exercise;
 import ua.com.sofon.workoutlogger.R;
+import ua.com.sofon.workoutlogger.ui.widget.MultiSelectTextView;
 import ua.com.sofon.workoutlogger.util.UIUtil;
 
 /**
@@ -33,6 +34,20 @@ public class ExerciseEditActivity extends AppCompatActivity {
 		txtName = (EditText) findViewById(R.id.exercise_name_txt);
 		txtName.clearFocus();
 		txtDescription = (EditText) findViewById(R.id.exercise_description_txt);
+		txtMuscleGroups = (MultiSelectTextView) findViewById(R.id.exercise_muscle_groups);
+
+		//Init muscle groups dialog.
+		String[] names = getResources().getStringArray(R.array.exercises_types_array);
+		int[] ids = getResources().getIntArray(R.array.exercises_num_types_array);
+		txtMuscleGroups.setData(names, ids);
+		txtMuscleGroups.setTitle(getString(R.string.title_muscle_groups));
+		txtMuscleGroups.showNeutralButton(true);
+		txtMuscleGroups.setOnItemsSelectedListener(new MultiSelectTextView.OnItemsSelectedListener() {
+			@Override
+			public void OnItemsSelected(int[] ids, String[] names) {
+				mExercise.setGroups(ids);
+			}
+		});
 
 		if (getIntent().getAction() != null) {
 			action = getIntent().getAction();
@@ -46,12 +61,14 @@ public class ExerciseEditActivity extends AppCompatActivity {
 			case ACTION_VIEW:
 				txtName.setEnabled(false);
 				txtDescription.setEnabled(false);
+				txtMuscleGroups.setEnabled(false);
 			case ACTION_EDIT:
 				if (extras.containsKey(ExercisesActivity.EXTRAS_KEY_EXERCISES)) {
 					mExercise = extras.getParcelable(ExercisesActivity.EXTRAS_KEY_EXERCISES);
 					if (mExercise != null) {
 						txtName.setText(mExercise.getName());
 						txtDescription.setText(mExercise.getDescription());
+						txtMuscleGroups.setText(mExercise.getMuscleGroupsNames(getApplicationContext()));
 					}
 				}
 				break;
@@ -104,6 +121,8 @@ public class ExerciseEditActivity extends AppCompatActivity {
 				action = ACTION_EDIT;
 				txtName.setEnabled(true);
 				txtDescription.setEnabled(true);
+				txtMuscleGroups.setEnabled(true);
+
 				invalidateOptionsMenu();
 				return true;
 			case R.id.action_delete:
@@ -166,6 +185,9 @@ public class ExerciseEditActivity extends AppCompatActivity {
 
 	/** Text field contains exercise description. */
 	private EditText txtDescription;
+
+	/** Text field contains exercise muscle groups. */
+	private MultiSelectTextView txtMuscleGroups;
 
 	/** Item position in the list */
 	private int itemPosition;

@@ -41,7 +41,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
 	private static final String DATABASE_NAME = "workout_logger.db";
-	private static final int DATABASE_VERSION = 13;
+	private static final int DATABASE_VERSION = 14;
 
 	//Tables names
 	public static final String TABLE_EXERCISES = "exercises";
@@ -58,6 +58,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_EXE_NAME = "name";
 	public static final String COLUMN_EXE_DESCRIPTION = "description";
 	public static final String COLUMN_EXE_TYPE = "type";
+	public static final String COLUMN_MUSCLE_GROUPS = "muscle_groups";
 
 	//Fields for table Workouts
 	public static final String COLUMN_W_NAME = "name";
@@ -99,7 +100,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 					+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ COLUMN_EXE_NAME + " TEXT NOT NULL, "
 					+ COLUMN_EXE_DESCRIPTION + " TEXT, "
-					+ COLUMN_EXE_TYPE + " INTEGER NOT NULL DEFAULT 0);";
+					+ COLUMN_EXE_TYPE + " INTEGER NOT NULL DEFAULT 0, "
+					+ COLUMN_MUSCLE_GROUPS + " TEXT NOT NULL DEFAULT '0');";
 
 	//Create Workouts table sql statement
 	private static final String DATABASE_CREATE_WORKOUTS_TABLE_SCRIPT =

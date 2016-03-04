@@ -29,7 +29,7 @@ public class NumPickerPreference extends DialogPreference {
 		super(context, attrs);
 		this.context = context;
 
-		setPositiveButtonText(R.string.numpicker_select);
+		setPositiveButtonText(R.string.btn_select);
 		setNegativeButtonText(R.string.btn_cancel);
 	}
 
