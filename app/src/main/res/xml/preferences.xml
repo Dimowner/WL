@@ -5,15 +5,28 @@
 		android:key="about"
 		android:title="About"
 		android:icon="@drawable/ic_information_outline_grey600_24dp" />
-	<!--<Preference-->
-		<!--android:key="logs"-->
-		<!--android:title="@string/title_app_logs"-->
-		<!--android:icon="@drawable/ic_android_grey600_24dp" />-->
+
 	<!--<ListPreference-->
 		<!--android:key="measure_units"-->
 		<!--android:title="Measure unit"-->
 		<!--android:icon="@drawable/ic_android_grey600_24dp"-->
 		<!--android:entries="@array/units_array"-->
 		<!--android:entryValues="@array/units_values" />-->
+	<PreferenceCategory android:title="@string/log_logs">
+
+		<CheckBoxPreference
+			android:key="enable_recording_logs"
+			android:title="@string/log_saving_logs_into_file"
+			android:summaryOff="@string/log_logs_wont_be_recorded"
+			android:summaryOn="@string/log_logs_will_be_recorded"
+			android:defaultValue="false"
+			android:icon="@drawable/ic_file_document_grey600_24dp"/>
+
+		<Preference
+			android:key="logs"
+			android:title="@string/title_app_logs"
+			android:icon="@drawable/ic_android_grey600_24dp"/>
+
+	</PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,5 +1,7 @@
 package ua.com.sofon.workoutlogger.ui;
 
+import java.util.Calendar;
+import java.sql.SQLException;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,14 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-
 import ua.com.sofon.workoutlogger.R;
 import ua.com.sofon.workoutlogger.database.BodyWeightDS;
-import ua.com.sofon.workoutlogger.parts.BaseParticle;
 import ua.com.sofon.workoutlogger.parts.BodyWeight;
 import ua.com.sofon.workoutlogger.ui.widget.DatePickerView;
 import ua.com.sofon.workoutlogger.ui.widget.TimePickerView;

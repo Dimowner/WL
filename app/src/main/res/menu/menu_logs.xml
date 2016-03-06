@@ -3,17 +3,22 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		tools:context="ua.com.sofon.workoutlogger.ui.LogsActivity">
 
-	<item
-		android:id="@+id/action_send_email"
-		android:icon="@drawable/ic_android_grey600_24dp"
-		android:orderInCategory="100"
-		android:title="Send"
-		app:showAsAction="ifRoom"/>
+<item
+	android:id="@+id/action_send_email"
+	android:orderInCategory="100"
+	android:title="@string/log_send_by_email"
+	app:showAsAction="never"/>
 
-	<item
-		android:id="@+id/action_open_file_location"
-		android:icon="@drawable/ic_android_grey600_24dp"
-		android:orderInCategory="100"
-		android:title="Open logs folder"
-		app:showAsAction="ifRoom"/>
+<item
+	android:id="@+id/action_open_file_location"
+	android:orderInCategory="100"
+	android:title="@string/log_open_logs_folder"
+	app:showAsAction="never"/>
+
+<item
+	android:id="@+id/action_clear"
+	android:orderInCategory="100"
+	android:title="@string/log_clear"
+	app:showAsAction="never"/>
+
 </menu>

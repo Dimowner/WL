@@ -107,4 +107,15 @@
 	<string name="time_picker_time">Time:</string>
 	<string name="title_muscle_groups">Muscle groups</string>
 
+	<string name="log_logs">Logs</string>
+	<string name="log_send_by_email">Send by email</string>
+	<string name="log_open_logs_folder">Open logs folder</string>
+	<string name="log_clear">Clear log file</string>
+	<string name="log_no_email_clients">There are no email clients installed</string>
+	<string name="log_choose_app">Choose application</string>
+	<string name="log_saving_logs_into_file">Saving log into file</string>
+	<string name="log_logs_wont_be_recorded">Logs is not recording</string>
+	<string name="log_logs_will_be_recorded">Logs is recording</string>
+	<string name="log_no_data">No data</string>
+
 </resources>

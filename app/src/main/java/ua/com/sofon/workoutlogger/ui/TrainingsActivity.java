@@ -32,6 +32,7 @@ public class TrainingsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_training);
 
+		LogUtils.checkLogsRecordingEnabled(getApplicationContext());
 		action = getIntent().getAction();
 		if (action == null) {
 			action = ACTION_VIEW;
