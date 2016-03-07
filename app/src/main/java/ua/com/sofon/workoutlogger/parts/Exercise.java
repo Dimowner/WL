@@ -1,5 +1,6 @@
 package ua.com.sofon.workoutlogger.parts;
 
+import java.util.Arrays;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -55,11 +56,7 @@ public class Exercise extends BaseParticle implements Parcelable {
 		} else {
 			this.description = "";
 		}
-		if (groups != null) {
-			this.groups = groups;
-		} else {
-			this.groups = new int[0];
-		}
+		setGroups(groups);
 	}
 
 	//----- START Parcelable implementation ----------
@@ -132,6 +129,11 @@ public class Exercise extends BaseParticle implements Parcelable {
 		}
 	}
 
+	/**
+	 * Convert string that contains muscle groups ids into int array.
+	 * @param groups group ids example: "0;1;2;3;4;9"
+	 * @return Converted groups into int array.
+	 */
 	public static int[] groupsStrToArray(String groups) {
 		if (groups != null && !groups.isEmpty()) {
 			String[] grStr = groups.split(";");
@@ -152,7 +154,11 @@ public class Exercise extends BaseParticle implements Parcelable {
 		return new int[0];
 	}
 
-	private String groupsArrayToStr(int[] groups) {
+	/**
+	 * Convert int array that contains muscle groups of exercise into String separated by ";"
+	 * @return String that contains muscle groups example "0;1;2;3;4;5;9"
+	 */
+	public static String groupsArrayToStr(int[] groups) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < groups.length; i++) {
 			sb.append(groups[i]).append(";");
@@ -185,22 +191,30 @@ public class Exercise extends BaseParticle implements Parcelable {
 	}
 
 	public void setGroups(int[] ids) {
-		groups = ids;
+		boolean ok = true;
+		for (int i = 0; i < ids.length; i++) {
+			if (ids[i] < MUSCLE_GROUP_OTHER || ids[i] > MUSCLE_GROUP_SHIN) {
+				ok = false;
+			}
+		}
+		if (ok) {
+			this.groups = ids;
+		} else {
+			LOGE(LOG_TAG, "setGroups error param \"ids\" has wrong data.");
+		}
 	}
 
-//	public void setGroups(Context context, String[] names) {
-//		String[] namesRes = context.getResources()
-//				.getStringArray(R.array.exercises_types_array);
-//		ArrayList<Integer> gr = new ArrayList<>();
-//		for (int i = 0; i < names.length; i++) {
-//			for (int j = 0; j < namesRes.length; j++) {
-//				if (names[i].equals(namesRes[j])) {
-//					gr.add(j);
-//				}
-//			}
-//		}
-////		groups = gr.toArray();
-//	}
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof Exercise)) {
+			return false;
+		}
+		Exercise e = (Exercise) o;
+		return (this.id == e.getId()
+						&& this.name.equals(e.getName())
+						&& this.description.equals(e.getDescription())
+						&& Arrays.equals(this.groups, e.getMuscleGroupsIds()));
+	}
 
 	@Override
 	public String toString() {
@@ -209,8 +223,7 @@ public class Exercise extends BaseParticle implements Parcelable {
 				+ SQLiteHelper.COLUMN_EXE_NAME + " = '" + name + "', "
 				+ SQLiteHelper.COLUMN_EXE_DESCRIPTION + " = '" + description + "', "
 				+ SQLiteHelper.COLUMN_EXE_TYPE + " = '" + type
-//				TODO: toString groups
-//				+ SQLiteHelper.COLUMN_MUSCLE_GROUPS + " = " +
+				+ SQLiteHelper.COLUMN_MUSCLE_GROUPS + " = " + groupsArrayToStr(groups)
 				+ "']";
 	}
 
